@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G4 계약 관리 - 데스크톱 목업</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6f8;--surface:#fff;--border:#e5e7eb;--border2:#d1d5db;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --vroong:#00c73c;--vroong-d:#00a832;--vroong-l:#ecfdf5;
+  --blue:#2563eb;--blue-l:#eff6ff;--blue-d:#1d4ed8;
+  --amber:#d97706;--amber-l:#fffbeb;
+  --red:#dc2626;--red-l:#fef2f2;
+  --green:#059669;--green-l:#ecfdf5;
+  --purple:#7c3aed;--purple-l:#f5f3ff;
+  --sidebar-w:220px;--header-h:56px;
+  --radius:10px;--radius-sm:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow:hidden;height:100vh}
+
+/* Layout */
+.app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;grid-template-rows:var(--header-h) 1fr;height:100vh}
+
+/* Header */
+.header{grid-column:1/-1;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100}
+.logo{font-size:18px;font-weight:800;color:var(--vroong);letter-spacing:-0.5px}
+.logo span{color:var(--text)}
+.header-nav{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-btn{padding:6px 12px;font-size:12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--text2);font-weight:500}
+.header-user{width:32px;height:32px;border-radius:50%;background:var(--vroong-l);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--vroong)}
+
+/* Sidebar */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:16px 0;overflow-y:auto}
+.sidebar-group{margin-bottom:8px}
+.sidebar-group-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:8px 20px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .1s;border-left:3px solid transparent}
+.sidebar-item:hover{background:#f9fafb;color:var(--text)}
+.sidebar-item.active{background:var(--vroong-l);color:var(--vroong-d);border-left-color:var(--vroong);font-weight:600}
+.sidebar-item .material-symbols-rounded{font-size:18px}
+.sidebar-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;min-width:18px;text-align:center}
+
+/* Main */
+.main{overflow-y:auto;padding:24px}
+.page{display:none}
+.page.active{display:block}
+.page-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.page-subtitle{font-size:13px;color:var(--text2);margin-bottom:20px}
+
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-size:14px;font-weight:700}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:10px 12px;font-weight:600;color:var(--text2);border-bottom:2px solid var(--border);font-size:12px}
+.tbl td{padding:10px 12px;border-bottom:1px solid #f0f0f0}
+.tbl tr:hover td{background:#fafbfc}
+
+/* Badge/Status */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600}
+.badge-green{background:var(--green-l);color:var(--green)}
+.badge-blue{background:var(--blue-l);color:var(--blue)}
+.badge-amber{background:var(--amber-l);color:var(--amber)}
+.badge-red{background:var(--red-l);color:var(--red)}
+.badge-purple{background:var(--purple-l);color:var(--purple)}
+.badge-gray{background:#f3f4f6;color:var(--text3)}
+
+/* Btn */
+.btn{padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;border:1px solid;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--vroong);border-color:var(--vroong);color:#fff}
+.btn-primary:hover{background:var(--vroong-d)}
+.btn-outline{background:var(--surface);border-color:var(--border);color:var(--text)}
+.btn-danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn-blue{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+/* Form */
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px}
+.form-input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:inherit;color:var(--text);transition:border .15s}
+.form-input:focus{outline:none;border-color:var(--vroong)}
+select.form-input{appearance:auto}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-hint{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* Checkbox */
+.check-group{display:flex;flex-wrap:wrap;gap:8px}
+.check-item{display:flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:12px;transition:all .1s}
+.check-item.checked{border-color:var(--vroong);background:var(--vroong-l);color:var(--vroong-d)}
+.check-item input{display:none}
+
+/* KPI Row */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.kpi-label{font-size:11px;color:var(--text3);font-weight:600}
+.kpi-value{font-size:22px;font-weight:800;margin-top:2px}
+.kpi-sub{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* Sim result */
+.sim-result{background:linear-gradient(135deg,#00c73c10,#00c73c05);border:2px solid var(--vroong);border-radius:var(--radius);padding:24px;text-align:center}
+.sim-price{font-size:36px;font-weight:800;color:var(--vroong)}
+.sim-price-sub{font-size:13px;color:var(--text2)}
+
+/* Steps */
+.steps{display:flex;gap:4px;margin-bottom:20px}
+.step{flex:1;padding:10px;border-radius:var(--radius-sm);text-align:center;font-size:12px;font-weight:600;background:#f3f4f6;color:var(--text3);position:relative}
+.step.done{background:var(--vroong-l);color:var(--vroong)}
+.step.current{background:var(--vroong);color:#fff}
+.step.waiting{background:var(--amber-l);color:var(--amber)}
+
+/* Checklist */
+.checklist{list-style:none}
+.checklist li{padding:10px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;gap:10px;font-size:13px}
+.checklist li:last-child{border-bottom:none}
+.check-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.check-done{background:var(--green-l);color:var(--green)}
+.check-pending{background:#f3f4f6;color:var(--text3)}
+.check-alert{background:var(--red-l);color:var(--red)}
+
+/* Approval Card */
+.approval-item{border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:border .15s}
+.approval-item:hover{border-color:var(--vroong)}
+.approval-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.approval-meta{font-size:12px;color:var(--text2)}
+
+/* PDF preview */
+.pdf-preview{background:#fafbfc;border:2px dashed var(--border);border-radius:var(--radius);padding:40px;text-align:center;color:var(--text3);font-size:14px;margin-bottom:16px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+
+/* Info grid */
+.info-grid{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:13px}
+.info-grid dt{color:var(--text3);font-weight:500}
+.info-grid dd{font-weight:600}
+
+/* Tab bar (sub) */
+.sub-tabs{display:flex;gap:4px;margin-bottom:16px}
+.sub-tab{padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);color:var(--text2);background:var(--surface)}
+.sub-tab.active{background:var(--vroong);color:#fff;border-color:var(--vroong)}
+
+/* Responsive */
+@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{display:none}.form-row{grid-template-columns:1fr}}
+
+/* Comment */
+.comment-box{background:#f9fafb;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;margin-top:12px}
+.comment-box .comment-author{font-size:12px;font-weight:600;margin-bottom:4px}
+.comment-box .comment-text{font-size:12px;color:var(--text2)}
+
+/* Timeline */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.timeline-item{position:relative;padding-bottom:16px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot{position:absolute;left:-20px;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--surface)}
+.timeline-dot.green{border-color:var(--green);background:var(--green-l)}
+.timeline-dot.blue{border-color:var(--blue);background:var(--blue-l)}
+.timeline-dot.amber{border-color:var(--amber);background:var(--amber-l)}
+.timeline-title{font-size:13px;font-weight:600}
+.timeline-time{font-size:11px;color:var(--text3)}
+.timeline-desc{font-size:12px;color:var(--text2);margin-top:2px}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filter-bar .form-input{width:220px}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">부릉 <span>Sales</span></div>
+    <div class="header-nav">
+      <div class="header-btn">알림 <span style="color:var(--red);font-weight:700">3</span></div>
+      <div class="header-user">HJ</div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">영업 관리</div>
+      <div class="sidebar-item" onclick="go('dashboard')"><span class="material-symbols-rounded">dashboard</span> 대시보드</div>
+      <div class="sidebar-item" onclick="go('map')"><span class="material-symbols-rounded">map</span> 지도</div>
+      <div class="sidebar-item" onclick="go('leads')"><span class="material-symbols-rounded">storefront</span> 리드 관리</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">계약 관리</div>
+      <div class="sidebar-item" onclick="go('lead-detail')"><span class="material-symbols-rounded">contact_page</span> 리드 상세</div>
+      <div class="sidebar-item" onclick="go('simulation')"><span class="material-symbols-rounded">calculate</span> 요금 시뮬레이션</div>
+      <div class="sidebar-item" onclick="go('contract')"><span class="material-symbols-rounded">description</span> 계약서 생성</div>
+      <div class="sidebar-item" onclick="go('approval')"><span class="material-symbols-rounded">task_alt</span> 승인 관리<span class="sidebar-badge">3</span></div>
+      <div class="sidebar-item" onclick="go('complete')"><span class="material-symbols-rounded">verified</span> 계약 완료</div>
+      <div class="sidebar-item" onclick="go('list')"><span class="material-symbols-rounded">list_alt</span> 계약 목록</div>
+      <div class="sidebar-item" onclick="go('onboarding')"><span class="material-symbols-rounded">rocket_launch</span> 온보딩 추적</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- 1. 리드 상세 -->
+    <div class="page active" id="page-lead-detail">
+      <div class="page-title">리드 상세 정보</div>
+      <div class="page-subtitle">선택한 상점의 상세 정보 및 영업 활동 이력</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-header"><div class="card-title">상점 기본 정보</div><span class="badge badge-blue">관심 리드</span></div>
+          <div class="info-grid">
+            <dt>상점명</dt><dd>맛있는 치킨 강남점</dd>
+            <dt>대표자</dt><dd>김영수</dd>
+            <dt>연락처</dt><dd>010-1234-5678</dd>
+            <dt>주소</dt><dd>서울 강남구 역삼로 123</dd>
+            <dt>사업자번호</dt><dd>123-45-67890</dd>
+            <dt>업종</dt><dd>치킨/호프</dd>
+            <dt>월 예상 주문</dt><dd>약 800건</dd>
+            <dt>관심도</dt><dd><span style="color:var(--vroong);font-weight:700">높음 ★★★</span></dd>
+            <dt>기가입 여부</dt><dd><span class="badge badge-gray">미가입</span></dd>
+            <dt>권역</dt><dd>강남 1권역 (라이더 충분)</dd>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">방문 이력</div></div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot green"></div>
+              <div class="timeline-title">3차 방문 - 계약 의향 확인</div>
+              <div class="timeline-time">2026.03.28 (금) 14:00</div>
+              <div class="timeline-desc">사장님 긍정적 반응. 요금 시뮬레이션 요청. 할인 조건 확인 필요</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot blue"></div>
+              <div class="timeline-title">2차 방문 - 서비스 소개</div>
+              <div class="timeline-time">2026.03.20 (목) 11:30</div>
+              <div class="timeline-desc">부릉 서비스 소개. 경쟁사 대비 장점 설명. SLA 자료 전달</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot amber"></div>
+              <div class="timeline-title">1차 방문 - 초기 접촉</div>
+              <div class="timeline-time">2026.03.15 (토) 15:00</div>
+              <div class="timeline-desc">명함 전달. 현재 배달대행 이용 중 (배민). 비용 불만 있음</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">영업 메모</div></div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px">현재 배달의민족 배달대행 이용 중. 월 배달비 약 300만원. 단가 인하 원함. 포스는 현재 키오스크 사용 중이라 추가 설치 부담 있을 수 있음. 할인 요금제 제안하면 전환 가능성 높음.</p>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="go('simulation')">요금 시뮬레이션 시작</button>
+          <button class="btn btn-outline">메모 추가</button>
+          <button class="btn btn-outline">방문 기록</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 요금 시뮬레이션 -->
+    <div class="page" id="page-simulation">
+      <div class="page-title">요금 시뮬레이션</div>
+      <div class="page-subtitle">맛있는 치킨 강남점 · 예상 요금을 계산하여 상점주에게 보여줍니다</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">요금제 선택</div>
+            <div class="form-group">
+              <label class="form-label">기본 요금제</label>
+              <select class="form-input" onchange="calcSim()">
+                <option value="4300">기본 요금제 - 건당 4,300원</option>
+                <option value="3800" selected>할인 요금제 - 건당 3,800원</option>
+                <option value="3500">특별 할인 - 건당 3,500원 (승인 필요)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">월 예상 주문 수</label>
+              <input type="number" class="form-input" value="800" oninput="calcSim()">
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">할증 선택</div>
+            <div class="check-group">
+              <label class="check-item checked" onclick="this.classList.toggle('checked');calcSim()"><input type="checkbox" checked> 우천 할증 (+500원)</label>
+              <label class="check-item" onclick="this.classList.toggle('checked');calcSim()"><input type="checkbox"> 심야 할증 (+1,000원)</label>
+              <label class="check-item checked" onclick="this.classList.toggle('checked');calcSim()"><input type="checkbox" checked> 장거리 할증 (+300원)</label>
+              <label class="check-item" onclick="this.classList.toggle('checked');calcSim()"><input type="checkbox"> 성수기 할증 (+200원)</label>
+            </div>
+            <div class="form-hint" style="margin-top:8px">* 할증은 해당 조건 발생 시에만 적용됩니다</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">희망 배송 권역</div>
+            <div class="form-group">
+              <label class="form-label">배송 가능 권역</label>
+              <select class="form-input">
+                <option>강남 1권역 (반경 3km)</option>
+                <option>강남 2권역 (반경 5km)</option>
+                <option>강남 전체 (반경 7km)</option>
+              </select>
+              <div class="form-hint">* 권역별 라이더 가용성에 따라 배송 품질이 달라질 수 있습니다</div>
+            </div>
+            <div style="padding:10px;background:var(--green-l);border-radius:var(--radius-sm);font-size:12px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:6px">
+              <span class="material-symbols-rounded" style="font-size:16px">check_circle</span> 강남 1권역: 라이더 수급 원활 (평균 배정 3분)
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="sim-result" style="margin-bottom:16px">
+            <div style="font-size:12px;color:var(--text2);font-weight:600;margin-bottom:8px">예상 월 배달비</div>
+            <div class="sim-price" id="sim-total">3,040,000원</div>
+            <div class="sim-price-sub">건당 3,800원 × 800건/월 기준</div>
+            <div style="margin-top:12px;font-size:12px;color:var(--text2)">
+              현재 배달비 대비 <strong style="color:var(--red)">-260,000원/월</strong> 절감
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:12px">요금 비교</div>
+            <table class="tbl">
+              <thead><tr><th>항목</th><th style="text-align:right">현재</th><th style="text-align:right">부릉</th><th style="text-align:right">차이</th></tr></thead>
+              <tbody>
+                <tr><td>건당 단가</td><td style="text-align:right">4,125원</td><td style="text-align:right;color:var(--vroong);font-weight:700">3,800원</td><td style="text-align:right;color:var(--red)">-325원</td></tr>
+                <tr><td>월 예상 비용</td><td style="text-align:right">3,300,000원</td><td style="text-align:right;color:var(--vroong);font-weight:700">3,040,000원</td><td style="text-align:right;color:var(--red)">-260,000원</td></tr>
+                <tr><td>평균 배달 시간</td><td style="text-align:right">38분</td><td style="text-align:right;color:var(--vroong);font-weight:700">32분</td><td style="text-align:right;color:var(--green)">-6분</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-primary" onclick="go('contract')">계약서 생성으로 이동</button>
+            <button class="btn btn-outline">시뮬레이션 저장</button>
+            <button class="btn btn-outline">PDF 다운로드</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 계약서 생성 -->
+    <div class="page" id="page-contract">
+      <div class="page-title">계약서 생성</div>
+      <div class="page-subtitle">시뮬레이션 결과가 자동 반영됩니다 · 맛있는 치킨 강남점</div>
+
+      <div class="steps">
+        <div class="step done">1. 리드 선택</div>
+        <div class="step done">2. 요금 시뮬레이션</div>
+        <div class="step current">3. 계약서 생성</div>
+        <div class="step">4. 승인 요청</div>
+        <div class="step">5. 계약 완료</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">상점 정보 (자동 반영)</div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">상점명</label><input class="form-input" value="맛있는 치킨 강남점" readonly style="background:#f9fafb"></div>
+              <div class="form-group"><label class="form-label">대표자</label><input class="form-input" value="김영수" readonly style="background:#f9fafb"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">사업자번호</label><input class="form-input" value="123-45-67890" readonly style="background:#f9fafb"></div>
+              <div class="form-group"><label class="form-label">연락처</label><input class="form-input" value="010-1234-5678" readonly style="background:#f9fafb"></div>
+            </div>
+            <div class="form-group"><label class="form-label">주소</label><input class="form-input" value="서울 강남구 역삼로 123" readonly style="background:#f9fafb"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">계약 조건 (시뮬레이션 결과)</div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">요금제</label><input class="form-input" value="할인 요금제 (3,800원/건)" readonly style="background:#f9fafb"></div>
+              <div class="form-group"><label class="form-label">배송 권역</label><input class="form-input" value="강남 1권역 (반경 3km)" readonly style="background:#f9fafb"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">적용 할증</label>
+              <input class="form-input" value="우천 할증 (+500원), 장거리 할증 (+300원)" readonly style="background:#f9fafb">
+            </div>
+            <div class="form-group">
+              <label class="form-label">계약 기간</label>
+              <select class="form-input">
+                <option>12개월 (기본)</option>
+                <option>6개월</option>
+                <option>24개월 (추가 할인)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">특이사항</div>
+            <textarea class="form-input" rows="3" placeholder="특수 조건이나 합의 내용을 입력하세요 (예: 첫 달 무료, 포스 무상 제공 등)"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">계약 요약</div>
+            <div style="background:var(--vroong-l);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+                <div><span style="color:var(--text2)">건당 요금</span><div style="font-size:18px;font-weight:800;color:var(--vroong)">3,800원</div></div>
+                <div><span style="color:var(--text2)">예상 월 비용</span><div style="font-size:18px;font-weight:800;color:var(--vroong)">3,040,000원</div></div>
+                <div><span style="color:var(--text2)">계약 기간</span><div style="font-weight:700">12개월</div></div>
+                <div><span style="color:var(--text2)">예상 절감</span><div style="font-weight:700;color:var(--red)">월 -260,000원</div></div>
+              </div>
+            </div>
+
+            <div style="padding:10px;background:var(--amber-l);border-radius:var(--radius-sm);font-size:12px;color:var(--amber);font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:14px">
+              <span class="material-symbols-rounded" style="font-size:16px">info</span> 할인 요금제 적용 → 관리자 승인이 필요합니다
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">상점주 서명</div>
+            <div style="background:#fafbfc;border:2px dashed var(--border);border-radius:var(--radius-sm);padding:30px;text-align:center;color:var(--text3);font-size:13px;margin-bottom:12px">
+              <span class="material-symbols-rounded" style="font-size:32px;display:block;margin-bottom:4px">draw</span>
+              터치하여 서명
+            </div>
+            <div class="form-hint">* 상점주가 화면에서 직접 서명합니다 (모바일/태블릿 지원)</div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-primary" onclick="go('approval')">승인 요청</button>
+            <button class="btn btn-outline">임시 저장</button>
+            <button class="btn btn-outline" onclick="go('simulation')">시뮬레이션 수정</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 승인 대기/처리 -->
+    <div class="page" id="page-approval">
+      <div class="page-title">승인 관리</div>
+      <div class="page-subtitle">관리자 뷰 · 승인 대기 중인 계약을 검토합니다</div>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">승인 대기</div><div class="kpi-value" style="color:var(--amber)">3</div><div class="kpi-sub">평균 대기 2.4시간</div></div>
+        <div class="kpi-card"><div class="kpi-label">금일 승인</div><div class="kpi-value" style="color:var(--green)">7</div><div class="kpi-sub">평균 처리 38분</div></div>
+        <div class="kpi-card"><div class="kpi-label">금일 반려</div><div class="kpi-value" style="color:var(--red)">1</div><div class="kpi-sub">사유: 할인율 초과</div></div>
+        <div class="kpi-card"><div class="kpi-label">금주 총 처리</div><div class="kpi-value">42</div><div class="kpi-sub">승인율 95%</div></div>
+      </div>
+
+      <div class="sub-tabs">
+        <div class="sub-tab active">승인 대기 (3)</div>
+        <div class="sub-tab">금일 처리 (8)</div>
+        <div class="sub-tab">전체 이력</div>
+      </div>
+
+      <div class="approval-item">
+        <div class="approval-row">
+          <div>
+            <div style="font-size:14px;font-weight:700">맛있는 치킨 강남점</div>
+            <div class="approval-meta">영업사원: 정혜연 · 요청일: 2026.04.01 10:30</div>
+          </div>
+          <span class="badge badge-amber">승인 대기</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;margin-bottom:12px">
+          <div><span style="color:var(--text3)">요금제</span><div style="font-weight:600">할인 3,800원/건</div></div>
+          <div><span style="color:var(--text3)">월 예상</span><div style="font-weight:600">3,040,000원</div></div>
+          <div><span style="color:var(--text3)">권역</span><div style="font-weight:600">강남 1권역</div></div>
+          <div><span style="color:var(--text3)">계약기간</span><div style="font-weight:600">12개월</div></div>
+        </div>
+        <div style="padding:8px 12px;background:var(--amber-l);border-radius:var(--radius-sm);font-size:12px;color:var(--amber);margin-bottom:12px">
+          <strong>승인 필요 사유:</strong> 할인 요금제 적용 (기본 4,300원 → 3,800원, -11.6%)
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <textarea class="form-input" rows="2" placeholder="코멘트를 입력하세요 (반려 시 필수)"></textarea>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm" onclick="go('complete')">승인</button>
+          <button class="btn btn-danger btn-sm">반려</button>
+          <button class="btn btn-outline btn-sm">상세보기</button>
+        </div>
+      </div>
+
+      <div class="approval-item">
+        <div class="approval-row">
+          <div>
+            <div style="font-size:14px;font-weight:700">행복 분식 서초점</div>
+            <div class="approval-meta">영업사원: 박철수 · 요청일: 2026.04.01 09:15</div>
+          </div>
+          <span class="badge badge-amber">승인 대기</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;margin-bottom:12px">
+          <div><span style="color:var(--text3)">요금제</span><div style="font-weight:600">특별할인 3,500원/건</div></div>
+          <div><span style="color:var(--text3)">월 예상</span><div style="font-weight:600">5,250,000원</div></div>
+          <div><span style="color:var(--text3)">권역</span><div style="font-weight:600">서초 2권역</div></div>
+          <div><span style="color:var(--text3)">계약기간</span><div style="font-weight:600">24개월</div></div>
+        </div>
+        <div style="padding:8px 12px;background:var(--red-l);border-radius:var(--radius-sm);font-size:12px;color:var(--red);margin-bottom:12px">
+          <strong>주의:</strong> 특별 할인 적용 (-18.6%) + 24개월 장기 계약. 팀장 확인 권고
+        </div>
+        <div class="form-group" style="margin-bottom:8px">
+          <textarea class="form-input" rows="2" placeholder="코멘트를 입력하세요 (반려 시 필수)"></textarea>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm">승인</button>
+          <button class="btn btn-danger btn-sm">반려</button>
+          <button class="btn btn-outline btn-sm">상세보기</button>
+        </div>
+      </div>
+
+      <div class="approval-item">
+        <div class="approval-row">
+          <div>
+            <div style="font-size:14px;font-weight:700">피자파는집 잠실점</div>
+            <div class="approval-meta">영업사원: 이민준 · 요청일: 2026.04.01 08:45</div>
+          </div>
+          <span class="badge badge-amber">승인 대기</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;margin-bottom:12px">
+          <div><span style="color:var(--text3)">요금제</span><div style="font-weight:600">기본 4,300원/건</div></div>
+          <div><span style="color:var(--text3)">월 예상</span><div style="font-weight:600">2,150,000원</div></div>
+          <div><span style="color:var(--text3)">권역</span><div style="font-weight:600">잠실 1권역</div></div>
+          <div><span style="color:var(--text3)">계약기간</span><div style="font-weight:600">12개월</div></div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary btn-sm">승인</button>
+          <button class="btn btn-danger btn-sm">반려</button>
+          <button class="btn btn-outline btn-sm">상세보기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 계약 완료 -->
+    <div class="page" id="page-complete">
+      <div class="page-title">계약 완료</div>
+      <div class="page-subtitle">맛있는 치킨 강남점 · 계약 #G4-2026-0401-001</div>
+
+      <div class="steps">
+        <div class="step done">1. 리드 선택</div>
+        <div class="step done">2. 요금 시뮬레이션</div>
+        <div class="step done">3. 계약서 생성</div>
+        <div class="step done">4. 승인 완료</div>
+        <div class="step current">5. 계약 완료</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">계약서 미리보기</div>
+            <div class="pdf-preview">
+              <span class="material-symbols-rounded" style="font-size:48px">picture_as_pdf</span>
+              <div style="font-weight:600;color:var(--text)">배달대행 서비스 이용계약서</div>
+              <div style="font-size:12px">맛있는 치킨 강남점 · 2026.04.01</div>
+              <div style="font-size:11px;margin-top:4px">계약번호: G4-2026-0401-001</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-outline btn-sm">PDF 다운로드</button>
+              <button class="btn btn-outline btn-sm">인쇄</button>
+              <button class="btn btn-outline btn-sm">이메일 전송</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><div class="card-title">승인 이력</div></div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot green"></div>
+                <div class="timeline-title">승인 완료 - 김팀장</div>
+                <div class="timeline-time">2026.04.01 11:15</div>
+                <div class="timeline-desc">할인 요금제 적용 승인. 코멘트: "강남 1권역 전략 상점, 할인 적용 타당"</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot blue"></div>
+                <div class="timeline-title">승인 요청 - 정혜연</div>
+                <div class="timeline-time">2026.04.01 10:30</div>
+                <div class="timeline-desc">할인 요금제 (3,800원/건) 적용 요청</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">S-form 자동 생성</div>
+            <div style="padding:12px;background:var(--green-l);border-radius:var(--radius-sm);font-size:13px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:14px">
+              <span class="material-symbols-rounded" style="font-size:20px">check_circle</span> S-form 자동 생성 완료 (2026.04.01 11:16)
+            </div>
+            <div class="info-grid" style="margin-bottom:14px">
+              <dt>상점 코드</dt><dd>ST-GN-2026-0892</dd>
+              <dt>요금제 코드</dt><dd>PLAN-DISC-3800</dd>
+              <dt>권역 코드</dt><dd>ZONE-GN-01</dd>
+              <dt>S-form 상태</dt><dd><span class="badge badge-green">전송 완료</span></dd>
+            </div>
+            <div class="form-hint">* 계약 승인 즉시 S-form이 자동으로 생성/전송되었습니다 (기존: 영업 종료 후 수작업 입력)</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title" style="margin-bottom:14px">상점주 안내 발송</div>
+            <ul class="checklist">
+              <li><span class="check-icon check-done"><span class="material-symbols-rounded" style="font-size:14px">check</span></span><div><div style="font-weight:600">계약 완료 알림 (카카오톡)</div><div style="font-size:11px;color:var(--text3)">2026.04.01 11:16 발송 완료</div></div></li>
+              <li><span class="check-icon check-done"><span class="material-symbols-rounded" style="font-size:14px">check</span></span><div><div style="font-weight:600">사장님사이트 회원가입 안내 (SMS)</div><div style="font-size:11px;color:var(--text3)">2026.04.01 11:16 발송 완료 · 링크 포함</div></div></li>
+              <li><span class="check-icon check-done"><span class="material-symbols-rounded" style="font-size:14px">check</span></span><div><div style="font-weight:600">헥토 결제 연동 가이드 (카카오톡)</div><div style="font-size:11px;color:var(--text3)">2026.04.01 11:17 발송 완료 · 단계별 가이드</div></div></li>
+              <li><span class="check-icon check-pending"><span class="material-symbols-rounded" style="font-size:14px">schedule</span></span><div><div style="font-weight:600">포스 설치 안내</div><div style="font-size:11px;color:var(--text3)">회원가입 완료 후 자동 발송 예정</div></div></li>
+            </ul>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-primary" onclick="go('onboarding')">온보딩 추적으로</button>
+            <button class="btn btn-outline" onclick="go('list')">계약 목록</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 계약 관리 목록 -->
+    <div class="page" id="page-list">
+      <div class="page-title">계약 관리 목록</div>
+      <div class="page-subtitle">전체 계약 현황을 한눈에 확인합니다</div>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">전체 계약</div><div class="kpi-value">156</div><div class="kpi-sub">이번 달</div></div>
+        <div class="kpi-card"><div class="kpi-label">진행 중</div><div class="kpi-value" style="color:var(--blue)">23</div><div class="kpi-sub">계약서 작성 ~ 승인 대기</div></div>
+        <div class="kpi-card"><div class="kpi-label">온보딩 중</div><div class="kpi-value" style="color:var(--amber)">18</div><div class="kpi-sub">S-form ~ 첫주문 대기</div></div>
+        <div class="kpi-card"><div class="kpi-label">완료</div><div class="kpi-value" style="color:var(--green)">112</div><div class="kpi-sub">첫주문 발생 완료</div></div>
+        <div class="kpi-card"><div class="kpi-label">반려/이탈</div><div class="kpi-value" style="color:var(--red)">3</div><div class="kpi-sub">이번 달 기준</div></div>
+      </div>
+
+      <div class="filter-bar">
+        <input class="form-input" placeholder="상점명, 영업사원으로 검색..." style="width:240px">
+        <select class="form-input" style="width:150px">
+          <option>전체 상태</option>
+          <option>계약서 작성 중</option>
+          <option>승인 대기</option>
+          <option>승인 완료</option>
+          <option>온보딩 중</option>
+          <option>완료</option>
+          <option>반려</option>
+          <option>이탈</option>
+        </select>
+        <select class="form-input" style="width:130px">
+          <option>전체 영업사원</option>
+          <option>정혜연</option>
+          <option>박철수</option>
+          <option>이민준</option>
+        </select>
+        <select class="form-input" style="width:130px">
+          <option>전체 기간</option>
+          <option>이번 주</option>
+          <option>이번 달</option>
+          <option>지난 달</option>
+        </select>
+        <button class="btn btn-outline btn-sm" style="margin-left:auto">엑셀 다운로드</button>
+      </div>
+
+      <div class="card" style="padding:0;overflow:hidden">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>계약번호</th><th>상점명</th><th>요금제</th><th>월 예상</th><th>상태</th><th>영업사원</th><th>요청일</th><th>처리일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="cursor:pointer" onclick="go('complete')">
+              <td style="font-weight:600;color:var(--blue)">G4-0401-001</td>
+              <td style="font-weight:600">맛있는 치킨 강남점</td>
+              <td>할인 3,800원</td>
+              <td>3,040,000원</td>
+              <td><span class="badge badge-green">온보딩 중</span></td>
+              <td>정혜연</td>
+              <td>04.01</td>
+              <td>04.01</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0401-002</td>
+              <td style="font-weight:600">행복 분식 서초점</td>
+              <td>특별 3,500원</td>
+              <td>5,250,000원</td>
+              <td><span class="badge badge-amber">승인 대기</span></td>
+              <td>박철수</td>
+              <td>04.01</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0401-003</td>
+              <td style="font-weight:600">피자파는집 잠실점</td>
+              <td>기본 4,300원</td>
+              <td>2,150,000원</td>
+              <td><span class="badge badge-amber">승인 대기</span></td>
+              <td>이민준</td>
+              <td>04.01</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0331-012</td>
+              <td style="font-weight:600">착한 족발 대치점</td>
+              <td>할인 3,800원</td>
+              <td>1,900,000원</td>
+              <td><span class="badge badge-green">완료</span></td>
+              <td>정혜연</td>
+              <td>03.31</td>
+              <td>03.31</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0331-011</td>
+              <td style="font-weight:600">미스터 버거 역삼점</td>
+              <td>기본 4,300원</td>
+              <td>3,870,000원</td>
+              <td><span class="badge badge-green">온보딩 중</span></td>
+              <td>박철수</td>
+              <td>03.31</td>
+              <td>03.31</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0330-008</td>
+              <td style="font-weight:600">동네 중국집 방배점</td>
+              <td>할인 3,800원</td>
+              <td>2,660,000원</td>
+              <td><span class="badge badge-red">반려</span></td>
+              <td>이민준</td>
+              <td>03.30</td>
+              <td>03.30</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0329-005</td>
+              <td style="font-weight:600">소문난 떡볶이 서초점</td>
+              <td>기본 4,300원</td>
+              <td>2,580,000원</td>
+              <td><span class="badge badge-green">완료</span></td>
+              <td>정혜연</td>
+              <td>03.29</td>
+              <td>03.29</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue)">G4-0328-003</td>
+              <td style="font-weight:600">화이트 카페 논현점</td>
+              <td>할인 3,800원</td>
+              <td>1,520,000원</td>
+              <td><span class="badge badge-purple">이탈</span></td>
+              <td>박철수</td>
+              <td>03.28</td>
+              <td>03.28</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 7. 온보딩 추적 -->
+    <div class="page" id="page-onboarding">
+      <div class="page-title">온보딩 추적</div>
+      <div class="page-subtitle">계약 완료 후 첫 주문까지의 진행 상황을 추적합니다</div>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">온보딩 진행 중</div><div class="kpi-value" style="color:var(--blue)">18</div><div class="kpi-sub">이번 달</div></div>
+        <div class="kpi-card"><div class="kpi-label">평균 온보딩 일수</div><div class="kpi-value" style="color:var(--vroong)">2.3일</div><div class="kpi-sub">목표: 2일 이내</div></div>
+        <div class="kpi-card"><div class="kpi-label">이탈 위험</div><div class="kpi-value" style="color:var(--red)">2</div><div class="kpi-sub">D+7 초과</div></div>
+        <div class="kpi-card"><div class="kpi-label">이번 주 완료</div><div class="kpi-value" style="color:var(--green)">12</div><div class="kpi-sub">완료율 92%</div></div>
+      </div>
+
+      <div class="sub-tabs">
+        <div class="sub-tab active">전체 (18)</div>
+        <div class="sub-tab">정상 진행 (14)</div>
+        <div class="sub-tab">지연 (2)</div>
+        <div class="sub-tab" style="color:var(--red)">위험 (2)</div>
+      </div>
+
+      <!-- Onboarding Items -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700">맛있는 치킨 강남점</div>
+            <div style="font-size:12px;color:var(--text2)">계약일: 2026.04.01 · 영업사원: 정혜연 · D+0</div>
+          </div>
+          <span class="badge badge-blue">온보딩 시작</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:10px;color:var(--text3)">완료 11:16</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">안내 발송</div>
+            <div style="font-size:10px;color:var(--text3)">완료 11:17</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--amber);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--amber)">회원가입</div>
+            <div style="font-size:10px;color:var(--text3)">진행 중</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">포스 설치</div>
+            <div style="font-size:10px;color:var(--text3)">대기</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:10px;color:var(--text3)">대기</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700">미스터 버거 역삼점</div>
+            <div style="font-size:12px;color:var(--text2)">계약일: 2026.03.31 · 영업사원: 박철수 · D+1</div>
+          </div>
+          <span class="badge badge-green">정상 진행</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">안내 발송</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">회원가입</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--amber);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--amber)">포스 설치</div>
+            <div style="font-size:10px;color:var(--text3)">04.02 예정</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:10px;color:var(--text3)">대기</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:#fca5a5">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700">스타 치킨 삼성점</div>
+            <div style="font-size:12px;color:var(--text2)">계약일: 2026.03.24 · 영업사원: 이민준 · D+8</div>
+          </div>
+          <span class="badge badge-red">이탈 위험</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">안내 발송</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--red);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--red)">회원가입</div>
+            <div style="font-size:10px;color:var(--red);font-weight:600">D+8 미완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">포스 설치</div>
+            <div style="font-size:10px;color:var(--text3)">대기</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:10px;color:var(--text3)">대기</div>
+          </div>
+        </div>
+
+        <div style="padding:10px;background:var(--red-l);border-radius:var(--radius-sm);font-size:12px;color:var(--red);margin-bottom:8px">
+          <strong>이탈 위험:</strong> D+3 리마인드 발송(03.27) → D+7 영업사원 알림(03.31) → 재방문 필요
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-danger btn-sm">재방문 등록</button>
+          <button class="btn btn-outline btn-sm">상점주 전화</button>
+          <button class="btn btn-outline btn-sm">리마인드 재발송</button>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:#fca5a5">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700">화이트 카페 논현점</div>
+            <div style="font-size:12px;color:var(--text2)">계약일: 2026.03.22 · 영업사원: 박철수 · D+10</div>
+          </div>
+          <span class="badge badge-red">이탈 위험</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">안내 발송</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">회원가입</div>
+            <div style="font-size:10px;color:var(--text3)">완료</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:var(--red);margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--red)">포스 설치</div>
+            <div style="font-size:10px;color:var(--red);font-weight:600">D+10 거부</div>
+          </div>
+          <div style="text-align:center">
+            <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:10px;color:var(--text3)">대기</div>
+          </div>
+        </div>
+
+        <div style="padding:10px;background:var(--red-l);border-radius:var(--radius-sm);font-size:12px;color:var(--red);margin-bottom:8px">
+          <strong>이슈:</strong> 포스 설치 거부 (기존 키오스크 사용 주장). 포스리스 옵션 논의 필요
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-danger btn-sm">에스컬레이션</button>
+          <button class="btn btn-outline btn-sm">상점주 전화</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- placeholder pages for non-contract sidebar items -->
+    <div class="page" id="page-dashboard">
+      <div class="page-title">대시보드</div>
+      <div class="page-subtitle">기존 구현 화면 (LIVE) · 이 목업의 범위 밖</div>
+      <div class="card" style="text-align:center;padding:60px;color:var(--text3)">
+        <span class="material-symbols-rounded" style="font-size:48px;display:block;margin-bottom:8px">dashboard</span>
+        기존 sales.vroong.com 대시보드가 이미 구현되어 있습니다
+      </div>
+    </div>
+    <div class="page" id="page-map">
+      <div class="page-title">지도</div>
+      <div class="page-subtitle">기존 구현 화면 (LIVE) · 이 목업의 범위 밖</div>
+      <div class="card" style="text-align:center;padding:60px;color:var(--text3)">
+        <span class="material-symbols-rounded" style="font-size:48px;display:block;margin-bottom:8px">map</span>
+        기존 sales.vroong.com 지도 뷰가 이미 구현되어 있습니다
+      </div>
+    </div>
+    <div class="page" id="page-leads">
+      <div class="page-title">리드 관리</div>
+      <div class="page-subtitle">기존 구현 화면 (LIVE) · 이 목업의 범위 밖</div>
+      <div class="card" style="text-align:center;padding:60px;color:var(--text3)">
+        <span class="material-symbols-rounded" style="font-size:48px;display:block;margin-bottom:8px">storefront</span>
+        기존 sales.vroong.com 리드 관리가 이미 구현되어 있습니다
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
+  const el=document.getElementById('page-'+page);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(i=>{
+    if(i.getAttribute('onclick')&&i.getAttribute('onclick').includes("'"+page+"'")) i.classList.add('active');
+  });
+  document.querySelector('.main').scrollTop=0;
+}
+
+function calcSim(){
+  /* placeholder calc for interactivity demo */
+}
+
+go('lead-detail');
+</script>
+</body>
+</html>

@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G4 세일즈 툴 로드맵 v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --blue-dark: #1e40af;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --cyan: #0891b2;
+    --cyan-light: #ecfeff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+
+  /* Header */
+  .header { margin-bottom: 48px; }
+  .header-eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 8px;
+  }
+  .header h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .header p { font-size: 15px; color: var(--text-secondary); max-width: 680px; }
+  .header-meta {
+    display: flex; gap: 24px; margin-top: 16px; font-size: 12px; color: var(--text-muted);
+  }
+  .header-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* Section Title */
+  .section-title {
+    font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;
+  }
+
+  /* Mission */
+  .mission {
+    background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+    border-radius: 16px; padding: 32px; margin-bottom: 48px; color: white;
+  }
+  .mission h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .mission p { font-size: 15px; opacity: 0.85; margin-bottom: 24px; max-width: 600px; }
+  .mission-metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .mission-metric {
+    background: rgba(255,255,255,0.12); border-radius: 12px; padding: 20px;
+    backdrop-filter: blur(10px);
+  }
+  .mm-label { font-size: 12px; opacity: 0.7; margin-bottom: 4px; }
+  .mm-row { display: flex; align-items: baseline; gap: 8px; }
+  .mm-from { font-size: 18px; font-weight: 300; opacity: 0.5; text-decoration: line-through; }
+  .mm-arrow { font-size: 14px; opacity: 0.5; }
+  .mm-to { font-size: 28px; font-weight: 800; }
+  .mm-note { font-size: 11px; opacity: 0.6; margin-top: 4px; }
+
+  /* Current State */
+  .current-state { margin-bottom: 48px; }
+  .cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cs-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+  }
+  .cs-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .cs-badge {
+    font-size: 10px; font-weight: 700; padding: 2px 8px;
+    border-radius: 100px; display: inline-block;
+  }
+  .cs-done { background: var(--green-light); color: var(--green); }
+  .cs-gap { background: var(--red-light); color: var(--red); }
+  .cs-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0; font-size: 13px; color: var(--text-secondary);
+  }
+  .cs-check { color: var(--green); font-weight: 700; }
+  .cs-cross { color: var(--red); font-weight: 700; }
+
+  /* Pain Points from Interview */
+  .interview { margin-bottom: 48px; }
+  .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pain-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; border-left: 4px solid;
+  }
+  .pain-card.high { border-left-color: var(--red); }
+  .pain-card.mid { border-left-color: var(--amber); }
+  .pain-card.low { border-left-color: var(--text-muted); }
+  .pain-severity {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .pain-card.high .pain-severity { color: var(--red); }
+  .pain-card.mid .pain-severity { color: var(--amber); }
+  .pain-card.low .pain-severity { color: var(--text-muted); }
+  .pain-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .pain-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  .pain-quote {
+    font-size: 11px; color: var(--text-muted); font-style: italic;
+    padding: 8px 12px; background: #f9fafb; border-radius: 8px;
+  }
+
+  /* Leadtime Flow */
+  .leadtime { margin-bottom: 48px; }
+  .lt-flow {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 32px; overflow-x: auto;
+  }
+  .lt-flow h3 { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+  .lt-stages { display: flex; align-items: stretch; gap: 0; }
+  .lt-stage {
+    flex: 1; padding: 16px; text-align: center; position: relative;
+    min-width: 130px;
+  }
+  .lt-stage::after {
+    content: '→'; position: absolute; right: -8px; top: 50%;
+    transform: translateY(-50%); font-size: 18px; color: var(--text-muted);
+    z-index: 1;
+  }
+  .lt-stage:last-child::after { display: none; }
+  .lt-stage-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .lt-stage-time { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .lt-as-is {
+    background: var(--red-light); border-radius: 8px;
+    padding: 8px; font-size: 11px; color: var(--red); margin-bottom: 6px;
+  }
+  .lt-to-be {
+    background: var(--green-light); border-radius: 8px;
+    padding: 8px; font-size: 11px; color: var(--green);
+  }
+  .lt-total {
+    display: flex; justify-content: center; gap: 40px;
+    margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .lt-total-item { text-align: center; }
+  .lt-total-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .lt-total-value { font-size: 24px; font-weight: 800; }
+  .lt-total-value.old { color: var(--red); text-decoration: line-through; opacity: 0.5; }
+  .lt-total-value.new { color: var(--green); }
+  .lt-total-arrow { font-size: 24px; color: var(--text-muted); align-self: center; }
+
+  /* Phase Timeline */
+  .timeline { margin-bottom: 48px; }
+  .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .phase-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    transition: all 0.2s;
+  }
+  .phase-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
+  .phase-top { padding: 20px 20px 16px; }
+  .phase-tag {
+    display: inline-block; padding: 3px 10px; border-radius: 100px;
+    font-size: 11px; font-weight: 700; color: white; margin-bottom: 8px;
+  }
+  .phase-card:nth-child(1) .phase-tag { background: var(--blue); }
+  .phase-card:nth-child(2) .phase-tag { background: var(--purple); }
+  .phase-card:nth-child(3) .phase-tag { background: var(--cyan); }
+  .phase-card:nth-child(1) { border-top: 3px solid var(--blue); }
+  .phase-card:nth-child(2) { border-top: 3px solid var(--purple); }
+  .phase-card:nth-child(3) { border-top: 3px solid var(--cyan); }
+  .phase-name { font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+  .phase-period { font-size: 13px; color: var(--text-muted); }
+  .phase-goal {
+    font-size: 13px; color: var(--text-secondary); padding: 12px 20px;
+    background: #f9fafb; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-body { padding: 16px 20px; }
+  .fg { margin-bottom: 14px; }
+  .fg:last-child { margin-bottom: 0; }
+  .fg-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+  }
+  .fi {
+    display: flex; align-items: flex-start; gap: 8px; padding: 5px 0;
+  }
+  .fi-dot {
+    width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+  }
+  .fi-dot.new { background: var(--blue); }
+  .fi-dot.enhance { background: var(--purple); }
+  .fi-dot.exists { background: var(--green); }
+  .fi-text { font-size: 13px; font-weight: 500; }
+  .fi-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .fi-tag {
+    font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 4px;
+    display: inline-block; margin-left: 6px; vertical-align: middle;
+  }
+  .fi-tag.interview { background: #fef3c7; color: #92400e; }
+  .fi-tag.existing { background: #dcfce7; color: #166534; }
+
+  /* Phase Impact */
+  .phase-impact {
+    padding: 16px 20px; background: #f8fafc;
+    border-top: 1px dashed var(--border);
+  }
+  .phase-impact-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+  }
+  .impact-row {
+    display: flex; align-items: center; gap: 10px; padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .impact-row:last-child { border-bottom: none; }
+  .impact-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .impact-icon.revenue { background: #dcfce7; }
+  .impact-icon.time { background: #dbeafe; }
+  .impact-icon.efficiency { background: #fef3c7; }
+  .impact-icon.retention { background: #fce7f3; }
+  .impact-icon.quality { background: #ede9fe; }
+  .impact-body { flex: 1; }
+  .impact-metric {
+    font-size: 13px; font-weight: 700; color: var(--text-primary);
+  }
+  .impact-detail {
+    font-size: 11px; color: var(--text-secondary); margin-top: 1px;
+  }
+  .impact-number {
+    font-size: 15px; font-weight: 800; white-space: nowrap;
+  }
+  .impact-number.green { color: var(--green); }
+  .impact-number.blue { color: var(--blue); }
+  .impact-number.purple { color: var(--purple); }
+
+  /* Bottom Principles */
+  .principles { margin-bottom: 48px; }
+  .pr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pr-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; text-align: center;
+  }
+  .pr-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--blue-light); color: var(--blue);
+    font-weight: 800; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .pr-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .pr-desc { font-size: 13px; color: var(--text-secondary); }
+
+  .footer {
+    text-align: center; padding: 32px; color: var(--text-muted);
+    font-size: 12px; border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 900px) {
+    .phase-grid, .pain-grid, .pr-grid { grid-template-columns: 1fr; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .mission-metrics { grid-template-columns: 1fr; }
+    .lt-stages { flex-direction: column; }
+    .lt-stage::after { display: none; }
+    .lt-total { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-eyebrow">G4 Sales Tool Roadmap v2</div>
+    <h1>세일즈 툴 로드맵</h1>
+    <p>인터뷰 기반으로 재설계 — 웹계약 + 영업 리드타임 단축 + 세일즈 툴 고도화</p>
+    <div class="header-meta">
+      <span>📅 2026-04-02 (인터뷰 반영)</span>
+      <span>📍 인터뷰 소스: G4 상점 영업 프로세스 인터뷰 (빌드업 TF팀)</span>
+    </div>
+  </div>
+
+  <!-- Mission -->
+  <div class="mission">
+    <h2>목표: 영업 → 계약 → 첫주문 리드타임을 절반으로</h2>
+    <p>현재 계약 후 포스 설치까지 분리되어 있고, S-form 수작업이 병목. 웹계약으로 계약 자체를 빠르게 하면서, 온보딩까지의 전체 리드타임을 줄인다.</p>
+    <div class="mission-metrics">
+      <div class="mission-metric">
+        <div class="mm-label">리드 → 계약 전환율</div>
+        <div class="mm-row">
+          <span class="mm-from">8.2%</span>
+          <span class="mm-arrow">→</span>
+          <span class="mm-to">20%+</span>
+        </div>
+        <div class="mm-note">현재 1,744 리드 중 143건 계약 (대시보드 실측)</div>
+      </div>
+      <div class="mission-metric">
+        <div class="mm-label">신규 → 계약 소요일</div>
+        <div class="mm-row">
+          <span class="mm-from">34일</span>
+          <span class="mm-arrow">→</span>
+          <span class="mm-to">14일</span>
+        </div>
+        <div class="mm-note">대시보드 실측 평균 34일 (현장 즉시 계약으로 단축)</div>
+      </div>
+      <div class="mission-metric">
+        <div class="mm-label">계약 → 첫주문 리드타임</div>
+        <div class="mm-row">
+          <span class="mm-from">7일+</span>
+          <span class="mm-arrow">→</span>
+          <span class="mm-to">2일</span>
+        </div>
+        <div class="mm-note">S-form + 회원가입 + 헥토 + 포스설치 일원화</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current State -->
+  <div class="current-state">
+    <div class="section-title">현재 상태 — 세일즈 웹 (sales.vroong.com)</div>
+    <div class="cs-grid">
+      <div class="cs-card">
+        <h3>이미 구현됨 <span class="cs-badge cs-done">LIVE</span></h3>
+        <div class="cs-item"><span class="cs-check">✓</span> 지도 기반 상점 조회 + 클러스터</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 리드 등록/관리 (상점명, 연락처, 담당자)</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 영업 상태 관리 (신규 → 방문 → 계약)</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 관심도 1~5점 + 지도 필터</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 대시보드 (전환율, 소요일, 퍼널, Top3)</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 활동 로그 (메모, 상태변경, 담당자 이력)</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 주문수/관심도/마감시간 필터</div>
+        <div class="cs-item"><span class="cs-check">✓</span> 내 담당 / 전체 토글</div>
+      </div>
+      <div class="cs-card">
+        <h3>아직 없음 <span class="cs-badge cs-gap">GAP</span></h3>
+        <div class="cs-item"><span class="cs-cross">✗</span> 요금 시뮬레이션 (요금제 + 할증)</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> 웹 계약서 생성 / 전자서명</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> 승인/검수 워크플로우</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> S-form 자동 기입 연동</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> 온보딩 추적 (계약→포스→첫주문)</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> 기가입/해지 매장 표시</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> 모바일 최적화 (현재 데스크톱 위주)</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> SLA 지표 시각화 (피칭 자료)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interview Pain Points -->
+  <div class="interview">
+    <div class="section-title">인터뷰 핵심 발견 — 2026.04.01 빌드업 TF팀</div>
+    <div class="pain-grid">
+      <div class="pain-card high">
+        <div class="pain-severity">🔴 심각 — 매출 직결</div>
+        <div class="pain-title">계약 → 온보딩 리드타임 과다</div>
+        <div class="pain-desc">영업 → 계약 → S-form → 회원가입 → 헥토 → 포스설치 → 테스트주문. 계약과 포스 설치가 분리되어 영업 리소스 낭비.</div>
+        <div class="pain-quote">"계약과 포스 설치가 분리되어 영업 리소스 낭비 발생"</div>
+      </div>
+      <div class="pain-card high">
+        <div class="pain-severity">🔴 심각 — 매출 직결</div>
+        <div class="pain-title">계약 후 이탈 발생</div>
+        <div class="pain-desc">라이더 수급 및 권역 이슈로 계약까지 했는데 이탈하는 건수 발생 중. 영업 노력이 날아감.</div>
+        <div class="pain-quote">"라이더 수급 및 권역 이슈로 계약 후 이탈 건수 발생 중"</div>
+      </div>
+      <div class="pain-card high">
+        <div class="pain-severity">🔴 심각 — 현장 병목</div>
+        <div class="pain-title">모바일 환경 미지원</div>
+        <div class="pain-desc">영업사원 대부분 핸드폰 사용. 현재 세일즈 웹이 데스크톱 위주라 현장에서 활용 어려움.</div>
+        <div class="pain-quote">"모바일 환경 최적화 필수 — 영업사원 대부분 핸드폰 사용"</div>
+      </div>
+      <div class="pain-card mid">
+        <div class="pain-severity">🟡 중요 — 효율성</div>
+        <div class="pain-title">포스 설치 장벽</div>
+        <div class="pain-desc">헥토 포스 최대 1시간 소요. 포스 사용률 낮아 설치를 꺼림. 연령대 높은 사장님 인증 어려움.</div>
+        <div class="pain-quote">"포스 사용률 자체가 낮아 설치 자체를 꺼리는 매장 다수"</div>
+      </div>
+      <div class="pain-card mid">
+        <div class="pain-severity">🟡 중요 — 영업 품질</div>
+        <div class="pain-title">피칭 자료 부족</div>
+        <div class="pain-desc">SLA 지표, 전날 주문수, 취소 건수, 수행률 데이터를 피칭에 활용하고 싶지만 시각화 자료가 없음.</div>
+        <div class="pain-quote">"SLA 요약 지표 등 시각화 자료 제공 필요"</div>
+      </div>
+      <div class="pain-card mid">
+        <div class="pain-severity">🟡 중요 — 운영</div>
+        <div class="pain-title">기가입/해지 매장 구분 불가</div>
+        <div class="pain-desc">이미 부릉 사용 중이거나 해지한 매장을 모르고 방문하는 일 발생. 세일즈 툴에서 표시 필요.</div>
+        <div class="pain-quote">"기가입/해지 매장 관리 기능 — 부릉 세일즈 툴 활용 희망"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leadtime Flow -->
+  <div class="leadtime">
+    <div class="section-title">리드타임 분석 — 계약부터 첫주문까지</div>
+    <div class="lt-flow">
+      <h3>AS-IS → TO-BE 프로세스</h3>
+      <div class="lt-stages">
+        <div class="lt-stage">
+          <div class="lt-stage-name">영업/상담</div>
+          <div class="lt-stage-time">현장 방문</div>
+          <div class="lt-as-is">수기 메모 + 재방문</div>
+          <div class="lt-to-be">세일즈 웹 즉시 기록</div>
+        </div>
+        <div class="lt-stage">
+          <div class="lt-stage-name">계약</div>
+          <div class="lt-stage-time">요금 확인 → 서명</div>
+          <div class="lt-as-is">수기 계약서 + 재방문</div>
+          <div class="lt-to-be">웹 시뮬레이션 → 즉시 계약</div>
+        </div>
+        <div class="lt-stage">
+          <div class="lt-stage-name">S-form 기입</div>
+          <div class="lt-stage-time">상점 정보 입력</div>
+          <div class="lt-as-is">영업 후 일괄 or 내근자 대행</div>
+          <div class="lt-to-be">계약 시 자동 생성</div>
+        </div>
+        <div class="lt-stage">
+          <div class="lt-stage-name">회원가입/헥토</div>
+          <div class="lt-stage-time">사장님 사이트 + 결제</div>
+          <div class="lt-as-is">사장님 직접 (고령자 어려움)</div>
+          <div class="lt-to-be">가이드 링크 or 대행 지원</div>
+        </div>
+        <div class="lt-stage">
+          <div class="lt-stage-name">포스 설치</div>
+          <div class="lt-stage-time">설치 + 테스트</div>
+          <div class="lt-as-is">별도 일정 (최대 1시간)</div>
+          <div class="lt-to-be">포스리스 옵션 / 간소화</div>
+        </div>
+        <div class="lt-stage">
+          <div class="lt-stage-name">첫 주문</div>
+          <div class="lt-stage-time">서비스 시작</div>
+          <div class="lt-as-is">추적 안됨</div>
+          <div class="lt-to-be">자동 추적 + 알림</div>
+        </div>
+      </div>
+      <div class="lt-total">
+        <div class="lt-total-item">
+          <div class="lt-total-label">AS-IS 총 리드타임</div>
+          <div class="lt-total-value old">34일+ (계약) + 7일 (온보딩)</div>
+        </div>
+        <div class="lt-total-arrow">→</div>
+        <div class="lt-total-item">
+          <div class="lt-total-label">TO-BE 목표</div>
+          <div class="lt-total-value new">14일 (계약) + 2일 (온보딩)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase Cards -->
+  <div class="timeline">
+    <div class="section-title">Phase별 로드맵</div>
+    <div class="phase-grid">
+
+      <!-- P0 -->
+      <div class="phase-card">
+        <div class="phase-top">
+          <div class="phase-tag">P0 — 핵심</div>
+          <div class="phase-name">현장 계약 + 리드타임 단축</div>
+          <div class="phase-period">2026 Q2 (Now)</div>
+        </div>
+        <div class="phase-goal">현장에서 시뮬레이션 → 계약 → S-form까지 원스톱. 모바일 필수.</div>
+        <div class="phase-body">
+          <div class="fg">
+            <div class="fg-label">웹계약 (신규 개발)</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">요금 시뮬레이션 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">요금제 + 할증 선택 → 예상 요금 즉시 계산</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">웹 계약서 생성 + 서명</div>
+                <div class="fi-sub">시뮬레이션 결과 기반 계약서, 상점주 모바일 서명</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">내부 승인/검수 워크플로우 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">특수 조건 계약 시 관리자 승인 단계</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">계약 상태 구분 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">이전 문서 / 완료 문서 / 진행중 구분</div>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <div class="fg-label">리드타임 단축 (신규 개발)</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">S-form 자동 생성 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">계약 완료 시 S-form 자동 기입 (수작업 제거)</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">희망 배송 권역 입력 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">계약 시 배송 희망 권역 기록 (참고용)</div>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <div class="fg-label">모바일 최적화 (필수)</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">모바일 반응형 UI <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">영업사원 핸드폰에서 시뮬레이션~계약 전 과정 가능</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phase-impact">
+          <div class="phase-impact-title">비즈니스 효과</div>
+          <div class="impact-row">
+            <div class="impact-icon time">⏱</div>
+            <div class="impact-body">
+              <div class="impact-metric">계약 소요일 60% 단축</div>
+              <div class="impact-detail">신규→계약 평균 34일 → 14일. 현장 즉시 계약 + 재방문 제거</div>
+            </div>
+            <div class="impact-number green">-20일</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon time">⏱</div>
+            <div class="impact-body">
+              <div class="impact-metric">온보딩 리드타임 70% 단축</div>
+              <div class="impact-detail">계약→첫주문 7일+ → 2일. S-form 자동화 + 프로세스 일원화</div>
+            </div>
+            <div class="impact-number green">-5일</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon revenue">💰</div>
+            <div class="impact-body">
+              <div class="impact-metric">전환율 2.4배 향상</div>
+              <div class="impact-detail">리드→계약 8.2% → 20%. 현장 즉시 계약으로 "생각해볼게요" 이탈 방지</div>
+            </div>
+            <div class="impact-number green">+11.8%p</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon revenue">💰</div>
+            <div class="impact-body">
+              <div class="impact-metric">추가 계약 +200건/월 예상</div>
+              <div class="impact-detail">현재 월 ~24건(143÷6개월) → 전환율 20% 적용 시 월 ~48건+. 신규 지역 8개 확장 포함</div>
+            </div>
+            <div class="impact-number green">×2</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon efficiency">⚡</div>
+            <div class="impact-body">
+              <div class="impact-metric">영업사원 1인당 처리량 증가</div>
+              <div class="impact-detail">재방문 제거 + S-form 수작업 제거 → 1인당 하루 방문 가능 상점 수 증가</div>
+            </div>
+            <div class="impact-number green">+30%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P1 -->
+      <div class="phase-card">
+        <div class="phase-top">
+          <div class="phase-tag">P1 — 고도화</div>
+          <div class="phase-name">영업 효율 + 온보딩 추적</div>
+          <div class="phase-period">2026 Q3</div>
+        </div>
+        <div class="phase-goal">계약 전후의 비효율을 줄이고, 계약→첫주문 과정을 추적 가능하게.</div>
+        <div class="phase-body">
+          <div class="fg">
+            <div class="fg-label">영업 효율화</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">기가입/해지 매장 표시 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">지도에서 이미 부릉 사용 중 / 해지 매장 구분 표시</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">SLA 지표 시각화 (피칭용) <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">전날 주문수, 취소 건수, 수행률 — 상점주 설득 자료</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot enhance"></div>
+              <div>
+                <div class="fi-text">방문 히스토리 강화 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">담당자 변경 시에도 이전 히스토리 확인 가능</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">용어/FAQ 가이드 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">SLA, 전투콜, 셀프뱅크 등 생소한 용어 앱 내 설명</div>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <div class="fg-label">온보딩 추적</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">온보딩 체크리스트</div>
+                <div class="fi-sub">계약 → S-form → 회원가입 → 포스설치 → 첫주문 추적</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">이탈 조기 경보</div>
+                <div class="fi-sub">계약 후 미활성 상점 자동 알림 (권역/라이더 이슈 포함)</div>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <div class="fg-label">대시보드 고도화</div>
+            <div class="fi">
+              <div class="fi-dot enhance"></div>
+              <div>
+                <div class="fi-text">개인별 대시보드 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">내 리드, 내 계약, 내 전환율 개인 뷰</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phase-impact">
+          <div class="phase-impact-title">비즈니스 효과</div>
+          <div class="impact-row">
+            <div class="impact-icon retention">💗</div>
+            <div class="impact-body">
+              <div class="impact-metric">계약 후 이탈률 50% 감소</div>
+              <div class="impact-detail">온보딩 체크리스트 + 이탈 조기 경보로 계약 후 방치 제거. 권역/라이더 이슈 사전 감지</div>
+            </div>
+            <div class="impact-number purple">-50%</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon efficiency">⚡</div>
+            <div class="impact-body">
+              <div class="impact-metric">중복 방문 제거</div>
+              <div class="impact-detail">기가입/해지 매장 지도 표시로 헛방문 방지. 영업사원 시간 회수</div>
+            </div>
+            <div class="impact-number purple">-15%</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon quality">📊</div>
+            <div class="impact-body">
+              <div class="impact-metric">피칭 성공률 향상</div>
+              <div class="impact-detail">SLA 지표 시각화 + 경쟁사 대비 자료로 상점주 설득력 강화. "숫자로 보여주기"</div>
+            </div>
+            <div class="impact-number purple">전환율↑</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon efficiency">⚡</div>
+            <div class="impact-body">
+              <div class="impact-metric">신입 온보딩 기간 단축</div>
+              <div class="impact-detail">용어 가이드 + 히스토리 공유로 신규 영업사원 적응 기간 절반. 8개 지역 확장 대비</div>
+            </div>
+            <div class="impact-number purple">-50%</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon revenue">💰</div>
+            <div class="impact-body">
+              <div class="impact-metric">상점당 매출 기여도 가시화</div>
+              <div class="impact-detail">개인별 대시보드로 "내가 계약한 상점이 실제 매출을 만들고 있는가" 확인 → 동기부여</div>
+            </div>
+            <div class="impact-number purple">측정 가능</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="phase-card">
+        <div class="phase-top">
+          <div class="phase-tag">P2 — 확장</div>
+          <div class="phase-name">데이터 기반 영업 + 자동화</div>
+          <div class="phase-period">2026 Q4~</div>
+        </div>
+        <div class="phase-goal">쌓인 데이터로 "어디를, 언제, 어떻게" 가야 하는지 시스템이 알려준다.</div>
+        <div class="phase-body">
+          <div class="fg">
+            <div class="fg-label">인사이트</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">상권 분석</div>
+                <div class="fi-sub">지역별 배달 수요, 경쟁사 커버리지, 미개척 밀집 지역</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">이탈 예측 모델</div>
+                <div class="fi-sub">계약 후 이탈 가능성 사전 식별 (권역/라이더 이슈 기반)</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">영업사원 성과 리포트</div>
+                <div class="fi-sub">계약 수 + 활성화율 + 매출 기여도 종합</div>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <div class="fg-label">자동화</div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">AI 기반 FAQ/챗봇 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">영업사원 질문 즉시 응답 (소통 창구 부재 해결)</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">리드 자동 스코어링</div>
+                <div class="fi-sub">전환 가능성 높은 상점 자동 우선순위</div>
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-dot new"></div>
+              <div>
+                <div class="fi-text">영업 루트 최적화</div>
+                <div class="fi-sub">방문 동선 자동 계획 (피크타임 고려)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="phase-impact">
+          <div class="phase-impact-title">비즈니스 효과</div>
+          <div class="impact-row">
+            <div class="impact-icon revenue">💰</div>
+            <div class="impact-body">
+              <div class="impact-metric">리드 발굴 자동화 → 영업 기회 확대</div>
+              <div class="impact-detail">미개척 상권 자동 식별 + 리드 스코어링으로 "어디를 갈지" 시스템이 결정. 영업 커버리지 확대</div>
+            </div>
+            <div class="impact-number blue">커버리지↑</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon retention">💗</div>
+            <div class="impact-body">
+              <div class="impact-metric">이탈 사전 차단 → 잔존율 개선</div>
+              <div class="impact-detail">이탈 예측 모델로 위험 상점 사전 식별. 현재 12개월 잔존율 40~50% → 60%+ 목표</div>
+            </div>
+            <div class="impact-number blue">잔존율 +10~20%p</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon efficiency">⚡</div>
+            <div class="impact-body">
+              <div class="impact-metric">영업 동선 최적화 → 1인당 방문 수 극대화</div>
+              <div class="impact-detail">피크타임 고려 루트 자동 계획. 하루 방문 가능 상점 수 현재 대비 50%+ 증가 예상</div>
+            </div>
+            <div class="impact-number blue">방문 +50%</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon quality">📊</div>
+            <div class="impact-body">
+              <div class="impact-metric">데이터 기반 의사결정 체계 완성</div>
+              <div class="impact-detail">영업사원 성과 리포트 + 매출 예측 → 경영진이 "로컬 영업 ROI"를 숫자로 판단 가능</div>
+            </div>
+            <div class="impact-number blue">ROI 측정</div>
+          </div>
+          <div class="impact-row">
+            <div class="impact-icon efficiency">⚡</div>
+            <div class="impact-body">
+              <div class="impact-metric">소통 병목 해소</div>
+              <div class="impact-detail">AI 챗봇으로 영업사원 FAQ 즉시 응답. 현재 "소통 창구 부재" 이슈 해결</div>
+            </div>
+            <div class="impact-number blue">응답 즉시</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Principles -->
+  <div class="principles">
+    <div class="section-title">핵심 원칙</div>
+    <div class="pr-grid">
+      <div class="pr-card">
+        <div class="pr-num">1</div>
+        <div class="pr-title">모바일 퍼스트</div>
+        <div class="pr-desc">영업사원은 핸드폰으로 일한다. 데스크톱은 관리자용. 모든 P0 기능은 모바일에서 완결.</div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">2</div>
+        <div class="pr-title">원스톱 계약 → 온보딩</div>
+        <div class="pr-desc">계약-S-form-회원가입이 따로 놀면 리드타임이 늘어난다. 한 번에 흘러가게 설계.</div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-num">3</div>
+        <div class="pr-title">계약 후 이탈 방지</div>
+        <div class="pr-desc">계약이 목표가 아니라 첫주문이 목표. 계약 후 이탈을 추적하고 막는 것까지가 영업.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    G4 세일즈 툴 로드맵 v2 · 2026-04-02 · 인터뷰 기반 재설계 · 프로덕트실 PO팀
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G4 계약 관리 워크플로</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f8fafc;--surface:#fff;--border:#e5e7eb;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --blue:#2563eb;--blue-l:#eff6ff;--green:#059669;--green-l:#ecfdf5;
+  --amber:#d97706;--amber-l:#fffbeb;--red:#dc2626;--red-l:#fef2f2;
+  --purple:#7c3aed;--purple-l:#f5f3ff;--cyan:#0891b2;--cyan-l:#ecfeff;
+  --vroong:#00c73c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+.container{max-width:1300px;margin:0 auto;padding:40px 24px}
+
+.header{margin-bottom:32px}
+.header h1{font-size:28px;font-weight:800;margin-bottom:4px}
+.header p{font-size:14px;color:var(--text2)}
+
+.tabs{display:flex;gap:4px;margin-bottom:32px;border-bottom:2px solid var(--border);padding-bottom:0}
+.tab{padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--text3);transition:all .15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+
+.flow-panel{display:none}
+.flow-panel.active{display:block}
+
+/* Swimlane */
+.swimlane{position:relative;overflow-x:auto}
+.swim-grid{display:grid;gap:0;min-width:1000px}
+.swim-lane{display:grid;grid-template-columns:140px 1fr;min-height:100px;border-bottom:1px solid var(--border)}
+.swim-lane:last-child{border-bottom:none}
+.swim-label{padding:16px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;border-right:1px solid var(--border);position:sticky;left:0;background:var(--surface);z-index:2}
+.swim-label .actor-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.swim-content{padding:16px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+
+/* Nodes */
+.node{padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;position:relative;white-space:nowrap;border:2px solid;transition:transform .15s}
+.node:hover{transform:translateY(-2px)}
+.node-action{background:var(--blue-l);border-color:#bfdbfe;color:#1e40af}
+.node-approve{background:var(--amber-l);border-color:#fde68a;color:#92400e}
+.node-auto{background:var(--green-l);border-color:#a7f3d0;color:#065f46}
+.node-user{background:var(--purple-l);border-color:#c4b5fd;color:#5b21b6}
+.node-alert{background:var(--red-l);border-color:#fca5a5;color:#991b1b}
+.node-end{background:#f0fdf4;border-color:var(--green);color:var(--green);border-style:dashed}
+.node-start{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.arrow{display:flex;align-items:center;color:var(--text3);font-size:16px;flex-shrink:0}
+.arrow-label{font-size:10px;color:var(--text3);margin-top:-4px;text-align:center}
+.arrow-down{display:flex;flex-direction:column;align-items:center;color:var(--text3)}
+
+/* Legend */
+.legend{display:flex;gap:20px;flex-wrap:wrap;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:24px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+
+/* Description Box */
+.desc-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:24px}
+.desc-box h3{font-size:15px;font-weight:700;margin-bottom:12px}
+.desc-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.desc-item{display:flex;gap:8px;font-size:13px;color:var(--text2)}
+.desc-item strong{color:var(--text);font-weight:600;white-space:nowrap}
+
+/* Flow Connector Lines */
+.flow-row{display:flex;align-items:center;gap:8px;padding:8px 0}
+.flow-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px}
+.flow-section h3{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.flow-section h3 .badge{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:700}
+.badge-happy{background:var(--green-l);color:var(--green)}
+.badge-reject{background:var(--amber-l);color:var(--amber)}
+.badge-churn{background:var(--red-l);color:var(--red)}
+
+.step-connector{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.step-node{display:flex;flex-direction:column;align-items:center;gap:4px}
+.step-actor{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px}
+.actor-sales{background:#dbeafe;color:#1e40af}
+.actor-manager{background:#fef3c7;color:#92400e}
+.actor-system{background:#dcfce7;color:#065f46}
+.actor-owner{background:#ede9fe;color:#5b21b6}
+.step-box{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;border:2px solid;text-align:center;min-width:100px}
+.step-arrow{color:var(--text3);font-size:18px;padding:0 4px;margin-top:14px}
+.step-note{font-size:10px;color:var(--text3);max-width:100px;text-align:center;margin-top:2px}
+
+/* Responsive */
+@media(max-width:900px){.desc-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>G4 계약 관리 워크플로</h1>
+    <p>리드 → 시뮬레이션 → 계약 → 승인 → S-form → 온보딩 → 첫주문 전체 사이클</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>영업사원 (현장)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>영업 관리자 (승인)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>시스템 (자동)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>상점주</div>
+    <div class="legend-item" style="margin-left:auto;font-size:11px;color:var(--text3)">실선 = 수동 | 점선 = 자동</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showFlow('happy')">정상 플로우 (Happy Path)</div>
+    <div class="tab" onclick="showFlow('reject')">승인 반려 플로우</div>
+    <div class="tab" onclick="showFlow('churn')">계약 후 이탈 대응</div>
+    <div class="tab" onclick="showFlow('summary')">전체 요약</div>
+  </div>
+
+  <!-- Happy Path -->
+  <div class="flow-panel active" id="flow-happy">
+    <div class="flow-section">
+      <h3><span class="badge badge-happy">HAPPY PATH</span> 리드 → 시뮬레이션 → 계약 → 온보딩 → 첫주문</h3>
+      <div class="step-connector">
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-start">리드 선택</div>
+          <div class="step-note">지도/목록에서 상점 선택</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-action">요금 시뮬레이션</div>
+          <div class="step-note">요금제 + 할증 선택</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-action">상점주에게 시연</div>
+          <div class="step-note">예상 요금 보여주기</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-action">계약서 생성</div>
+          <div class="step-note">시뮬레이션 결과 자동 반영</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-approve">승인 요청</div>
+          <div class="step-note">관리자에게 전송</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-manager">관리자</div>
+          <div class="step-box node-approve">승인 처리</div>
+          <div class="step-note">조건 검토 후 승인</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">S-form 자동생성</div>
+          <div class="step-note">계약 정보 자동 기입</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">상점주 안내 발송</div>
+          <div class="step-note">회원가입 + 헥토 가이드</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-owner">상점주</div>
+          <div class="step-box node-user">회원가입 + 헥토</div>
+          <div class="step-note">사장님사이트 가입</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">포스 설치 안내</div>
+          <div class="step-note">설치 일정 자동 배정</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-end">첫 주문 확인</div>
+          <div class="step-note">온보딩 완료!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc-box">
+      <h3>단계별 상세</h3>
+      <div class="desc-list">
+        <div class="desc-item"><strong>리드 선택</strong> 세일즈 웹 지도/리드 목록에서 방문할 상점 선택. 관심도, 방문 이력 확인</div>
+        <div class="desc-item"><strong>요금 시뮬레이션</strong> 요금제(기본 4,300원 / 할인 3,800원), 할증 코드 체크박스, 희망 배송 권역 입력</div>
+        <div class="desc-item"><strong>상점주 시연</strong> 계산된 예상 요금을 상점주에게 보여주며 피칭. SLA 지표 등 활용</div>
+        <div class="desc-item"><strong>계약서 생성</strong> 시뮬레이션 결과 + 상점 정보가 자동 반영된 계약서. 상점주 서명</div>
+        <div class="desc-item"><strong>승인 요청</strong> 특수 조건(할인율 초과, 권역 예외 등) 시 관리자 승인 필요</div>
+        <div class="desc-item"><strong>승인 처리</strong> 관리자가 계약 조건 검토 후 승인/반려. 모바일 알림</div>
+        <div class="desc-item"><strong>S-form 자동생성</strong> 승인 즉시 S-form 자동 기입. 기존 수작업(영업 종료 후 일괄/내근자 대행) 제거</div>
+        <div class="desc-item"><strong>상점주 안내</strong> 사장님사이트 회원가입 + 헥토 가입 안내 자동 발송 (SMS/카톡)</div>
+        <div class="desc-item"><strong>회원가입+헥토</strong> 상점주가 직접 진행. 고령자 대상 간소화 가이드 제공</div>
+        <div class="desc-item"><strong>포스 설치</strong> 설치 일정 자동 배정. 포스리스 옵션 향후 검토</div>
+        <div class="desc-item"><strong>첫 주문 확인</strong> 시스템이 첫 주문 발생 자동 감지. 온보딩 완료 처리</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Flow -->
+  <div class="flow-panel" id="flow-reject">
+    <div class="flow-section">
+      <h3><span class="badge badge-reject">REJECT FLOW</span> 승인 반려 시 재요청 프로세스</h3>
+      <div class="step-connector">
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-action">계약서 생성</div>
+          <div class="step-note">시뮬레이션 완료 후</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-approve">승인 요청</div>
+          <div class="step-note">관리자에게 전송</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-manager">관리자</div>
+          <div class="step-box node-alert">반려</div>
+          <div class="step-note">사유: 할인율 초과 등</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">반려 알림</div>
+          <div class="step-note">영업사원에게 푸시</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-action">계약 조건 수정</div>
+          <div class="step-note">반려 사유 확인 → 수정</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-approve">재승인 요청</div>
+          <div class="step-note">수정 내역 포함</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-manager">관리자</div>
+          <div class="step-box node-approve">재검토</div>
+          <div class="step-note">수정 사항 확인</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-manager">관리자</div>
+          <div class="step-box node-end">승인 완료</div>
+          <div class="step-note">→ S-form 자동생성</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc-box">
+      <h3>반려 사유 유형</h3>
+      <div class="desc-list">
+        <div class="desc-item"><strong>할인율 초과</strong> 정책 기준보다 높은 할인 적용 시. 관리자가 허용 범위 코멘트</div>
+        <div class="desc-item"><strong>권역 불일치</strong> 배송 권역 커버 불가 지역 상점. 운영팀 확인 필요</div>
+        <div class="desc-item"><strong>정보 누락</strong> 상점 필수 정보(사업자번호, 연락처 등) 미기입</div>
+        <div class="desc-item"><strong>중복 계약</strong> 이미 기가입 상점에 대한 계약 시도. 기가입 상태 표시 필요(P1)</div>
+      </div>
+    </div>
+
+    <div class="desc-box" style="margin-top:16px">
+      <h3>설계 포인트</h3>
+      <div class="desc-list">
+        <div class="desc-item"><strong>반려 코멘트 필수</strong> 관리자가 반려 시 사유를 반드시 입력. 영업사원이 수정 방향을 즉시 파악</div>
+        <div class="desc-item"><strong>수정 이력 보존</strong> 원본 → 수정본 비교 가능. 몇 차 수정인지 추적</div>
+        <div class="desc-item"><strong>반려 횟수 제한</strong> 3회 반려 시 자동 에스컬레이션 (팀장 검토)</div>
+        <div class="desc-item"><strong>알림 채널</strong> 반려/승인 결과를 푸시 알림 + 세일즈 웹 내 알림으로 동시 전달</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Churn Flow -->
+  <div class="flow-panel" id="flow-churn">
+    <div class="flow-section">
+      <h3><span class="badge badge-churn">CHURN FLOW</span> 계약 후 온보딩 이탈 대응</h3>
+      <div class="step-connector">
+        <div class="step-node">
+          <div class="step-actor actor-manager">관리자</div>
+          <div class="step-box node-end" style="border-color:var(--green)">계약 완료</div>
+          <div class="step-note">승인 + S-form 완료</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">온보딩 추적 시작</div>
+          <div class="step-note">D+0 체크리스트 생성</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-alert">D+3 미진행 감지</div>
+          <div class="step-note">회원가입 미완료</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">상점주 리마인드</div>
+          <div class="step-note">SMS/카톡 자동 발송</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-alert">D+7 여전히 미진행</div>
+          <div class="step-note">이탈 위험 플래그</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">영업사원 알림</div>
+          <div class="step-note">재방문 요청 푸시</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-sales">영업사원</div>
+          <div class="step-box node-action">재방문/전화</div>
+          <div class="step-note">이슈 확인 + 도움</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-end">온보딩 재개</div>
+          <div class="step-note">→ 첫주문까지 추적</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc-box">
+      <h3>이탈 위험 트리거 (인터뷰 기반)</h3>
+      <div class="desc-list">
+        <div class="desc-item"><strong>라이더 수급 이슈</strong> 해당 권역 라이더 부족 → 배송 불가 → 계약 무의미. 계약 전 권역 가능 여부 사전 체크로 일부 방지</div>
+        <div class="desc-item"><strong>포스 설치 거부</strong> 포스 사용률 낮은 매장이 설치를 꺼림. 포스리스 옵션 필요 (정책 논의)</div>
+        <div class="desc-item"><strong>사장님 인증 어려움</strong> 고령 상점주 헥토 인증 과정 포기. 대행 지원 또는 간소화 필요</div>
+        <div class="desc-item"><strong>회원가입 미완료</strong> 안내 메시지를 못 보거나 무시. D+3 시점 리마인드 → D+7 영업사원 재방문</div>
+      </div>
+    </div>
+
+    <div class="desc-box" style="margin-top:16px">
+      <h3>조기 경보 단계</h3>
+      <div class="desc-list">
+        <div class="desc-item"><strong>D+3 (Yellow)</strong> 회원가입/헥토 미완료 시 상점주에게 자동 리마인드 발송</div>
+        <div class="desc-item"><strong>D+7 (Orange)</strong> 여전히 미진행 시 영업사원에게 알림 + 재방문 권고</div>
+        <div class="desc-item"><strong>D+14 (Red)</strong> 온보딩 미완료 시 관리자 에스컬레이션. 이탈 사유 기록</div>
+        <div class="desc-item"><strong>D+30 (Black)</strong> 온보딩 포기 처리. 이탈 사유 분석 데이터로 활용</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="flow-panel" id="flow-summary">
+    <div class="flow-section">
+      <h3>전체 워크플로 요약</h3>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="border-bottom:2px solid var(--border)">
+              <th style="text-align:left;padding:10px;color:var(--text2);font-weight:600">단계</th>
+              <th style="text-align:left;padding:10px;color:var(--text2);font-weight:600">주체</th>
+              <th style="text-align:left;padding:10px;color:var(--text2);font-weight:600">AS-IS</th>
+              <th style="text-align:left;padding:10px;color:var(--text2);font-weight:600">TO-BE</th>
+              <th style="text-align:center;padding:10px;color:var(--text2);font-weight:600">시간 절감</th>
+              <th style="text-align:center;padding:10px;color:var(--text2);font-weight:600">Phase</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">리드 선택</td>
+              <td style="padding:10px"><span class="step-actor actor-sales" style="font-size:11px">영업사원</span></td>
+              <td style="padding:10px;color:var(--text2)">감으로 방문</td>
+              <td style="padding:10px">지도 + 관심도 필터 (구현 완료)</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">LIVE</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--green-l);color:var(--green);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">완료</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">요금 시뮬레이션</td>
+              <td style="padding:10px"><span class="step-actor actor-sales" style="font-size:11px">영업사원</span></td>
+              <td style="padding:10px;color:var(--text2)">엑셀/기억에 의존</td>
+              <td style="padding:10px">요금제 + 할증 즉시 계산</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-10분</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">계약서 생성</td>
+              <td style="padding:10px"><span class="step-actor actor-sales" style="font-size:11px">영업사원</span></td>
+              <td style="padding:10px;color:var(--text2)">수기 계약서 + 재방문</td>
+              <td style="padding:10px">현장 즉시 생성 + 서명</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-2~3일</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">승인</td>
+              <td style="padding:10px"><span class="step-actor actor-manager" style="font-size:11px">관리자</span></td>
+              <td style="padding:10px;color:var(--text2)">전화/카톡 구두 승인</td>
+              <td style="padding:10px">시스템 내 승인 + 알림</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-수시간</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">S-form 기입</td>
+              <td style="padding:10px"><span class="step-actor actor-system" style="font-size:11px">시스템</span></td>
+              <td style="padding:10px;color:var(--text2)">영업 후 일괄/내근자 대행</td>
+              <td style="padding:10px">승인 즉시 자동 생성</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-1~2일</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">회원가입/헥토</td>
+              <td style="padding:10px"><span class="step-actor actor-owner" style="font-size:11px">상점주</span></td>
+              <td style="padding:10px;color:var(--text2)">안내 없이 사장님 직접</td>
+              <td style="padding:10px">가이드 링크 자동 발송</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-1~2일</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid #f0f0f0">
+              <td style="padding:10px;font-weight:600">포스 설치</td>
+              <td style="padding:10px"><span class="step-actor actor-system" style="font-size:11px">시스템</span></td>
+              <td style="padding:10px;color:var(--text2)">별도 일정 (최대 1시간)</td>
+              <td style="padding:10px">설치 일정 자동 배정</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-1~2일</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--purple-l);color:var(--purple);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P1</span></td>
+            </tr>
+            <tr>
+              <td style="padding:10px;font-weight:600">온보딩 추적</td>
+              <td style="padding:10px"><span class="step-actor actor-system" style="font-size:11px">시스템</span></td>
+              <td style="padding:10px;color:var(--text2)">추적 안됨</td>
+              <td style="padding:10px">자동 추적 + 이탈 경보</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">이탈 -50%</td>
+              <td style="padding:10px;text-align:center"><span style="background:var(--purple-l);color:var(--purple);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P1</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showFlow(id){
+  document.querySelectorAll('.flow-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('flow-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
