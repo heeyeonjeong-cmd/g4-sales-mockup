@@ -745,24 +745,28 @@ select.form-input{appearance:auto}
     <!-- 6b. 계약내역 목록 -->
     <div class="page" id="page-contract-history">
       <div class="page-title">계약내역 목록</div>
-      <div class="page-subtitle">계약 체결·승인·변경·갱신·해지 등 이력을 시간순으로 조회합니다</div>
+      <div class="page-subtitle">계약코드 기준으로 주체·상태·구분·기간·담당자를 조회합니다</div>
 
       <div class="filter-bar">
-        <input class="form-input" placeholder="계약번호, 상점명으로 검색..." style="width:240px">
-        <select class="form-input" style="width:150px">
-          <option>전체 구분</option>
-          <option>체결·승인</option>
-          <option>조건 변경</option>
+        <input class="form-input" placeholder="계약코드, 상점명 검색..." style="width:240px">
+        <select class="form-input" style="width:140px">
+          <option>전체 계약상태</option>
+          <option>초안</option>
+          <option>개시</option>
           <option>갱신</option>
-          <option>해지·만료</option>
-          <option>반려</option>
+          <option>만료</option>
+        </select>
+        <select class="form-input" style="width:160px">
+          <option>전체 계약구분</option>
+          <option>본계약</option>
+          <option>부속합의서</option>
+          <option>변경합의서</option>
         </select>
         <select class="form-input" style="width:130px">
           <option>전체 기간</option>
-          <option>오늘</option>
-          <option>이번 주</option>
           <option>이번 달</option>
           <option>지난 3개월</option>
+          <option>올해</option>
         </select>
         <button class="btn btn-outline btn-sm" style="margin-left:auto">엑셀 다운로드</button>
       </div>
@@ -771,73 +775,89 @@ select.form-input{appearance:auto}
         <table class="tbl">
           <thead>
             <tr>
-              <th>일시</th><th>구분</th><th>계약번호</th><th>상점명</th><th>내용</th><th>처리자</th>
+              <th>계약코드</th><th>상점명</th><th>계약주체</th><th>계약상태</th><th>계약구분</th><th>계약기간</th><th>생성일</th><th>계약 담당자</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.04.01 11:16</td>
-              <td><span class="badge badge-green">체결 완료</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0401-001</td>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260401-001</td>
               <td style="font-weight:600">맛있는 치킨 강남점</td>
-              <td>승인 완료 · S-form 자동 생성 · 온보딩 시작</td>
-              <td>시스템</td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.04.01 10:42</td>
-              <td><span class="badge badge-blue">승인</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0401-001</td>
-              <td style="font-weight:600">맛있는 치킨 강남점</td>
-              <td>관리자 승인 (할인 3,800원 · 12개월)</td>
-              <td>김관리</td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.04.01 09:05</td>
-              <td><span class="badge badge-amber">승인 요청</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0401-002</td>
-              <td style="font-weight:600">행복 분식 서초점</td>
-              <td>특별 요금 제출 · 팀장 검토 대기</td>
-              <td>박철수</td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.03.31 16:20</td>
-              <td><span class="badge badge-purple">조건 변경</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0331-012</td>
-              <td style="font-weight:600">착한 족발 대치점</td>
-              <td>월 예상 주문 수정 반영 (시뮬 재산출)</td>
+              <td>로컬</td>
+              <td><span class="badge badge-green">개시</span></td>
+              <td>본계약</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.04.01 ~ 2027.03.31</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.03.28</td>
               <td>정혜연</td>
             </tr>
             <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.03.31 14:00</td>
-              <td><span class="badge badge-green">체결 완료</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0331-012</td>
-              <td style="font-weight:600">착한 족발 대치점</td>
-              <td>첫 주문 발생 · 온보딩 완료 처리</td>
-              <td>시스템</td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.03.30 15:33</td>
-              <td><span class="badge badge-red">반려</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0330-008</td>
-              <td style="font-weight:600">동네 중국집 방배점</td>
-              <td>할인율 근거 미첨부 · 재제출 요청</td>
-              <td>이승인</td>
-            </tr>
-            <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.03.28 11:00</td>
-              <td><span class="badge badge-gray">이탈</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2026-0328-003</td>
-              <td style="font-weight:600">화이트 카페 논현점</td>
-              <td>상점주 계약 철회 의사 통보</td>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260401-002</td>
+              <td style="font-weight:600">행복 분식 서초점</td>
+              <td>로컬</td>
+              <td><span class="badge badge-amber">초안</span></td>
+              <td>본계약</td>
+              <td style="white-space:nowrap;color:var(--text3)">—</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.04.01</td>
               <td>박철수</td>
             </tr>
             <tr>
-              <td style="white-space:nowrap;color:var(--text2)">2026.03.15 10:00</td>
-              <td><span class="badge badge-purple">갱신</span></td>
-              <td style="font-weight:600;color:var(--blue)">G4-2025-0315-044</td>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260401-002-A</td>
+              <td style="font-weight:600">행복 분식 서초점</td>
+              <td>로컬</td>
+              <td><span class="badge badge-amber">초안</span></td>
+              <td>변경합의서</td>
+              <td style="white-space:nowrap;color:var(--text2)">본계약 G4-C-20260401-002 부속</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.04.01</td>
+              <td>박철수</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260331-012</td>
+              <td style="font-weight:600">착한 족발 대치점</td>
+              <td>로컬</td>
+              <td><span class="badge badge-green">개시</span></td>
+              <td>본계약</td>
+              <td style="white-space:nowrap;color:var(--text2)">2025.04.01 ~ 2026.03.31</td>
+              <td style="white-space:nowrap;color:var(--text2)">2025.03.25</td>
+              <td>정혜연</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260331-012-S1</td>
+              <td style="font-weight:600">착한 족발 대치점</td>
+              <td>로컬</td>
+              <td><span class="badge badge-green">개시</span></td>
+              <td>부속합의서</td>
+              <td style="white-space:nowrap;color:var(--text2)">본계약 기간 준용</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.03.31</td>
+              <td>정혜연</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260315-R01</td>
               <td style="font-weight:600">한입 떡볶이 신논현점</td>
-              <td>1년 약정 자동 갱신 · 동일 조건 유지</td>
-              <td>시스템</td>
+              <td>로컬</td>
+              <td><span class="badge badge-purple">갱신</span></td>
+              <td>본계약</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.03.15 ~ 2027.03.14</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.03.15</td>
+              <td>이민준</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20260330-008-C1</td>
+              <td style="font-weight:600">동네 중국집 방배점</td>
+              <td>로컬</td>
+              <td><span class="badge badge-amber">초안</span></td>
+              <td>변경합의서</td>
+              <td style="white-space:nowrap;color:var(--text2)">2024.06.01 ~ 2026.05.31 (요금 조항 개정)</td>
+              <td style="white-space:nowrap;color:var(--text2)">2026.03.30</td>
+              <td>이민준</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;color:var(--blue);white-space:nowrap">G4-C-20230301-088</td>
+              <td style="font-weight:600">옛날국밥 신사점</td>
+              <td>로컬</td>
+              <td><span class="badge badge-gray">만료</span></td>
+              <td>본계약</td>
+              <td style="white-space:nowrap;color:var(--text2)">2023.04.01 ~ 2025.03.31</td>
+              <td style="white-space:nowrap;color:var(--text2)">2023.03.18</td>
+              <td>박철수</td>
             </tr>
           </tbody>
         </table>
