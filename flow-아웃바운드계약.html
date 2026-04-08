@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G4 아웃바운드 계약 플로우</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--bg2:#f8fafc;--surface:#fff;--border:#e5e7eb;--border2:#d1d5db;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --vroong:#00c73c;--vroong-d:#00a832;--vroong-l:#ecfdf5;
+  --blue:#2563eb;--blue-l:#eff6ff;--blue-d:#1d4ed8;
+  --amber:#d97706;--amber-l:#fffbeb;
+  --red:#dc2626;--red-l:#fef2f2;
+  --green:#059669;--green-l:#ecfdf5;
+  --purple:#7c3aed;--purple-l:#f5f3ff;
+  --cyan:#0891b2;--cyan-l:#ecfeff;
+  --pink:#db2777;--pink-l:#fdf2f8;
+  --indigo:#4f46e5;--indigo-l:#eef2ff;
+  --orange:#ea580c;--orange-l:#fff7ed;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 24px 60px}
+
+.header{margin-bottom:32px}
+.header-badge{display:inline-block;font-size:11px;font-weight:700;color:var(--purple);background:var(--purple-l);padding:4px 12px;border-radius:100px;margin-bottom:8px;letter-spacing:.5px}
+.header h1{font-size:26px;font-weight:900;line-height:1.3}
+.header h1 span{color:var(--purple)}
+.header-meta{font-size:12px;color:var(--text3);margin-top:4px}
+.header-summary{font-size:13px;color:var(--text2);margin-top:12px;line-height:1.7;max-width:800px}
+
+.tabs{display:flex;gap:4px;margin-bottom:28px;border-bottom:2px solid var(--border);flex-wrap:wrap}
+.tab{padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-2px;color:var(--text3);transition:all .15s;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+.panel{display:none}
+.panel.active{display:block}
+
+.section{margin-bottom:32px}
+.section-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px}
+.section-title{font-size:20px;font-weight:800;margin-bottom:16px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.card-sm{padding:14px}
+
+/* Swimlane */
+.swim-container{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+.swim-grid{display:grid;min-width:1200px}
+.swim-lane{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid #f0f0f0}
+.swim-lane:last-child{border-bottom:none}
+.swim-label{padding:14px 12px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;border-right:1px solid var(--border);background:#fafbfc;position:sticky;left:0;z-index:2}
+.swim-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.swim-content{padding:14px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:80px}
+
+.node{padding:8px 14px;border-radius:10px;font-size:11px;font-weight:600;border:2px solid;white-space:nowrap;cursor:default;transition:transform .1s;position:relative}
+.node:hover{transform:translateY(-2px);z-index:5}
+.n-action{background:var(--blue-l);border-color:#bfdbfe;color:#1e40af}
+.n-auto{background:var(--green-l);border-color:#a7f3d0;color:#065f46}
+.n-check{background:var(--amber-l);border-color:#fde68a;color:#92400e}
+.n-user{background:var(--purple-l);border-color:#c4b5fd;color:#5b21b6}
+.n-alert{background:var(--red-l);border-color:#fca5a5;color:#991b1b}
+.n-end{background:#f0fdf4;border-color:var(--green);color:var(--green);border-style:dashed}
+.n-start{background:var(--purple);border-color:var(--purple);color:#fff}
+.n-anchor{background:var(--orange-l);border-color:#fb923c;color:var(--orange)}
+.n-screen{background:#faf5ff;border-color:#d8b4fe;color:#6b21a8}
+.n-gray{background:#f3f4f6;border-color:#d1d5db;color:var(--text2)}
+
+.node .tooltip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;font-weight:400;white-space:normal;width:240px;line-height:1.5;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.node .tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e293b}
+.node:hover .tooltip{display:block}
+
+.arr{color:var(--text3);font-size:14px;flex-shrink:0;font-weight:700}
+
+.legend{display:flex;gap:14px;flex-wrap:wrap;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;font-size:11px;color:var(--text2)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:10px;height:10px;border-radius:50%;border:2px solid}
+
+.phase-row{display:flex;gap:0;margin-bottom:20px;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.phase-item{flex:1;padding:10px 14px;text-align:center;cursor:default}
+.phase-item:not(:last-child){border-right:1px solid var(--border)}
+.phase-item .num{font-size:15px;font-weight:900}
+.phase-item .label{font-size:9px;font-weight:600;color:var(--text2)}
+.phase-item.p-a{color:#fff}
+.phase-item.p-a .label{color:rgba(255,255,255,.8)}
+
+/* Screen indicator */
+.screen-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700;background:#faf5ff;color:#7c3aed;border:1px solid #d8b4fe;position:absolute;top:-10px;right:-6px;white-space:nowrap}
+
+/* Vertical Flow */
+.v-flow{display:flex;flex-direction:column;gap:0}
+.v-step{display:flex;gap:16px;align-items:flex-start}
+.v-step .v-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:40px}
+.v-step .v-dot{width:12px;height:12px;border-radius:50%;border:3px solid;flex-shrink:0}
+.v-step .v-bar{width:2px;flex:1;min-height:16px;background:var(--border)}
+.v-step:last-child .v-bar{display:none}
+.v-step .v-body{padding:0 0 20px;flex:1}
+.v-step .v-title{font-size:13px;font-weight:700;margin-bottom:2px}
+.v-step .v-actor{font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;display:inline-block;margin-bottom:4px}
+.v-step .v-screen{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-bottom:4px;margin-left:6px;background:#faf5ff;color:#7c3aed;border:1px solid #d8b4fe}
+.v-step .v-desc{font-size:12px;color:var(--text2);line-height:1.6}
+.v-step .v-system{font-size:11px;color:var(--green);margin-top:4px;font-weight:600}
+.v-step .v-time{font-size:10px;color:var(--text3);font-weight:600}
+
+.cmp-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.cmp-tbl th{text-align:left;padding:10px 12px;font-weight:700;font-size:11px;color:var(--text2);border-bottom:2px solid var(--border)}
+.cmp-tbl td{padding:10px 12px;border-bottom:1px solid #f0f0f0;line-height:1.5}
+.cmp-tbl tr:hover td{background:#fafbfc}
+
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700}
+.b-green{background:var(--green-l);color:var(--green)}
+.b-blue{background:var(--blue-l);color:var(--blue)}
+.b-amber{background:var(--amber-l);color:var(--amber)}
+.b-red{background:var(--red-l);color:var(--red)}
+.b-purple{background:var(--purple-l);color:var(--purple)}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+@media(max-width:768px){
+  .g2{grid-template-columns:1fr}
+  .swim-container{margin:0 -24px;border-radius:0;border-left:0;border-right:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="header-badge">G4 Outbound Sales Flow</div>
+    <h1>영업사원 <span>직접 계약</span> 플로우</h1>
+    <div class="header-meta">세일즈 웹 목업 기준 | G4 세일즈 웹 계약 프로젝트 | 2026.04</div>
+    <div class="header-summary">
+      영업사원이 현장에서 리드를 발굴하고, <strong>세일즈 웹(sales.vroong.com)</strong>을 통해 시뮬레이션 → 계약 → 승인 → 온보딩까지 진행하는 전체 플로우입니다.<br>
+      각 단계가 <strong>목업의 어떤 화면</strong>에 해당하는지 표시했습니다.
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab(0)">전체 플로우 (Swimlane)</div>
+    <div class="tab" onclick="showTab(1)">단계별 상세 + 목업 매핑</div>
+    <div class="tab" onclick="showTab(2)">아웃바운드 vs 셀프 비교</div>
+  </div>
+
+  <!-- ==================== TAB 0: Swimlane ==================== -->
+  <div class="panel active" id="panel-0">
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple-l);border-color:#c4b5fd"></div>영업사원 액션</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--blue-l);border-color:#bfdbfe"></div>상점주 액션</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green-l);border-color:#a7f3d0"></div>시스템 자동</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber-l);border-color:#fde68a"></div>관리자 승인</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#faf5ff;border-color:#d8b4fe"></div>목업 화면</div>
+    </div>
+
+    <div class="phase-row">
+      <div class="phase-item p-a" style="background:var(--purple)"><div class="num">1</div><div class="label">리드 발굴 & 방문</div></div>
+      <div class="phase-item p-a" style="background:var(--blue)"><div class="num">2</div><div class="label">피칭 & 시뮬레이션</div></div>
+      <div class="phase-item p-a" style="background:var(--indigo)"><div class="num">3</div><div class="label">현장 계약</div></div>
+      <div class="phase-item p-a" style="background:var(--amber)"><div class="num">4</div><div class="label">승인 & 셋업</div></div>
+      <div class="phase-item p-a" style="background:var(--vroong)"><div class="num">5</div><div class="label">온보딩 & 활성화</div></div>
+    </div>
+
+    <div class="swim-container">
+      <div class="swim-grid">
+
+        <!-- Lane: 영업사원 -->
+        <div class="swim-lane">
+          <div class="swim-label"><div class="dot" style="background:var(--purple)"></div>영업사원</div>
+          <div class="swim-content">
+            <div class="node n-start">현장 방문<span class="tooltip">영업사원이 타겟 상점에 직접 방문. 동선은 지도 뷰에서 계획</span></div>
+            <div class="arr">→</div>
+            <div class="node n-user" style="position:relative">리드 등록/선택<span class="screen-tag">리드 상세</span><span class="tooltip">세일즈 웹에서 상점 정보 등록. 사업자번호 입력 시 기가입/해지 여부 자동 확인</span></div>
+            <div class="arr">→</div>
+            <div class="node n-user" style="position:relative">요금 시뮬레이션<span class="screen-tag">시뮬레이션</span><span class="tooltip">상점주에게 핸드폰 화면을 보여주며 요금 계산. 경쟁사 대비 절감액 시각화</span></div>
+            <div class="arr">→</div>
+            <div class="node n-user" style="position:relative">계약서 생성<span class="screen-tag">계약서 생성</span><span class="tooltip">시뮬레이션 결과 자동 반영. 요금제/권역/기간 설정 후 계약서 생성</span></div>
+            <div class="arr">→</div>
+            <div class="node n-user" style="position:relative">승인 요청<span class="screen-tag">승인 관리</span><span class="tooltip">할인 요금 적용 시 관리자 승인 요청. 기본 요금이면 자동 승인</span></div>
+            <div class="arr">→</div>
+            <div class="node n-user" style="position:relative">포스 설치 방문<span class="screen-tag">온보딩 추적</span><span class="tooltip">승인 완료 후 포스 설치 일정 조율 → 재방문하여 포스 설치/연동</span></div>
+            <div class="arr">→</div>
+            <div class="node n-end" style="position:relative">온보딩 완료<span class="screen-tag">온보딩 추적</span><span class="tooltip">테스트 주문 성공 → 활성화 마킹. 이후 30일 모니터링</span></div>
+          </div>
+        </div>
+
+        <!-- Lane: 상점주 -->
+        <div class="swim-lane">
+          <div class="swim-label"><div class="dot" style="background:var(--blue)"></div>상점주</div>
+          <div class="swim-content">
+            <div class="node n-action">영업사원 응대<span class="tooltip">영업사원 방문 시 서비스 소개 청취</span></div>
+            <div class="arr">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-action">요금 확인<span class="tooltip">영업사원이 보여주는 시뮬레이션 화면에서 절감 효과 확인</span></div>
+            <div class="arr">→</div>
+            <div class="node n-action">터치 서명<span class="tooltip">영업사원 핸드폰/태블릿에서 계약서 확인 후 화면 터치 서명</span></div>
+            <div class="arr">→</div>
+            <div class="node n-gray" style="opacity:.4">대기<span class="tooltip">승인 대기 중. 카카오톡으로 진행 상태 알림 수신</span></div>
+            <div class="arr">→</div>
+            <div class="node n-action">사장님사이트 가입<span class="tooltip">계약 완료 후 SMS로 받은 링크로 사장님사이트 회원가입</span></div>
+            <div class="arr">→</div>
+            <div class="node n-action">테스트 주문<span class="tooltip">포스 설치 후 영업사원과 함께 테스트 주문 진행</span></div>
+          </div>
+        </div>
+
+        <!-- Lane: 시스템 -->
+        <div class="swim-lane">
+          <div class="swim-label"><div class="dot" style="background:var(--green)"></div>시스템<br>(자동)</div>
+          <div class="swim-content">
+            <div class="node n-auto">기가입/해지 체크<span class="tooltip">사업자번호 입력 시 부릉 기가입/해지 이력 자동 조회</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">배달 가능 확인<span class="tooltip">주소 → 권역 매핑 → 라이더 수급 체크. 불가 시 화면에 경고 표시</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">절감액 계산<span class="tooltip">요금제 × 월 주문수 자동 계산. 경쟁사 대비 절감액 시각화</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">계약서 자동 생성<span class="tooltip">시뮬레이션 데이터 + 상점 정보 → 계약서 PDF 자동 생성</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">S-form 자동 생성<span class="tooltip">승인 즉시 S-form 자동 변환 + 전송. 수작업 제거</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">상점 계정 생성<span class="tooltip">S-form 기반 상점 마스터 등록 + 권역/요금제 세팅. 사장님사이트 접근 가능</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">이탈 모니터링<span class="tooltip">활성화 후 30일 주문 패턴 추적. 3일 무주문 → 영업사원 알림</span></div>
+          </div>
+        </div>
+
+        <!-- Lane: 관리자 -->
+        <div class="swim-lane">
+          <div class="swim-label"><div class="dot" style="background:var(--amber)"></div>영업 관리자</div>
+          <div class="swim-content">
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-check" style="position:relative">계약 승인/반려<span class="screen-tag">승인 관리</span><span class="tooltip">할인 요금, 특별 조건 등 검토 → 승인 or 사유 기재 후 반려. 기본 요금은 자동 승인</span></div>
+            <div class="arr">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-check" style="position:relative">성과 확인<span class="screen-tag">계약 상태</span><span class="tooltip">팀별 전환율, 계약 현황, 온보딩 진행 상태 확인</span></div>
+          </div>
+        </div>
+
+        <!-- Lane: 목업 화면 -->
+        <div class="swim-lane" style="background:#faf5ff08">
+          <div class="swim-label" style="background:#faf5ff"><div class="dot" style="background:var(--purple)"></div>목업 화면</div>
+          <div class="swim-content" style="gap:8px">
+            <div class="node n-screen">📱 리드 상세<span class="tooltip">상점 기본 정보, 방문 이력, 영업 메모. "요금 시뮬레이션 시작" 버튼</span></div>
+            <div class="arr">→</div>
+            <div class="node n-screen">📱 요금 시뮬레이션<span class="tooltip">요금제 선택, 할증, 권역 설정 → 절감 효과 시각화. "계약서 생성" 버튼</span></div>
+            <div class="arr">→</div>
+            <div class="node n-screen">📱 계약서 생성<span class="tooltip">자동 반영된 상점/요금 정보 + 상점주 터치 서명 + "승인 요청" 버튼</span></div>
+            <div class="arr">→</div>
+            <div class="node n-screen">📱 승인 관리<span class="tooltip">관리자 뷰: 승인 대기 목록, 코멘트, 승인/반려 버튼</span></div>
+            <div class="arr">→</div>
+            <div class="node n-screen">📱 계약 완료<span class="tooltip">계약서 PDF, S-form 자동 생성 확인, 상점주 안내 발송 현황</span></div>
+            <div class="arr">→</div>
+            <div class="node n-screen">📱 계약 상태<span class="tooltip">전체 계약 목록 + 상태 필터. 승인/진행/완료/해지</span></div>
+            <div class="arr">→</div>
+            <div class="node n-screen">📱 온보딩 추적<span class="tooltip">포스 설치, 사장님사이트 가입, 테스트 주문 등 온보딩 체크리스트</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Key Insight -->
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--purple)">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px">핵심: 세일즈 웹이 해주는 것</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        세일즈 웹 도입 전에는 영업사원이 <strong style="color:var(--red)">엑셀로 요금 계산 → 수작업 계약서 → 카톡 승인 → S-form 수동 입력</strong>을 했습니다.<br>
+        세일즈 웹 도입 후: <strong>1)</strong> 요금 시뮬레이션을 상점주에게 바로 보여주고, <strong>2)</strong> 현장에서 터치 서명으로 즉시 계약하며, <strong>3)</strong> 승인 → S-form → 상점 계정이 <strong style="color:var(--vroong)">자동</strong>으로 흘러갑니다.<br>
+        <strong style="color:var(--purple)">→ 영업사원은 "판매"에 집중하고, 나머지는 시스템이 처리.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 1: Step-by-Step ==================== -->
+  <div class="panel" id="panel-1">
+    <div class="section">
+      <div class="section-label">Step-by-Step + Mockup Mapping</div>
+      <div class="section-title">9단계 상세 플로우</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:16px">각 단계에서 세일즈 웹의 <strong style="color:#7c3aed">어떤 화면</strong>을 사용하는지 표시했습니다.</div>
+    </div>
+
+    <div class="v-flow">
+      <!-- Step 1 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
+          <div class="v-title">Step 1. 리드 발굴 & 현장 방문</div>
+          <div class="v-desc">
+            타겟 상점 리스트를 세일즈 웹 <strong>지도 뷰</strong>에서 확인하고 방문 동선을 계획합니다.<br>
+            플랫폼 다중 입점 상점, 가게배달 미사용 매장 등을 우선 타겟팅.<br>
+            <strong>앵커 상점(500건+/월)</strong>이면 리드 스코어가 높게 표시 → 우선 방문.
+          </div>
+          <div class="v-time">소요: 이동 포함 ~30분/상점</div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
+          <div class="v-screen">리드 상세</div>
+          <div class="v-title">Step 2. 리드 등록 & 정보 확인</div>
+          <div class="v-desc">
+            세일즈 웹 <strong>리드 상세</strong> 화면에서:<br>
+            • 상점 기본 정보 입력 (상점명, 대표자, 연락처, 주소, 사업자번호)<br>
+            • 시스템이 <strong>사업자 진위 + 기가입/해지 여부</strong> 자동 확인<br>
+            • 방문 이력, 영업 메모 기록<br>
+            • 월 예상 주문수, 관심도 표기
+          </div>
+          <div class="v-system">⚡ 시스템: 사업자번호 → 국세청 API 진위 확인 → 기가입 체크 → 배달 가능 권역 확인</div>
+          <div class="v-time">소요: ~5분</div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원 + 상점주</div>
+          <div class="v-screen">요금 시뮬레이션</div>
+          <div class="v-title">Step 3. 요금 시뮬레이션 & 피칭</div>
+          <div class="v-desc">
+            세일즈 웹 <strong>요금 시뮬레이션</strong> 화면을 상점주에게 보여주며:<br>
+            • 요금제 선택 (기본 4,300원 / 할인 3,800원 / 특별 3,500원)<br>
+            • 할증 조건 선택 (우천, 심야, 장거리, 성수기)<br>
+            • 희망 배송 권역 + 라이더 수급 상태 확인<br>
+            • <strong>경쟁사 대비 절감액</strong>이 자동 계산되어 시각화<br>
+            상점주: "월 26만원 절감" 같은 구체적 숫자 확인 → 계약 의향 상승
+          </div>
+          <div class="v-system">⚡ 시스템: 요금제 × 월 주문수 → 예상 비용 자동 계산 + 경쟁사 비교 테이블 생성</div>
+          <div class="v-time">소요: ~10분 (설명 포함)</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--indigo)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--indigo-l);color:var(--indigo)">영업사원 + 상점주</div>
+          <div class="v-screen">계약서 생성</div>
+          <div class="v-title">Step 4. 현장 계약서 생성 & 서명</div>
+          <div class="v-desc">
+            "계약서 생성으로 이동" 버튼 클릭 → <strong>계약서 생성</strong> 화면:<br>
+            • 상점 정보 + 시뮬레이션 결과가 <strong>자동 반영</strong> (수작업 0)<br>
+            • 계약 기간 선택 (6/12/24개월)<br>
+            • 특이사항 기재 (첫 달 무료, 포스 무상 등)<br>
+            • 계약 요약 확인 → 상점주가 <strong>화면에서 터치 서명</strong><br>
+            <em style="color:var(--purple)">→ 이전: 별도 계약서 준비 → 재방문 필요 → 2~3일 소요</em><br>
+            <em style="color:var(--vroong)">→ 이후: 현장에서 즉시 완료 → 5분</em>
+          </div>
+          <div class="v-system">⚡ 시스템: 입력 데이터 → 계약서 PDF 자동 생성 → 할인 요금 시 승인 필요 플래그</div>
+          <div class="v-time">소요: ~5분</div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--amber)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--amber-l);color:var(--amber)">영업 관리자</div>
+          <div class="v-screen">승인 관리</div>
+          <div class="v-title">Step 5. 관리자 승인</div>
+          <div class="v-desc">
+            <strong>승인 관리</strong> 화면에서 관리자가 검토:<br>
+            • 승인 대기 목록에서 계약 조건 확인 (요금제, 월 예상, 권역, 기간)<br>
+            • 할인율 적정성 판단 → <strong>승인</strong> or <strong>반려 (사유 필수)</strong><br>
+            • 앵커 상점 특별 요금 → 팀장 확인 권고 표시<br>
+            • 기본 요금(4,300원)이면 <strong>자동 승인</strong> → 관리자 개입 불필요<br>
+            <br>
+            <strong>승인 후 자동 처리:</strong><br>
+            ① 계약서 확정 + PDF 발급<br>
+            ② S-form 자동 생성/전송<br>
+            ③ 상점주에게 카카오톡/SMS 안내 발송 (계약 완료 + 사장님사이트 가입 링크 + 헥토 가이드)
+          </div>
+          <div class="v-system">⚡ 시스템: 승인 즉시 → S-form 생성 → 상점 계정 생성 → 안내 메시지 일괄 발송</div>
+          <div class="v-time">소요: ~30분 (SLA 목표)</div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--green)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--green-l);color:var(--green)">시스템 자동</div>
+          <div class="v-screen">계약 완료</div>
+          <div class="v-title">Step 6. 계약 완료 & 자동 셋업</div>
+          <div class="v-desc">
+            <strong>계약 완료</strong> 화면에서 확인 가능:<br>
+            • 계약서 PDF 미리보기/다운로드/이메일 전송<br>
+            • S-form 자동 생성 상태 (상점 코드, 요금제 코드, 권역 코드)<br>
+            • 승인 이력 타임라인<br>
+            • 상점주 안내 발송 현황 (카카오톡 계약 완료 알림, SMS 가입 링크, 헥토 가이드, 포스 안내)
+          </div>
+          <div class="v-system">⚡ 시스템: 상점 마스터 등록 → 권역/요금제 세팅 → 사장님사이트 계정 준비</div>
+          <div class="v-time">소요: 즉시 (자동)</div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--blue)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--blue-l);color:var(--blue)">상점주</div>
+          <div class="v-title">Step 7. 사장님사이트 가입 & 헥토 연동</div>
+          <div class="v-desc">
+            상점주가 SMS 링크로 사장님사이트 회원가입:<br>
+            • 이미 생성된 상점 계정에 매핑<br>
+            • 헥토(결제) 가입 연동 진행<br>
+            <em style="color:var(--text3)">이 단계에서 연령대 높은 사장님은 어려움 겪을 수 있음 → 영업사원이 전화/재방문 지원</em>
+          </div>
+          <div class="v-time">소요: ~15분 (사장님 직접)</div>
+        </div>
+      </div>
+
+      <!-- Step 8 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
+          <div class="v-screen">온보딩 추적</div>
+          <div class="v-title">Step 8. 포스 설치 & 테스트 주문</div>
+          <div class="v-desc">
+            <strong>온보딩 추적</strong> 화면에서 진행 상황 체크:<br>
+            • 포스 설치 일정 조율 → <strong>재방문</strong> (현재 계약과 분리되어 있는 핵심 병목)<br>
+            • 헥토 포스 설치 + 연동 확인 (30분~1시간)<br>
+            • 사장님사이트 사용법 안내<br>
+            • <strong>테스트 주문</strong> 실행 → 정상 배달 확인<br>
+            <br>
+            온보딩 체크리스트: ✅ 계약 완료 → ✅ S-form → ✅ 사장님사이트 가입 → ✅ 헥토 가입 → ✅ 포스 설치 → ✅ 테스트 주문
+          </div>
+          <div class="v-time">소요: 30분~1시간 (재방문 필요)</div>
+        </div>
+      </div>
+
+      <!-- Step 9 -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--vroong)"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--vroong-l);color:var(--vroong)">시스템 + 영업사원</div>
+          <div class="v-screen">온보딩 추적</div>
+          <div class="v-title">Step 9. 활성화 & 30일 모니터링</div>
+          <div class="v-desc">
+            테스트 주문 성공 → 상점 상태 <strong>"Active"</strong>로 전환.<br>
+            이후 30일간:<br>
+            • 시스템이 주문 패턴 자동 모니터링<br>
+            • 3일 연속 주문 0건 → 영업사원에게 <strong style="color:var(--red)">이탈 경보</strong><br>
+            • 앵커 상점 → 전담 체크인 콜 (주 1회)<br>
+            • <strong>온보딩 추적</strong> 화면에서 전체 상점의 온보딩 상태 / D+7 주문율 확인
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card" style="border-left:4px solid var(--purple);margin-top:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-size:13px;font-weight:700">아웃바운드 계약 리드타임</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:2px">첫 방문 → 활성 상점</div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:center">
+          <div style="text-align:center"><div style="font-size:10px;color:var(--text3);font-weight:600">AS-IS (세일즈 웹 없이)</div><div style="font-size:18px;font-weight:900;color:var(--red);text-decoration:line-through">7~14일</div></div>
+          <div style="font-size:20px;font-weight:300;color:var(--text3)">→</div>
+          <div style="text-align:center"><div style="font-size:10px;color:var(--purple);font-weight:600">TO-BE (세일즈 웹)</div><div style="font-size:18px;font-weight:900;color:var(--purple)">2~3일</div></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:8px">
+        현장 계약: ~30분 | 승인: ~30분 (SLA) | 사장님사이트 가입: 당일 | 포스 설치: 익일 방문 기준
+      </div>
+    </div>
+
+    <!-- Screen Map -->
+    <div class="card" style="margin-top:0">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">목업 화면 ↔ 플로우 단계 매핑</div>
+      <div style="overflow-x:auto">
+        <table class="cmp-tbl">
+          <thead><tr><th>목업 화면</th><th>플로우 단계</th><th>주요 액터</th><th>핵심 기능</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:var(--purple)">리드 상세</td><td>Step 2</td><td>영업사원</td><td>상점 정보, 방문 이력, 영업 메모, 기가입 체크</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">요금 시뮬레이션</td><td>Step 3</td><td>영업사원 → 상점주</td><td>요금제/할증/권역 선택 → 절감액 시각화</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약서 생성</td><td>Step 4</td><td>영업사원 + 상점주</td><td>자동 반영 + 터치 서명 + 승인 요청</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">승인 관리</td><td>Step 5</td><td>영업 관리자</td><td>승인 대기 목록, 코멘트, 승인/반려</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약 완료</td><td>Step 6</td><td>시스템 (자동)</td><td>PDF, S-form, 안내 발송, 승인 이력</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약 상태</td><td>Step 5~6</td><td>영업사원/관리자</td><td>전체 계약 필터링, 상태별 조회</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">온보딩 추적</td><td>Step 8~9</td><td>영업사원</td><td>체크리스트, D+7 주문율, 이탈 경보</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TAB 2: Compare ==================== -->
+  <div class="panel" id="panel-2">
+    <div class="section">
+      <div class="section-label">Comparison</div>
+      <div class="section-title">아웃바운드(영업사원) vs 셀프 인바운드 — 플로우 비교</div>
+    </div>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="cmp-tbl">
+        <thead>
+          <tr>
+            <th style="width:130px">구분</th>
+            <th style="width:38%"><span style="color:var(--purple)">● </span>아웃바운드 (영업사원 직접)</th>
+            <th style="width:38%"><span style="color:var(--vroong)">● </span>셀프 인바운드 (사장님 직접)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700">시작점</td>
+            <td>영업사원이 상점 방문</td>
+            <td>사장님이 랜딩 페이지 방문</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">리드 등록</td>
+            <td>영업사원이 세일즈 웹에 입력</td>
+            <td>사장님이 직접 회원가입</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">요금 시뮬레이션</td>
+            <td>영업사원이 상점주에게 <strong>보여주며 설명</strong></td>
+            <td>사장님이 <strong>혼자</strong> 시뮬레이터 사용</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">계약 서명</td>
+            <td>현장에서 영업사원 핸드폰 터치 서명</td>
+            <td>온라인 전자서명 (자택/가게에서)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">S-form</td>
+            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 시스템 자동 생성 (수작업 0)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">승인 프로세스</td>
+            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 관리자 승인 (할인 시) / 자동 승인 (기본 요금)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">상점 계정 생성</td>
+            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 승인 즉시 시스템 자동 생성</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">영업사원 역할</td>
+            <td><strong>리드 발굴 + 피칭 + 계약 + 포스 설치</strong><br><span style="font-size:11px;color:var(--text3)">전 과정 관여</span></td>
+            <td><strong>검증 + 포스 설치만</strong><br><span style="font-size:11px;color:var(--text3)">마무리 터치만</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">포스 설치</td>
+            <td>계약과 <strong>분리된 재방문</strong> (핵심 병목)</td>
+            <td>동일하게 <strong>재방문 필요</strong> (향후 포스리스 옵션)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">리드 온도</td>
+            <td><span class="badge b-blue">콜드~웜</span> 관심 불확실</td>
+            <td><span class="badge b-green">웜~핫</span> 이미 관심 표현</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">리드타임</td>
+            <td><strong>2~3일</strong> (세일즈 웹 기준)</td>
+            <td><strong>1~2일</strong></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">영업사원 1인당<br>처리량</td>
+            <td>~5건/일 (방문 + 피칭 + 계약)</td>
+            <td>~10건/일 (검증 + 포스만)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">적합한 상점</td>
+            <td><span class="badge" style="background:var(--orange-l);color:var(--orange)">앵커/메가 상점</span> 고물량, 경쟁사 전환<br>→ 직접 피칭 효과 큼</td>
+            <td><span class="badge b-blue">소/중물량 상점</span> 이미 관심 있는 상점<br>→ 셀프로도 충분</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;color:var(--purple)">세일즈 웹 사용</td>
+            <td><strong>7개 화면 모두 사용</strong><br>리드 상세 → 시뮬레이션 → 계약서 → 승인 → 완료 → 상태 → 온보딩</td>
+            <td><strong>3개 화면 사용</strong> (백오피스만)<br>승인 관리 → 계약 상태 → 온보딩 추적</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--amber);margin-top:0">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px">전략적 시사점: 채널별 역할 분담</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.8">
+        <strong style="color:var(--purple)">아웃바운드 = 앵커 상점 사냥</strong>: 월 500건+ 고물량 상점에는 영업사원이 직접 방문하여 피칭하는 것이 전환율이 높습니다. 비용 절감 시뮬레이션을 직접 보여주며 의사결정자를 설득하고, 특별 요금제까지 현장에서 제안 가능.<br>
+        <strong style="color:var(--vroong)">인바운드 = 소/중물량 커버리지 확보</strong>: 이미 관심 있는 상점주가 셀프로 가입하면 영업사원은 검증 + 포스 설치만. 1인당 처리량이 2배 → 같은 인력으로 더 많은 상점 활성화.<br>
+        <strong style="color:var(--amber)">→ 결론: 아웃바운드가 "질(물량)"을, 인바운드가 "양(상점 수)"을 책임지는 듀얼 채널 구조.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)">
+    G4 세일즈 웹 계약 프로젝트 · 아웃바운드 계약 플로우 · 2026.04
+  </div>
+
+</div>
+
+<script>
+function showTab(idx){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+</script>
+</body>
+</html>
