@@ -131,7 +131,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
     <h1>영업사원 <span>직접 계약</span> 플로우</h1>
     <div class="header-meta">세일즈 웹 목업 기준 | G4 세일즈 웹 계약 프로젝트 | 2026.04</div>
     <div class="header-summary">
-      영업사원이 현장에서 리드를 발굴하고, <strong>세일즈 웹(sales.vroong.com)</strong>을 통해 시뮬레이션 → 계약 → 승인 → 온보딩까지 진행하는 전체 플로우입니다.<br>
+      영업사원이 현장에서 리드를 발굴하고, <strong>세일즈 웹(sales.vroong.com)</strong>을 통해 시뮬레이션 → 계약 → 자동 셋업 → 온보딩까지 진행하는 전체 플로우입니다.<br>
       각 단계가 <strong>목업의 어떤 화면</strong>에 해당하는지 표시했습니다.
     </div>
   </div>
@@ -149,7 +149,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
       <div class="legend-item"><div class="legend-dot" style="background:var(--purple-l);border-color:#c4b5fd"></div>영업사원 액션</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--blue-l);border-color:#bfdbfe"></div>상점주 액션</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--green-l);border-color:#a7f3d0"></div>시스템 자동</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--amber-l);border-color:#fde68a"></div>관리자 승인</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber-l);border-color:#fde68a"></div>성과 모니터링</div>
       <div class="legend-item"><div class="legend-dot" style="background:#faf5ff;border-color:#d8b4fe"></div>목업 화면</div>
     </div>
 
@@ -157,7 +157,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
       <div class="phase-item p-a" style="background:var(--purple)"><div class="num">1</div><div class="label">리드 발굴 & 방문</div></div>
       <div class="phase-item p-a" style="background:var(--blue)"><div class="num">2</div><div class="label">피칭 & 시뮬레이션</div></div>
       <div class="phase-item p-a" style="background:var(--indigo)"><div class="num">3</div><div class="label">현장 계약</div></div>
-      <div class="phase-item p-a" style="background:var(--amber)"><div class="num">4</div><div class="label">승인 & 셋업</div></div>
+      <div class="phase-item p-a" style="background:var(--amber)"><div class="num">4</div><div class="label">자동 셋업</div></div>
       <div class="phase-item p-a" style="background:var(--vroong)"><div class="num">5</div><div class="label">온보딩 & 활성화</div></div>
     </div>
 
@@ -174,11 +174,9 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-user" style="position:relative">요금 시뮬레이션<span class="screen-tag">시뮬레이션</span><span class="tooltip">상점주에게 핸드폰 화면을 보여주며 요금 계산. 경쟁사 대비 절감액 시각화</span></div>
             <div class="arr">→</div>
-            <div class="node n-user" style="position:relative">계약서 생성<span class="screen-tag">계약서 생성</span><span class="tooltip">시뮬레이션 결과 자동 반영. 요금제/권역/기간 설정 후 계약서 생성</span></div>
+            <div class="node n-user" style="position:relative">계약서 생성 + 서명<span class="screen-tag">계약서 생성</span><span class="tooltip">시뮬레이션 결과 자동 반영. 요금제/권역/기간 설정 후 계약서 생성 → 상점주 서명 → 계약 즉시 확정</span></div>
             <div class="arr">→</div>
-            <div class="node n-user" style="position:relative">승인 요청<span class="screen-tag">승인 관리</span><span class="tooltip">할인 요금 적용 시 관리자 승인 요청. 기본 요금이면 자동 승인</span></div>
-            <div class="arr">→</div>
-            <div class="node n-user" style="position:relative">포스 설치 방문<span class="screen-tag">온보딩 추적</span><span class="tooltip">승인 완료 후 포스 설치 일정 조율 → 재방문하여 포스 설치/연동</span></div>
+            <div class="node n-user" style="position:relative">포스 설치 방문<span class="screen-tag">온보딩 추적</span><span class="tooltip">계약 확정 후 포스 설치 일정 조율 → 재방문하여 포스 설치/연동</span></div>
             <div class="arr">→</div>
             <div class="node n-end" style="position:relative">온보딩 완료<span class="screen-tag">온보딩 추적</span><span class="tooltip">테스트 주문 성공 → 활성화 마킹. 이후 30일 모니터링</span></div>
           </div>
@@ -194,11 +192,9 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr" style="opacity:.3">→</div>
             <div class="node n-action">요금 확인<span class="tooltip">영업사원이 보여주는 시뮬레이션 화면에서 절감 효과 확인</span></div>
             <div class="arr">→</div>
-            <div class="node n-action">터치 서명<span class="tooltip">영업사원 핸드폰/태블릿에서 계약서 확인 후 화면 터치 서명</span></div>
+            <div class="node n-action">터치 서명<span class="tooltip">영업사원 핸드폰/태블릿에서 계약서 확인 후 화면 터치 서명 → 계약 즉시 확정</span></div>
             <div class="arr">→</div>
-            <div class="node n-gray" style="opacity:.4">대기<span class="tooltip">승인 대기 중. 카카오톡으로 진행 상태 알림 수신</span></div>
-            <div class="arr">→</div>
-            <div class="node n-action">사장님사이트 가입<span class="tooltip">계약 완료 후 SMS로 받은 링크로 사장님사이트 회원가입</span></div>
+            <div class="node n-action">사장님사이트 가입<span class="tooltip">계약 확정 후 SMS로 받은 링크로 사장님사이트 회원가입</span></div>
             <div class="arr">→</div>
             <div class="node n-action">테스트 주문<span class="tooltip">포스 설치 후 영업사원과 함께 테스트 주문 진행</span></div>
           </div>
@@ -216,7 +212,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-auto">계약서 자동 생성<span class="tooltip">시뮬레이션 데이터 + 상점 정보 → 계약서 PDF 자동 생성</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">S-form 자동 생성<span class="tooltip">승인 즉시 S-form 자동 변환 + 전송. 수작업 제거</span></div>
+            <div class="node n-auto">S-form 자동 생성<span class="tooltip">계약 서명 완료 즉시 S-form 자동 변환 + 전송. 수작업 제거</span></div>
             <div class="arr">→</div>
             <div class="node n-auto">상점 계정 생성<span class="tooltip">S-form 기반 상점 마스터 등록 + 권역/요금제 세팅. 사장님사이트 접근 가능</span></div>
             <div class="arr">→</div>
@@ -224,7 +220,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           </div>
         </div>
 
-        <!-- Lane: 관리자 -->
+        <!-- Lane: 관리자 (성과 모니터링) -->
         <div class="swim-lane">
           <div class="swim-label"><div class="dot" style="background:var(--amber)"></div>영업 관리자</div>
           <div class="swim-content">
@@ -234,8 +230,6 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr" style="opacity:.3">→</div>
             <div class="node n-gray" style="opacity:.4">—</div>
             <div class="arr" style="opacity:.3">→</div>
-            <div class="node n-check" style="position:relative">계약 승인/반려<span class="screen-tag">승인 관리</span><span class="tooltip">할인 요금, 특별 조건 등 검토 → 승인 or 사유 기재 후 반려. 기본 요금은 자동 승인</span></div>
-            <div class="arr">→</div>
             <div class="node n-gray" style="opacity:.4">—</div>
             <div class="arr" style="opacity:.3">→</div>
             <div class="node n-gray" style="opacity:.4">—</div>
@@ -252,13 +246,11 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-screen">📱 요금 시뮬레이션<span class="tooltip">요금제 선택, 할증, 권역 설정 → 절감 효과 시각화. "계약서 생성" 버튼</span></div>
             <div class="arr">→</div>
-            <div class="node n-screen">📱 계약서 생성<span class="tooltip">자동 반영된 상점/요금 정보 + 상점주 터치 서명 + "승인 요청" 버튼</span></div>
-            <div class="arr">→</div>
-            <div class="node n-screen">📱 승인 관리<span class="tooltip">관리자 뷰: 승인 대기 목록, 코멘트, 승인/반려 버튼</span></div>
+            <div class="node n-screen">📱 계약서 생성<span class="tooltip">자동 반영된 상점/요금 정보 + 상점주 터치 서명 → 계약 즉시 확정</span></div>
             <div class="arr">→</div>
             <div class="node n-screen">📱 계약 완료<span class="tooltip">계약서 PDF, S-form 자동 생성 확인, 상점주 안내 발송 현황</span></div>
             <div class="arr">→</div>
-            <div class="node n-screen">📱 계약 상태<span class="tooltip">전체 계약 목록 + 상태 필터. 승인/진행/완료/해지</span></div>
+            <div class="node n-screen">📱 계약 상태<span class="tooltip">전체 계약 목록 + 상태 필터. 진행/완료/해지</span></div>
             <div class="arr">→</div>
             <div class="node n-screen">📱 온보딩 추적<span class="tooltip">포스 설치, 사장님사이트 가입, 테스트 주문 등 온보딩 체크리스트</span></div>
           </div>
@@ -272,7 +264,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
       <div style="font-size:13px;font-weight:700;margin-bottom:6px">핵심: 세일즈 웹이 해주는 것</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.8">
         세일즈 웹 도입 전에는 영업사원이 <strong style="color:var(--red)">엑셀로 요금 계산 → 수작업 계약서 → 카톡 승인 → S-form 수동 입력</strong>을 했습니다.<br>
-        세일즈 웹 도입 후: <strong>1)</strong> 요금 시뮬레이션을 상점주에게 바로 보여주고, <strong>2)</strong> 현장에서 터치 서명으로 즉시 계약하며, <strong>3)</strong> 승인 → S-form → 상점 계정이 <strong style="color:var(--vroong)">자동</strong>으로 흘러갑니다.<br>
+        세일즈 웹 도입 후: <strong>1)</strong> 요금 시뮬레이션을 상점주에게 바로 보여주고, <strong>2)</strong> 현장에서 터치 서명으로 즉시 계약 확정하며, <strong>3)</strong> S-form → 상점 계정이 <strong style="color:var(--vroong)">자동</strong>으로 흘러갑니다. 별도 승인 단계 없이 계약 즉시 처리.<br>
         <strong style="color:var(--purple)">→ 영업사원은 "판매"에 집중하고, 나머지는 시스템이 처리.</strong>
       </div>
     </div>
@@ -282,7 +274,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
   <div class="panel" id="panel-1">
     <div class="section">
       <div class="section-label">Step-by-Step + Mockup Mapping</div>
-      <div class="section-title">9단계 상세 플로우</div>
+      <div class="section-title">8단계 상세 플로우</div>
       <div style="font-size:12px;color:var(--text2);margin-bottom:16px">각 단계에서 세일즈 웹의 <strong style="color:#7c3aed">어떤 화면</strong>을 사용하는지 표시했습니다.</div>
     </div>
 
@@ -353,51 +345,27 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             • 상점 정보 + 시뮬레이션 결과가 <strong>자동 반영</strong> (수작업 0)<br>
             • 계약 기간 선택 (6/12/24개월)<br>
             • 특이사항 기재 (첫 달 무료, 포스 무상 등)<br>
-            • 계약 요약 확인 → 상점주가 <strong>화면에서 터치 서명</strong><br>
+            • 계약 요약 확인 → 상점주가 <strong>화면에서 터치 서명</strong> → <strong>계약 즉시 확정</strong><br>
             <em style="color:var(--purple)">→ 이전: 별도 계약서 준비 → 재방문 필요 → 2~3일 소요</em><br>
             <em style="color:var(--vroong)">→ 이후: 현장에서 즉시 완료 → 5분</em>
           </div>
-          <div class="v-system">⚡ 시스템: 입력 데이터 → 계약서 PDF 자동 생성 → 할인 요금 시 승인 필요 플래그</div>
+          <div class="v-system">⚡ 시스템: 입력 데이터 → 계약서 PDF 자동 생성 → 서명 완료 즉시 S-form + 상점 계정 자동 생성 트리거</div>
           <div class="v-time">소요: ~5분</div>
         </div>
       </div>
 
       <!-- Step 5 -->
       <div class="v-step">
-        <div class="v-line"><div class="v-dot" style="border-color:var(--amber)"></div><div class="v-bar"></div></div>
-        <div class="v-body">
-          <div class="v-actor" style="background:var(--amber-l);color:var(--amber)">영업 관리자</div>
-          <div class="v-screen">승인 관리</div>
-          <div class="v-title">Step 5. 관리자 승인</div>
-          <div class="v-desc">
-            <strong>승인 관리</strong> 화면에서 관리자가 검토:<br>
-            • 승인 대기 목록에서 계약 조건 확인 (요금제, 월 예상, 권역, 기간)<br>
-            • 할인율 적정성 판단 → <strong>승인</strong> or <strong>반려 (사유 필수)</strong><br>
-            • 앵커 상점 특별 요금 → 팀장 확인 권고 표시<br>
-            • 기본 요금(4,300원)이면 <strong>자동 승인</strong> → 관리자 개입 불필요<br>
-            <br>
-            <strong>승인 후 자동 처리:</strong><br>
-            ① 계약서 확정 + PDF 발급<br>
-            ② S-form 자동 생성/전송<br>
-            ③ 상점주에게 카카오톡/SMS 안내 발송 (계약 완료 + 사장님사이트 가입 링크 + 헥토 가이드)
-          </div>
-          <div class="v-system">⚡ 시스템: 승인 즉시 → S-form 생성 → 상점 계정 생성 → 안내 메시지 일괄 발송</div>
-          <div class="v-time">소요: ~30분 (SLA 목표)</div>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--green)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--green-l);color:var(--green)">시스템 자동</div>
           <div class="v-screen">계약 완료</div>
-          <div class="v-title">Step 6. 계약 완료 & 자동 셋업</div>
+          <div class="v-title">Step 5. 계약 완료 & 자동 셋업</div>
           <div class="v-desc">
             <strong>계약 완료</strong> 화면에서 확인 가능:<br>
             • 계약서 PDF 미리보기/다운로드/이메일 전송<br>
             • S-form 자동 생성 상태 (상점 코드, 요금제 코드, 권역 코드)<br>
-            • 승인 이력 타임라인<br>
+            • 처리 이력 타임라인<br>
             • 상점주 안내 발송 현황 (카카오톡 계약 완료 알림, SMS 가입 링크, 헥토 가이드, 포스 안내)
           </div>
           <div class="v-system">⚡ 시스템: 상점 마스터 등록 → 권역/요금제 세팅 → 사장님사이트 계정 준비</div>
@@ -405,12 +373,12 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
 
-      <!-- Step 7 -->
+      <!-- Step 6 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--blue)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--blue-l);color:var(--blue)">상점주</div>
-          <div class="v-title">Step 7. 사장님사이트 가입 & 헥토 연동</div>
+          <div class="v-title">Step 6. 사장님사이트 가입 & 헥토 연동</div>
           <div class="v-desc">
             상점주가 SMS 링크로 사장님사이트 회원가입:<br>
             • 이미 생성된 상점 계정에 매핑<br>
@@ -421,13 +389,13 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
 
-      <!-- Step 8 -->
+      <!-- Step 7 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
           <div class="v-screen">온보딩 추적</div>
-          <div class="v-title">Step 8. 포스 설치 & 테스트 주문</div>
+          <div class="v-title">Step 7. 포스 설치 & 테스트 주문</div>
           <div class="v-desc">
             <strong>온보딩 추적</strong> 화면에서 진행 상황 체크:<br>
             • 포스 설치 일정 조율 → <strong>재방문</strong> (현재 계약과 분리되어 있는 핵심 병목)<br>
@@ -435,19 +403,19 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             • 사장님사이트 사용법 안내<br>
             • <strong>테스트 주문</strong> 실행 → 정상 배달 확인<br>
             <br>
-            온보딩 체크리스트: ✅ 계약 완료 → ✅ S-form → ✅ 사장님사이트 가입 → ✅ 헥토 가입 → ✅ 포스 설치 → ✅ 테스트 주문
+            온보딩 체크리스트: ✅ 계약 확정 → ✅ S-form → ✅ 사장님사이트 가입 → ✅ 헥토 가입 → ✅ 포스 설치 → ✅ 테스트 주문
           </div>
           <div class="v-time">소요: 30분~1시간 (재방문 필요)</div>
         </div>
       </div>
 
-      <!-- Step 9 -->
+      <!-- Step 8 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--vroong)"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--vroong-l);color:var(--vroong)">시스템 + 영업사원</div>
           <div class="v-screen">온보딩 추적</div>
-          <div class="v-title">Step 9. 활성화 & 30일 모니터링</div>
+          <div class="v-title">Step 8. 활성화 & 30일 모니터링</div>
           <div class="v-desc">
             테스트 주문 성공 → 상점 상태 <strong>"Active"</strong>로 전환.<br>
             이후 30일간:<br>
@@ -470,11 +438,11 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div style="display:flex;gap:20px;align-items:center">
           <div style="text-align:center"><div style="font-size:10px;color:var(--text3);font-weight:600">AS-IS (세일즈 웹 없이)</div><div style="font-size:18px;font-weight:900;color:var(--red);text-decoration:line-through">7~14일</div></div>
           <div style="font-size:20px;font-weight:300;color:var(--text3)">→</div>
-          <div style="text-align:center"><div style="font-size:10px;color:var(--purple);font-weight:600">TO-BE (세일즈 웹)</div><div style="font-size:18px;font-weight:900;color:var(--purple)">2~3일</div></div>
+          <div style="text-align:center"><div style="font-size:10px;color:var(--purple);font-weight:600">TO-BE (세일즈 웹)</div><div style="font-size:18px;font-weight:900;color:var(--purple)">1~2일</div></div>
         </div>
       </div>
       <div style="font-size:11px;color:var(--text3);margin-top:8px">
-        현장 계약: ~30분 | 승인: ~30분 (SLA) | 사장님사이트 가입: 당일 | 포스 설치: 익일 방문 기준
+        현장 계약: ~30분 | 자동 셋업: 즉시 | 사장님사이트 가입: 당일 | 포스 설치: 익일 방문 기준
       </div>
     </div>
 
@@ -487,11 +455,10 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <tbody>
             <tr><td style="font-weight:700;color:var(--purple)">리드 상세</td><td>Step 2</td><td>영업사원</td><td>상점 정보, 방문 이력, 영업 메모, 기가입 체크</td></tr>
             <tr><td style="font-weight:700;color:var(--purple)">요금 시뮬레이션</td><td>Step 3</td><td>영업사원 → 상점주</td><td>요금제/할증/권역 선택 → 절감액 시각화</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">계약서 생성</td><td>Step 4</td><td>영업사원 + 상점주</td><td>자동 반영 + 터치 서명 + 승인 요청</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">승인 관리</td><td>Step 5</td><td>영업 관리자</td><td>승인 대기 목록, 코멘트, 승인/반려</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">계약 완료</td><td>Step 6</td><td>시스템 (자동)</td><td>PDF, S-form, 안내 발송, 승인 이력</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">계약 상태</td><td>Step 5~6</td><td>영업사원/관리자</td><td>전체 계약 필터링, 상태별 조회</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">온보딩 추적</td><td>Step 8~9</td><td>영업사원</td><td>체크리스트, D+7 주문율, 이탈 경보</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약서 생성</td><td>Step 4</td><td>영업사원 + 상점주</td><td>자동 반영 + 터치 서명 → 계약 즉시 확정</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약 완료</td><td>Step 5</td><td>시스템 (자동)</td><td>PDF, S-form, 안내 발송, 처리 이력</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약 상태</td><td>Step 5</td><td>영업사원/관리자</td><td>전체 계약 필터링, 상태별 조회, 성과 모니터링</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">온보딩 추적</td><td>Step 7~8</td><td>영업사원</td><td>체크리스트, D+7 주문율, 이탈 경보</td></tr>
           </tbody>
         </table>
       </div>
@@ -541,15 +508,15 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           </tr>
           <tr>
             <td style="font-weight:700">승인 프로세스</td>
-            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 관리자 승인 (할인 시) / 자동 승인 (기본 요금)</td>
+            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">승인 없음 — 계약 즉시 확정</td>
           </tr>
           <tr>
             <td style="font-weight:700">상점 계정 생성</td>
-            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 승인 즉시 시스템 자동 생성</td>
+            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 계약 확정 즉시 시스템 자동 생성</td>
           </tr>
           <tr>
             <td style="font-weight:700">영업사원 역할</td>
-            <td><strong>리드 발굴 + 피칭 + 계약 + 포스 설치</strong><br><span style="font-size:11px;color:var(--text3)">전 과정 관여</span></td>
+            <td><strong>리드 발굴 + 피칭 + 계약 + 포스 설치</strong><br><span style="font-size:11px;color:var(--text3)">계약까지 현장 완결</span></td>
             <td><strong>검증 + 포스 설치만</strong><br><span style="font-size:11px;color:var(--text3)">마무리 터치만</span></td>
           </tr>
           <tr>
@@ -564,7 +531,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           </tr>
           <tr>
             <td style="font-weight:700">리드타임</td>
-            <td><strong>2~3일</strong> (세일즈 웹 기준)</td>
+            <td><strong>1~2일</strong> (세일즈 웹 기준)</td>
             <td><strong>1~2일</strong></td>
           </tr>
           <tr>
@@ -579,8 +546,8 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           </tr>
           <tr>
             <td style="font-weight:700;color:var(--purple)">세일즈 웹 사용</td>
-            <td><strong>7개 화면 모두 사용</strong><br>리드 상세 → 시뮬레이션 → 계약서 → 승인 → 완료 → 상태 → 온보딩</td>
-            <td><strong>3개 화면 사용</strong> (백오피스만)<br>승인 관리 → 계약 상태 → 온보딩 추적</td>
+            <td><strong>6개 화면 사용</strong><br>리드 상세 → 시뮬레이션 → 계약서 → 완료 → 상태 → 온보딩</td>
+            <td><strong>2개 화면 사용</strong> (백오피스만)<br>계약 상태 → 온보딩 추적</td>
           </tr>
         </tbody>
       </table>

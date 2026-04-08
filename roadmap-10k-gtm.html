@@ -198,7 +198,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px;color:var(--text2)">
           <div><strong style="color:var(--text)">타겟팅:</strong> 플랫폼 다중 입점 상점, 월 주문 500건+ 예상, 현재 경쟁사(배민/요기요) 배달대행 이용 중</div>
           <div><strong style="color:var(--text)">피칭 무기:</strong> 비용 절감 시뮬레이션이 강력 (월 수백만원 차이), SLA 비교 데이터, 묶음배송 효과</div>
-          <div><strong style="color:var(--text)">계약 조건:</strong> 할인 요금제 + 장기 계약으로 락인. 관리자 승인 필요 → 승인 워크플로 필수</div>
+          <div><strong style="color:var(--text)">계약 조건:</strong> 할인 요금제 + 장기 계약으로 락인. 현장 즉시 계약 확정</div>
           <div><strong style="color:var(--text)">우선순위:</strong> 리드 스코어링에 "예상 물량" 가중치 부여. 고물량 리드 → 영업사원 우선 배정</div>
         </div>
       </div>
@@ -301,7 +301,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <div class="flow-arrow">→</div>
           <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">현장 방문<br>시뮬레이션</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">즉시 계약<br>승인 요청</div>
+          <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">즉시 계약<br>확정</div>
           <div class="flow-arrow">→</div>
           <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">S-form<br>자동</div>
           <div class="flow-arrow">→</div>
@@ -354,8 +354,8 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <div class="ib-right" style="background:var(--amber-l);color:var(--amber);font-size:11px;font-weight:700">리드 확인<br>+ 전화</div>
 
           <div class="ib-actor" style="color:var(--text3);font-size:11px">조건 합의</div>
-          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><span class="badge b-cyan" style="font-size:9px">자동</span><span style="font-size:11px">권역 확인 OK → 계약서 발행 + 승인 요청</span></div>
-          <div class="ib-right" style="background:var(--vroong-l);color:var(--vroong);font-size:11px;font-weight:700">계약서 발행<br>승인 요청</div>
+          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><span class="badge b-cyan" style="font-size:9px">자동</span><span style="font-size:11px">권역 확인 OK → 계약서 발행 + 즉시 확정</span></div>
+          <div class="ib-right" style="background:var(--vroong-l);color:var(--vroong);font-size:11px;font-weight:700">계약서 발행<br>즉시 확정</div>
 
           <div class="ib-actor" style="color:var(--text3);font-size:11px">-</div>
           <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:none"><span class="badge b-green" style="font-size:9px">자동</span><span style="font-size:11px">S-form + 안내 발송 + 온보딩 추적 시작</span></div>
@@ -402,7 +402,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div style="margin-bottom:8px"><div class="track-label" style="background:var(--vroong-l);color:var(--vroong)">세일즈 툴</div></div>
         <ul class="phase-items">
           <li><div class="dot" style="background:var(--vroong)"></div>요금 시뮬레이션 MVP</li>
-          <li><div class="dot" style="background:var(--vroong)"></div>웹 계약서 + 승인 워크플로</li>
+          <li><div class="dot" style="background:var(--vroong)"></div>웹 계약서 + 현장 즉시 확정</li>
           <li><div class="dot" style="background:var(--vroong)"></div>S-form 자동화</li>
         </ul>
         <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--indigo-l);color:var(--indigo)">인바운드</div></div>
@@ -452,7 +452,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <ul class="phase-items">
           <li><div class="dot" style="background:#b45309"></div>리드 스코어에 물량 가중치 반영 → 앵커 리드 우선 배정</li>
           <li><div class="dot" style="background:#b45309"></div>앵커 전용 요금 시뮬레이션 (묶음배송, 볼륨 할인)</li>
-          <li><div class="dot" style="background:#b45309"></div>관리자 승인 기반 특별 요금제 워크플로</li>
+          <li><div class="dot" style="background:#b45309"></div>앵커 전용 특별 요금제 자동 적용</li>
         </ul>
         <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--amber-l);color:var(--amber)">운영</div></div>
         <ul class="phase-items">
@@ -540,7 +540,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
       <div class="card card-sm">
         <div style="font-size:12px;font-weight:800;margin-bottom:2px">Salesforce 2026</div>
         <div style="font-size:11px;color:var(--text2);margin-bottom:6px">AI 에이전트로 수동 작업 제거, 통합 데이터 기반 예측</div>
-        <div class="callout" style="background:var(--blue-l);color:var(--blue-d);font-size:11px;padding:8px"><strong>적용:</strong> S-form 자동화 + 승인 워크플로 = 수동 제거 영역</div>
+        <div class="callout" style="background:var(--blue-l);color:var(--blue-d);font-size:11px;padding:8px"><strong>적용:</strong> S-form 자동화 + 계약 즉시 확정 = 수동 제거 영역</div>
       </div>
       <div class="card card-sm">
         <div style="font-size:12px;font-weight:800;margin-bottom:2px">HubSpot 2026</div>

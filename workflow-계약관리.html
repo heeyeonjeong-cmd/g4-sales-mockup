@@ -43,7 +43,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
 .node{padding:10px 16px;border-radius:10px;font-size:12px;font-weight:600;position:relative;white-space:nowrap;border:2px solid;transition:transform .15s}
 .node:hover{transform:translateY(-2px)}
 .node-action{background:var(--blue-l);border-color:#bfdbfe;color:#1e40af}
-.node-approve{background:var(--amber-l);border-color:#fde68a;color:#92400e}
+.node-monitor{background:var(--amber-l);border-color:#fde68a;color:#92400e}
 .node-auto{background:var(--green-l);border-color:#a7f3d0;color:#065f46}
 .node-user{background:var(--purple-l);border-color:#c4b5fd;color:#5b21b6}
 .node-alert{background:var(--red-l);border-color:#fca5a5;color:#991b1b}
@@ -72,7 +72,6 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
 .flow-section h3{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .flow-section h3 .badge{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:700}
 .badge-happy{background:var(--green-l);color:var(--green)}
-.badge-reject{background:var(--amber-l);color:var(--amber)}
 .badge-churn{background:var(--red-l);color:var(--red)}
 
 .step-connector{display:flex;align-items:center;gap:0;flex-wrap:wrap}
@@ -94,12 +93,12 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
 <div class="container">
   <div class="header">
     <h1>G4 계약 관리 워크플로</h1>
-    <p>리드 → 시뮬레이션 → 계약 → 승인 → S-form → 온보딩 → 첫주문 전체 사이클</p>
+    <p>리드 → 시뮬레이션 → 계약 + 서명 → S-form 자동생성 → 온보딩 → 첫주문 전체 사이클</p>
   </div>
 
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>영업사원 (현장)</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>영업 관리자 (승인)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>영업 관리자 (모니터링)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#059669"></div>시스템 (자동)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>상점주</div>
     <div class="legend-item" style="margin-left:auto;font-size:11px;color:var(--text3)">실선 = 수동 | 점선 = 자동</div>
@@ -107,15 +106,14 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
 
   <div class="tabs">
     <div class="tab active" onclick="showFlow('happy')">정상 플로우 (Happy Path)</div>
-    <div class="tab" onclick="showFlow('reject')">승인 반려 플로우</div>
-    <div class="tab" onclick="showFlow('churn')">계약 후 이탈 대응</div>
+    <div class="tab" onclick="showFlow('churn')">이탈 대응</div>
     <div class="tab" onclick="showFlow('summary')">전체 요약</div>
   </div>
 
   <!-- Happy Path -->
   <div class="flow-panel active" id="flow-happy">
     <div class="flow-section">
-      <h3><span class="badge badge-happy">HAPPY PATH</span> 리드 → 시뮬레이션 → 계약 → 온보딩 → 첫주문</h3>
+      <h3><span class="badge badge-happy">HAPPY PATH</span> 리드 → 시뮬레이션 → 계약 + 서명 → 자동처리 → 온보딩 → 첫주문</h3>
       <div class="step-connector">
         <div class="step-node">
           <div class="step-actor actor-sales">영업사원</div>
@@ -137,26 +135,20 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="step-arrow">→</div>
         <div class="step-node">
           <div class="step-actor actor-sales">영업사원</div>
-          <div class="step-box node-action">계약서 생성</div>
+          <div class="step-box node-action">계약서 생성 + 서명</div>
           <div class="step-note">시뮬레이션 결과 자동 반영</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-sales">영업사원</div>
-          <div class="step-box node-approve">승인 요청</div>
-          <div class="step-note">관리자에게 전송</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-manager">관리자</div>
-          <div class="step-box node-approve">승인 처리</div>
-          <div class="step-note">조건 검토 후 승인</div>
         </div>
         <div class="step-arrow">→</div>
         <div class="step-node">
           <div class="step-actor actor-system">시스템</div>
           <div class="step-box node-auto">S-form 자동생성</div>
-          <div class="step-note">계약 정보 자동 기입</div>
+          <div class="step-note">서명 완료 즉시 자동 기입</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-node">
+          <div class="step-actor actor-system">시스템</div>
+          <div class="step-box node-auto">상점 계정 생성</div>
+          <div class="step-note">계약 정보 기반 자동 처리</div>
         </div>
         <div class="step-arrow">→</div>
         <div class="step-node">
@@ -191,90 +183,13 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="desc-item"><strong>리드 선택</strong> 세일즈 웹 지도/리드 목록에서 방문할 상점 선택. 관심도, 방문 이력 확인</div>
         <div class="desc-item"><strong>요금 시뮬레이션</strong> 요금제(기본 4,300원 / 할인 3,800원), 할증 코드 체크박스, 희망 배송 권역 입력</div>
         <div class="desc-item"><strong>상점주 시연</strong> 계산된 예상 요금을 상점주에게 보여주며 피칭. SLA 지표 등 활용</div>
-        <div class="desc-item"><strong>계약서 생성</strong> 시뮬레이션 결과 + 상점 정보가 자동 반영된 계약서. 상점주 서명</div>
-        <div class="desc-item"><strong>승인 요청</strong> 특수 조건(할인율 초과, 권역 예외 등) 시 관리자 승인 필요</div>
-        <div class="desc-item"><strong>승인 처리</strong> 관리자가 계약 조건 검토 후 승인/반려. 모바일 알림</div>
-        <div class="desc-item"><strong>S-form 자동생성</strong> 승인 즉시 S-form 자동 기입. 기존 수작업(영업 종료 후 일괄/내근자 대행) 제거</div>
+        <div class="desc-item"><strong>계약서 생성 + 서명</strong> 시뮬레이션 결과 + 상점 정보가 자동 반영된 계약서. 현장에서 상점주 서명까지 완료</div>
+        <div class="desc-item"><strong>S-form 자동생성</strong> 서명 완료 즉시 S-form 자동 기입. 기존 수작업(영업 종료 후 일괄/내근자 대행) 제거</div>
+        <div class="desc-item"><strong>상점 계정 생성</strong> 계약 정보 기반으로 상점 계정 자동 생성. 별도 승인 절차 없이 즉시 처리</div>
         <div class="desc-item"><strong>상점주 안내</strong> 사장님사이트 회원가입 + 헥토 가입 안내 자동 발송 (SMS/카톡)</div>
         <div class="desc-item"><strong>회원가입+헥토</strong> 상점주가 직접 진행. 고령자 대상 간소화 가이드 제공</div>
         <div class="desc-item"><strong>포스 설치</strong> 설치 일정 자동 배정. 포스리스 옵션 향후 검토</div>
         <div class="desc-item"><strong>첫 주문 확인</strong> 시스템이 첫 주문 발생 자동 감지. 온보딩 완료 처리</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Reject Flow -->
-  <div class="flow-panel" id="flow-reject">
-    <div class="flow-section">
-      <h3><span class="badge badge-reject">REJECT FLOW</span> 승인 반려 시 재요청 프로세스</h3>
-      <div class="step-connector">
-        <div class="step-node">
-          <div class="step-actor actor-sales">영업사원</div>
-          <div class="step-box node-action">계약서 생성</div>
-          <div class="step-note">시뮬레이션 완료 후</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-sales">영업사원</div>
-          <div class="step-box node-approve">승인 요청</div>
-          <div class="step-note">관리자에게 전송</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-manager">관리자</div>
-          <div class="step-box node-alert">반려</div>
-          <div class="step-note">사유: 할인율 초과 등</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-system">시스템</div>
-          <div class="step-box node-auto">반려 알림</div>
-          <div class="step-note">영업사원에게 푸시</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-sales">영업사원</div>
-          <div class="step-box node-action">계약 조건 수정</div>
-          <div class="step-note">반려 사유 확인 → 수정</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-sales">영업사원</div>
-          <div class="step-box node-approve">재승인 요청</div>
-          <div class="step-note">수정 내역 포함</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-manager">관리자</div>
-          <div class="step-box node-approve">재검토</div>
-          <div class="step-note">수정 사항 확인</div>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="step-node">
-          <div class="step-actor actor-manager">관리자</div>
-          <div class="step-box node-end">승인 완료</div>
-          <div class="step-note">→ S-form 자동생성</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="desc-box">
-      <h3>반려 사유 유형</h3>
-      <div class="desc-list">
-        <div class="desc-item"><strong>할인율 초과</strong> 정책 기준보다 높은 할인 적용 시. 관리자가 허용 범위 코멘트</div>
-        <div class="desc-item"><strong>권역 불일치</strong> 배송 권역 커버 불가 지역 상점. 운영팀 확인 필요</div>
-        <div class="desc-item"><strong>정보 누락</strong> 상점 필수 정보(사업자번호, 연락처 등) 미기입</div>
-        <div class="desc-item"><strong>중복 계약</strong> 이미 기가입 상점에 대한 계약 시도. 기가입 상태 표시 필요(P1)</div>
-      </div>
-    </div>
-
-    <div class="desc-box" style="margin-top:16px">
-      <h3>설계 포인트</h3>
-      <div class="desc-list">
-        <div class="desc-item"><strong>반려 코멘트 필수</strong> 관리자가 반려 시 사유를 반드시 입력. 영업사원이 수정 방향을 즉시 파악</div>
-        <div class="desc-item"><strong>수정 이력 보존</strong> 원본 → 수정본 비교 가능. 몇 차 수정인지 추적</div>
-        <div class="desc-item"><strong>반려 횟수 제한</strong> 3회 반려 시 자동 에스컬레이션 (팀장 검토)</div>
-        <div class="desc-item"><strong>알림 채널</strong> 반려/승인 결과를 푸시 알림 + 세일즈 웹 내 알림으로 동시 전달</div>
       </div>
     </div>
   </div>
@@ -285,9 +200,9 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
       <h3><span class="badge badge-churn">CHURN FLOW</span> 계약 후 온보딩 이탈 대응</h3>
       <div class="step-connector">
         <div class="step-node">
-          <div class="step-actor actor-manager">관리자</div>
+          <div class="step-actor actor-system">시스템</div>
           <div class="step-box node-end" style="border-color:var(--green)">계약 완료</div>
-          <div class="step-note">승인 + S-form 완료</div>
+          <div class="step-note">서명 + S-form 자동 완료</div>
         </div>
         <div class="step-arrow">→</div>
         <div class="step-node">
@@ -397,19 +312,11 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
               <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
             </tr>
             <tr style="border-bottom:1px solid #f0f0f0">
-              <td style="padding:10px;font-weight:600">승인</td>
-              <td style="padding:10px"><span class="step-actor actor-manager" style="font-size:11px">관리자</span></td>
-              <td style="padding:10px;color:var(--text2)">전화/카톡 구두 승인</td>
-              <td style="padding:10px">시스템 내 승인 + 알림</td>
-              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-수시간</td>
-              <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid #f0f0f0">
               <td style="padding:10px;font-weight:600">S-form 기입</td>
               <td style="padding:10px"><span class="step-actor actor-system" style="font-size:11px">시스템</span></td>
               <td style="padding:10px;color:var(--text2)">영업 후 일괄/내근자 대행</td>
-              <td style="padding:10px">승인 즉시 자동 생성</td>
-              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-1~2일</td>
+              <td style="padding:10px">서명 완료 즉시 자동 생성</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-1~3일</td>
               <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
             </tr>
             <tr style="border-bottom:1px solid #f0f0f0">

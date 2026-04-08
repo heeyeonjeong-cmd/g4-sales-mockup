@@ -168,7 +168,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
     <div class="phase-row">
       <div class="phase-item p-active" style="background:var(--blue)"><div class="num">1</div><div class="label">발견 & 시뮬레이션</div></div>
       <div class="phase-item p-active" style="background:var(--indigo)"><div class="num">2</div><div class="label">가입 & 계약</div></div>
-      <div class="phase-item p-active" style="background:var(--purple)"><div class="num">3</div><div class="label">검증 & 승인</div></div>
+      <div class="phase-item p-active" style="background:var(--purple)"><div class="num">3</div><div class="label">자동 셋업</div></div>
       <div class="phase-item p-active" style="background:var(--vroong)"><div class="num">4</div><div class="label">온보딩 셋업</div></div>
       <div class="phase-item p-active" style="background:var(--amber)"><div class="num">5</div><div class="label">활성화</div></div>
     </div>
@@ -191,9 +191,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-action">전자 계약 서명<span class="tooltip">약관 동의 + 전자서명. 계약서 PDF 자동 생성 → 이메일 발송</span></div>
             <div class="arr">→</div>
-            <div class="node n-gray">대기<span class="tooltip">시스템이 검증하고 영업사원이 확인하는 동안 대기. 사장님에게는 진행 상태가 실시간 노출</span></div>
-            <div class="arr">→</div>
-            <div class="node n-action">포스 설치 일정 확인<span class="tooltip">영업사원이 잡은 포스 설치 일정을 사장님 사이트에서 확인/변경</span></div>
+            <div class="node n-action">포스 설치 일정 확인<span class="tooltip">시스템 자동 셋업 완료 후 영업사원이 잡은 포스 설치 일정을 사장님 사이트에서 확인/변경</span></div>
             <div class="arr">→</div>
             <div class="node n-action">테스트 주문<span class="tooltip">포스 설치 완료 후 테스트 주문 실행. 정상 수신 확인</span></div>
             <div class="arr">→</div>
@@ -235,8 +233,6 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr" style="opacity:.3">→</div>
             <div class="node n-user">신규 리드 알림 수신<span class="tooltip">세일즈 툴에 신규 인바운드 리드 알림. 리드 정보 + 스코어 + 앵커 여부 확인</span></div>
             <div class="arr">→</div>
-            <div class="node n-check">계약 정보 검증<span class="tooltip">사업자 확인, 계약 조건 적정성, 권역 가능 여부 재확인. 이상 없으면 승인 요청</span></div>
-            <div class="arr">→</div>
             <div class="node n-user">포스 설치 일정 조율<span class="tooltip">사장님과 포스 설치 일정 협의. 헥토 연동 or 포스리스 옵션 안내</span></div>
             <div class="arr">→</div>
             <div class="node n-user">현장 방문 & 포스 설치<span class="tooltip">포스 설치 + 연동 확인 + 사용법 안내. 평균 30분~1시간 소요</span></div>
@@ -257,10 +253,10 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr" style="opacity:.3">→</div>
             <div class="node n-gray" style="opacity:.4">—</div>
             <div class="arr" style="opacity:.3">→</div>
-            <div class="node n-check">계약 승인<span class="tooltip">영업사원이 올린 계약 검토 → 승인/반려. 앵커 상점(500건+)은 특별 요금제 → 별도 승인 필요</span></div>
-            <div class="arr">→</div>
-            <div class="node n-anchor">앵커 특별 요금 승인<span class="tooltip">앵커 상점 전용 볼륨 할인/묶음배송 특가. 관리자 승인 후 계약서 반영</span></div>
-            <div class="arr">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
+            <div class="node n-gray" style="opacity:.4">—</div>
+            <div class="arr" style="opacity:.3">→</div>
             <div class="node n-gray" style="opacity:.4">—</div>
             <div class="arr" style="opacity:.3">→</div>
             <div class="node n-gray" style="opacity:.4">—</div>
@@ -276,11 +272,11 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
     <div class="card" style="margin-top:16px;border-left:4px solid var(--vroong)">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px">핵심 포인트: 뒷단에서 일어나는 일</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.8">
-        사장님은 "가입 → 계약 → 대기 → 포스 설치 → 첫 주문"만 경험하지만, 뒤에서는:<br>
-        <strong>1)</strong> 시스템이 배달 가능 여부 · 사업자 진위 · 기가입 여부 · 리드 스코어링 · S-form 생성을 <strong>전부 자동</strong>으로 처리하고,<br>
-        <strong>2)</strong> 영업사원이 리드를 확인 → 계약 검증 → 포스 설치까지 <strong>마무리 터치</strong>를 담당하며,<br>
-        <strong>3)</strong> 관리자가 승인 + 앵커 특별 요금을 <strong>검수</strong>합니다.<br>
-        <strong style="color:var(--vroong)">→ 사장님의 셀프 가입이 "방치"가 아니라, 시스템 + 사람이 즉시 받아주는 구조.</strong>
+        사장님은 "가입 → 계약 → 포스 설치 → 첫 주문"만 경험하지만, 뒤에서는:<br>
+        <strong>1)</strong> 시스템이 배달 가능 여부 · 사업자 진위 · 기가입 여부 · 리드 스코어링 · S-form 생성 · 상점 계정 생성까지 <strong>전부 자동</strong>으로 처리하고,<br>
+        <strong>2)</strong> 영업사원이 리드를 확인 → 포스 설치 → 초기 케어까지 <strong>마무리 터치</strong>를 담당하며,<br>
+        <strong>3)</strong> 관리자는 온보딩 KPI를 통해 <strong>성과를 모니터링</strong>합니다.<br>
+        <strong style="color:var(--vroong)">→ 별도 승인 단계 없이, 전자서명 완료 즉시 시스템이 자동으로 모든 셋업을 처리하는 구조.</strong>
       </div>
     </div>
   </div>
@@ -289,7 +285,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
   <div class="panel" id="panel-1">
     <div class="section">
       <div class="section-label">Step-by-Step</div>
-      <div class="section-title">10단계 상세 플로우</div>
+      <div class="section-title">7단계 상세 플로우</div>
     </div>
 
     <div class="v-flow">
@@ -344,15 +340,17 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="v-line"><div class="v-dot" style="border-color:var(--green)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--green-l);color:var(--green)">시스템 자동</div>
-          <div class="v-title">Step 4. 리드 분류 & 영업사원 자동 배정</div>
+          <div class="v-title">Step 4. 자동 분류 · 배정 · 상점 계정 생성</div>
           <div class="v-desc">
-            리드 스코어링 결과에 따라 자동 분류:<br>
+            전자서명 완료 즉시 시스템이 자동으로 처리:<br>
+            • S-form 자동 생성 + 리드 스코어링 → 물량 등급 판정<br>
             • <strong style="color:var(--text3)">소물량 (~100건/월)</strong>: 일반 영업사원 배정<br>
             • <strong style="color:var(--amber)">앵커 (500건+/월)</strong>: 시니어 영업사원 우선 배정<br>
             • <strong style="color:var(--purple)">메가 (1,000건+/월)</strong>: Key Account 매니저 직접 배정<br>
-            영업사원에게 <strong>즉시 알림</strong> (앱 푸시 + 세일즈 툴 알림).
+            • <strong>상점 계정 자동 생성</strong> + 권역 세팅 + 포스 연동 준비<br>
+            영업사원에게 <strong>즉시 알림</strong> (앱 푸시 + 세일즈 툴 알림). 사장님에게 "계약 완료! 포스 설치 일정을 잡아주세요" 안내 발송.
           </div>
-          <div class="v-system">⚡ 시스템: 물량 등급 판정 → 권역별 영업사원 매칭 → 알림 발송</div>
+          <div class="v-system">⚡ 시스템: 물량 등급 판정 → 영업사원 매칭 → 상점 계정 생성 → 알림 발송 (전부 자동, 승인 없음)</div>
           <div class="v-time">소요: 즉시 (자동)</div>
         </div>
       </div>
@@ -362,57 +360,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
-          <div class="v-title">Step 5. 계약 정보 검증 & 승인 요청</div>
-          <div class="v-desc">
-            세일즈 툴에서 인바운드 리드 확인:<br>
-            • 사업자 정보, 요금제, 권역 적합성 검토<br>
-            • 이상 없으면 → 관리자 <strong>승인 요청</strong><br>
-            • 앵커 상점이면 → 특별 요금제 검토 → <strong>별도 승인 라인</strong>
-          </div>
-          <div class="v-time">소요: ~30분 (SLA)</div>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="v-step">
-        <div class="v-line"><div class="v-dot" style="border-color:var(--amber)"></div><div class="v-bar"></div></div>
-        <div class="v-body">
-          <div class="v-actor" style="background:var(--amber-l);color:var(--amber)">영업 관리자</div>
-          <div class="v-title">Step 6. 계약 승인 (+ 앵커 특별 요금 승인)</div>
-          <div class="v-desc">
-            일반 상점: 계약 조건 검토 → <strong>승인</strong><br>
-            앵커 상점: 볼륨 할인/묶음배송 특가 적용 여부 → <strong>특별 승인</strong><br>
-            반려 시: 사유 기재 → 영업사원에게 반려 알림 → 수정 후 재요청
-          </div>
-          <div class="v-system">⚡ 시스템: 승인 즉시 → 상점 계정 자동 생성 → 사장님에게 "계약 완료" 알림 발송</div>
-          <div class="v-time">소요: ~2시간 (SLA)</div>
-        </div>
-      </div>
-
-      <!-- Step 7 -->
-      <div class="v-step">
-        <div class="v-line"><div class="v-dot" style="border-color:var(--green)"></div><div class="v-bar"></div></div>
-        <div class="v-body">
-          <div class="v-actor" style="background:var(--green-l);color:var(--green)">시스템 자동</div>
-          <div class="v-title">Step 7. 상점 계정 생성 & 셋업</div>
-          <div class="v-desc">
-            승인 완료 즉시 자동으로:<br>
-            • 부릉 상점 계정 생성 (사장님사이트 로그인 가능)<br>
-            • 배달 권역 세팅<br>
-            • 헥토 연동 준비 (포스 설치 전 사전 작업)<br>
-            • 사장님에게 "계약 완료! 포스 설치 일정을 잡아주세요" 안내 발송
-          </div>
-          <div class="v-system">⚡ 시스템: S-form 데이터 → 상점 마스터 자동 등록 → 권역/요금제 세팅</div>
-          <div class="v-time">소요: 즉시 (자동)</div>
-        </div>
-      </div>
-
-      <!-- Step 8 -->
-      <div class="v-step">
-        <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
-        <div class="v-body">
-          <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
-          <div class="v-title">Step 8. 포스 설치 & 연동</div>
+          <div class="v-title">Step 5. 포스 설치 & 연동</div>
           <div class="v-desc">
             사장님과 일정 조율 후 <strong>현장 방문</strong>:<br>
             • 포스 설치 (헥토 연동)<br>
@@ -424,12 +372,12 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
 
-      <!-- Step 9 -->
+      <!-- Step 6 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--blue)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--blue-l);color:var(--blue)">사장님 + 영업사원</div>
-          <div class="v-title">Step 9. 테스트 주문 & 활성화</div>
+          <div class="v-title">Step 6. 테스트 주문 & 활성화</div>
           <div class="v-desc">
             포스에서 테스트 주문 발생 → 라이더 배정 → 정상 배달 확인.<br>
             성공 시 상점 상태를 <strong>"활성(Active)"</strong>으로 전환.
@@ -439,12 +387,12 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
 
-      <!-- Step 10 -->
+      <!-- Step 7 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--vroong)"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--vroong-l);color:var(--vroong)">시스템 + 영업사원</div>
-          <div class="v-title">Step 10. 초기 30일 모니터링 (이탈 방지)</div>
+          <div class="v-title">Step 7. 초기 30일 모니터링 (이탈 방지)</div>
           <div class="v-desc">
             활성화 후 30일간 이탈 모니터링:<br>
             • 3일 연속 주문 0건 → 영업사원에게 <strong style="color:var(--red)">이탈 경보</strong><br>
@@ -470,7 +418,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
       <div style="font-size:11px;color:var(--text3);margin-top:8px">
-        사장님 셀프 부분: ~10분 | 시스템 자동: 즉시 | 영업사원 검증+승인: ~2시간 (SLA) | 포스 설치: 다음날 방문 기준
+        사장님 셀프 부분: ~10분 | 시스템 자동 셋업: 즉시 | 영업사원 포스 설치: 다음날 방문 기준
       </div>
     </div>
   </div>
@@ -526,13 +474,13 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <tr>
             <td style="font-weight:700">승인</td>
             <td>전화/카톡 구두 → 추적 불가</td>
-            <td>세일즈 툴 내 승인 워크플로 → 이력 보존</td>
-            <td><span class="badge b-green">투명성↑</span></td>
+            <td><strong>승인 없음</strong> — 계약 즉시 확정, 시스템 자동 처리</td>
+            <td><span class="badge b-green">병목 제거</span></td>
           </tr>
           <tr>
             <td style="font-weight:700">상점 계정 생성</td>
             <td>S-form → 운영팀 수동 등록 → 1~2일</td>
-            <td><strong>승인 즉시 자동 생성</strong></td>
+            <td><strong>전자서명 즉시 자동 생성</strong></td>
             <td><span class="badge b-green">-100% 시간</span></td>
           </tr>
           <tr>
@@ -544,7 +492,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <tr>
             <td style="font-weight:700">영업사원 역할</td>
             <td>리드 발굴 + 피칭 + 계약 + 포스 설치 (ALL)</td>
-            <td><strong>검증 + 포스 설치 + 초기 케어</strong> (마무리만)</td>
+            <td><strong>포스 설치 + 초기 케어</strong> (마무리만)</td>
             <td><span class="badge b-blue">업무 50%↓</span></td>
           </tr>
           <tr>
@@ -562,7 +510,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <tr>
             <td style="font-weight:700;color:var(--amber)">앵커 상점 대응</td>
             <td>물량 구분 없이 동일 프로세스</td>
-            <td>리드 스코어 → 자동 분류 → 시니어 우선 배정 → 특별 요금 승인</td>
+            <td>리드 스코어 → 자동 분류 → 시니어 우선 배정 → 전담 케어</td>
             <td><span class="badge b-purple">물량 극대화</span></td>
           </tr>
           <tr>
@@ -603,21 +551,12 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
         <div style="display:flex;flex-direction:column;align-items:center">
           <div style="font-size:16px;color:var(--text3)">→</div>
-          <div style="font-size:9px;color:var(--text3)">전자 서명<br>완료</div>
+          <div style="font-size:9px;color:var(--text3)">전자서명<br>완료</div>
         </div>
 
         <div style="text-align:center">
-          <div style="padding:12px 20px;background:var(--amber);color:#fff;border-radius:12px;font-size:13px;font-weight:700;min-width:110px">계약 체결<br><span style="font-size:10px;opacity:.8">승인 대기</span></div>
-          <div style="font-size:10px;color:var(--text3);margin-top:4px">영업사원 검증 중</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div style="font-size:16px;color:var(--text3)">→</div>
-          <div style="font-size:9px;color:var(--text3)">관리자<br>승인</div>
-        </div>
-
-        <div style="text-align:center">
-          <div style="padding:12px 20px;background:var(--purple);color:#fff;border-radius:12px;font-size:13px;font-weight:700;min-width:110px">계약 승인<br><span style="font-size:10px;opacity:.8">셋업 중</span></div>
-          <div style="font-size:10px;color:var(--text3);margin-top:4px">계정 생성 · 포스 대기</div>
+          <div style="padding:12px 20px;background:var(--purple);color:#fff;border-radius:12px;font-size:13px;font-weight:700;min-width:110px">계약 완료<br><span style="font-size:10px;opacity:.8">셋업 중</span></div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px">자동 계정 생성 · 포스 대기</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center">
           <div style="font-size:16px;color:var(--text3)">→</div>
@@ -639,15 +578,6 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             시뮬레이션 단계에서 주소 입력 → 배달 불가 판정<br>
             → "상담 신청" 폼으로 전환 (이메일/전화 수집)<br>
             → 향후 권역 확장 시 재연락 리스트에 등록
-          </div>
-        </div>
-        <div class="card card-sm" style="border-left:4px solid var(--amber);flex:1;min-width:260px">
-          <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:4px">예외: 승인 반려</div>
-          <div style="font-size:11px;color:var(--text2);line-height:1.6">
-            관리자가 반려 (권역 이슈, 요금 부적정 등)<br>
-            → 영업사원에게 반려 사유 전달<br>
-            → 사장님에게 "추가 확인이 필요합니다" 안내<br>
-            → 수정 후 재계약 or 아웃바운드 전환
           </div>
         </div>
         <div class="card card-sm" style="border-left:4px solid var(--purple);flex:1;min-width:260px">
@@ -683,18 +613,11 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <td>사업자 DB 등록, 기가입 체크 완료</td>
           </tr>
           <tr>
-            <td><span class="badge b-amber">계약 체결 (승인 대기)</span></td>
-            <td>계약서 서명 완료, 검증 중</td>
+            <td><span class="badge b-purple">계약 완료 (셋업 중)</span></td>
+            <td>계약 확정, 자동 셋업 진행 중</td>
             <td>전자서명 완료</td>
-            <td>"검토 중입니다" 진행 바</td>
-            <td>S-form 생성, 리드 스코어링, 영업사원 배정, 검증 시작</td>
-          </tr>
-          <tr>
-            <td><span class="badge b-purple">계약 승인 (셋업 중)</span></td>
-            <td>승인됨, 포스 설치 대기</td>
-            <td>관리자 승인</td>
             <td>"포스 설치 일정을 잡아주세요"</td>
-            <td>상점 계정 생성, 권역 세팅, 포스 준비</td>
+            <td>S-form 생성, 리드 스코어링, 영업사원 배정, 상점 계정 생성, 권역 세팅, 포스 준비</td>
           </tr>
           <tr>
             <td><span class="badge b-green">활성 (Active)</span></td>

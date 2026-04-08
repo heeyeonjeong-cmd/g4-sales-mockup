@@ -192,7 +192,7 @@ select.form-input{appearance:auto}
       <div class="sidebar-item" onclick="go('lead-detail')"><span class="material-symbols-rounded">contact_page</span> 리드 상세</div>
       <div class="sidebar-item" onclick="go('simulation')"><span class="material-symbols-rounded">calculate</span> 요금 시뮬레이션</div>
       <div class="sidebar-item" onclick="go('contract')"><span class="material-symbols-rounded">description</span> 계약서 생성</div>
-      <div class="sidebar-item" onclick="go('approval')"><span class="material-symbols-rounded">task_alt</span> 승인 관리<span class="sidebar-badge">3</span></div>
+      <div class="sidebar-item" onclick="go('monitoring')"><span class="material-symbols-rounded">monitoring</span> 계약 모니터링</div>
       <div class="sidebar-item" onclick="go('complete')"><span class="material-symbols-rounded">verified</span> 계약 완료</div>
       <div class="sidebar-item" onclick="go('list')"><span class="material-symbols-rounded">list_alt</span> 계약 상태</div>
       <div class="sidebar-item" onclick="go('onboarding')"><span class="material-symbols-rounded">rocket_launch</span> 온보딩 추적</div>
@@ -274,7 +274,7 @@ select.form-input{appearance:auto}
               <select class="form-input" onchange="calcSim()">
                 <option value="4300">기본 요금제 - 건당 4,300원</option>
                 <option value="3800" selected>할인 요금제 - 건당 3,800원</option>
-                <option value="3500">특별 할인 - 건당 3,500원 (승인 필요)</option>
+                <option value="3500">특별 할인 - 건당 3,500원</option>
               </select>
             </div>
             <div class="form-group">
@@ -351,8 +351,7 @@ select.form-input{appearance:auto}
         <div class="step done">1. 리드 선택</div>
         <div class="step done">2. 요금 시뮬레이션</div>
         <div class="step current">3. 계약서 생성</div>
-        <div class="step">4. 승인 요청</div>
-        <div class="step">5. 계약 완료</div>
+        <div class="step">4. 계약 완료</div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -408,9 +407,6 @@ select.form-input{appearance:auto}
               </div>
             </div>
 
-            <div style="padding:10px;background:var(--amber-l);border-radius:var(--radius-sm);font-size:12px;color:var(--amber);font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:14px">
-              <span class="material-symbols-rounded" style="font-size:16px">info</span> 할인 요금제 적용 → 관리자 승인이 필요합니다
-            </div>
           </div>
 
           <div class="card">
@@ -423,7 +419,7 @@ select.form-input{appearance:auto}
           </div>
 
           <div style="display:flex;gap:8px;margin-top:16px">
-            <button class="btn btn-primary" onclick="go('approval')">승인 요청</button>
+            <button class="btn btn-primary" onclick="go('complete')">계약 확정</button>
             <button class="btn btn-outline">임시 저장</button>
             <button class="btn btn-outline" onclick="go('simulation')">시뮬레이션 수정</button>
           </div>
@@ -431,21 +427,21 @@ select.form-input{appearance:auto}
       </div>
     </div>
 
-    <!-- 4. 승인 대기/처리 -->
-    <div class="page" id="page-approval">
-      <div class="page-title">승인 관리</div>
-      <div class="page-subtitle">관리자 뷰 · 승인 대기 중인 계약을 검토합니다</div>
+    <!-- 4. 계약 모니터링 -->
+    <div class="page" id="page-monitoring">
+      <div class="page-title">계약 모니터링</div>
+      <div class="page-subtitle">관리자 뷰 · 최근 계약 현황을 한눈에 확인합니다</div>
 
       <div class="kpi-row">
-        <div class="kpi-card"><div class="kpi-label">승인 대기</div><div class="kpi-value" style="color:var(--amber)">3</div><div class="kpi-sub">평균 대기 2.4시간</div></div>
-        <div class="kpi-card"><div class="kpi-label">금일 승인</div><div class="kpi-value" style="color:var(--green)">7</div><div class="kpi-sub">평균 처리 38분</div></div>
-        <div class="kpi-card"><div class="kpi-label">금일 반려</div><div class="kpi-value" style="color:var(--red)">1</div><div class="kpi-sub">사유: 할인율 초과</div></div>
-        <div class="kpi-card"><div class="kpi-label">금주 총 처리</div><div class="kpi-value">42</div><div class="kpi-sub">승인율 95%</div></div>
+        <div class="kpi-card"><div class="kpi-label">신규 계약</div><div class="kpi-value" style="color:var(--blue)">3</div><div class="kpi-sub">오늘 확정</div></div>
+        <div class="kpi-card"><div class="kpi-label">금일 계약</div><div class="kpi-value" style="color:var(--green)">7</div><div class="kpi-sub">전일 대비 +2</div></div>
+        <div class="kpi-card"><div class="kpi-label">이번 주 계약</div><div class="kpi-value" style="color:var(--vroong)">42</div><div class="kpi-sub">주간 목표 50건</div></div>
+        <div class="kpi-card"><div class="kpi-label">월 누적</div><div class="kpi-value">156</div><div class="kpi-sub">달성률 78%</div></div>
       </div>
 
       <div class="sub-tabs">
-        <div class="sub-tab active">승인 대기 (3)</div>
-        <div class="sub-tab">금일 처리 (8)</div>
+        <div class="sub-tab active">최근 계약 (10)</div>
+        <div class="sub-tab">금일 확정 (7)</div>
         <div class="sub-tab">전체 이력</div>
       </div>
 
@@ -453,9 +449,9 @@ select.form-input{appearance:auto}
         <div class="approval-row">
           <div>
             <div style="font-size:14px;font-weight:700">맛있는 치킨 강남점</div>
-            <div class="approval-meta">영업사원: 정혜연 · 요청일: 2026.04.01 10:30</div>
+            <div class="approval-meta">영업사원: 정혜연 · 계약일: 2026.04.01 10:30</div>
           </div>
-          <span class="badge badge-amber">승인 대기</span>
+          <span class="badge badge-green">계약 확정</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;margin-bottom:12px">
           <div><span style="color:var(--text3)">요금제</span><div style="font-weight:600">할인 3,800원/건</div></div>
@@ -463,16 +459,9 @@ select.form-input{appearance:auto}
           <div><span style="color:var(--text3)">권역</span><div style="font-weight:600">강남 1권역</div></div>
           <div><span style="color:var(--text3)">계약기간</span><div style="font-weight:600">12개월</div></div>
         </div>
-        <div style="padding:8px 12px;background:var(--amber-l);border-radius:var(--radius-sm);font-size:12px;color:var(--amber);margin-bottom:12px">
-          <strong>승인 필요 사유:</strong> 할인 요금제 적용 (기본 4,300원 → 3,800원, -11.6%)
-        </div>
-        <div class="form-group" style="margin-bottom:8px">
-          <textarea class="form-input" rows="2" placeholder="코멘트를 입력하세요 (반려 시 필수)"></textarea>
-        </div>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-primary btn-sm" onclick="go('complete')">승인</button>
-          <button class="btn btn-danger btn-sm">반려</button>
-          <button class="btn btn-outline btn-sm">상세보기</button>
+          <button class="btn btn-outline btn-sm" onclick="go('complete')">상세보기</button>
+          <button class="btn btn-outline btn-sm">계약서 보기</button>
         </div>
       </div>
 
@@ -480,9 +469,9 @@ select.form-input{appearance:auto}
         <div class="approval-row">
           <div>
             <div style="font-size:14px;font-weight:700">행복 분식 서초점</div>
-            <div class="approval-meta">영업사원: 박철수 · 요청일: 2026.04.01 09:15</div>
+            <div class="approval-meta">영업사원: 박철수 · 계약일: 2026.04.01 09:15</div>
           </div>
-          <span class="badge badge-amber">승인 대기</span>
+          <span class="badge badge-green">계약 확정</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;margin-bottom:12px">
           <div><span style="color:var(--text3)">요금제</span><div style="font-weight:600">특별할인 3,500원/건</div></div>
@@ -490,16 +479,9 @@ select.form-input{appearance:auto}
           <div><span style="color:var(--text3)">권역</span><div style="font-weight:600">서초 2권역</div></div>
           <div><span style="color:var(--text3)">계약기간</span><div style="font-weight:600">24개월</div></div>
         </div>
-        <div style="padding:8px 12px;background:var(--red-l);border-radius:var(--radius-sm);font-size:12px;color:var(--red);margin-bottom:12px">
-          <strong>주의:</strong> 특별 할인 적용 (-18.6%) + 24개월 장기 계약. 팀장 확인 권고
-        </div>
-        <div class="form-group" style="margin-bottom:8px">
-          <textarea class="form-input" rows="2" placeholder="코멘트를 입력하세요 (반려 시 필수)"></textarea>
-        </div>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-primary btn-sm">승인</button>
-          <button class="btn btn-danger btn-sm">반려</button>
           <button class="btn btn-outline btn-sm">상세보기</button>
+          <button class="btn btn-outline btn-sm">계약서 보기</button>
         </div>
       </div>
 
@@ -507,9 +489,9 @@ select.form-input{appearance:auto}
         <div class="approval-row">
           <div>
             <div style="font-size:14px;font-weight:700">피자파는집 잠실점</div>
-            <div class="approval-meta">영업사원: 이민준 · 요청일: 2026.04.01 08:45</div>
+            <div class="approval-meta">영업사원: 이민준 · 계약일: 2026.04.01 08:45</div>
           </div>
-          <span class="badge badge-amber">승인 대기</span>
+          <span class="badge badge-green">계약 확정</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:12px;margin-bottom:12px">
           <div><span style="color:var(--text3)">요금제</span><div style="font-weight:600">기본 4,300원/건</div></div>
@@ -518,9 +500,8 @@ select.form-input{appearance:auto}
           <div><span style="color:var(--text3)">계약기간</span><div style="font-weight:600">12개월</div></div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-primary btn-sm">승인</button>
-          <button class="btn btn-danger btn-sm">반려</button>
           <button class="btn btn-outline btn-sm">상세보기</button>
+          <button class="btn btn-outline btn-sm">계약서 보기</button>
         </div>
       </div>
     </div>
@@ -534,8 +515,7 @@ select.form-input{appearance:auto}
         <div class="step done">1. 리드 선택</div>
         <div class="step done">2. 요금 시뮬레이션</div>
         <div class="step done">3. 계약서 생성</div>
-        <div class="step done">4. 승인 완료</div>
-        <div class="step current">5. 계약 완료</div>
+        <div class="step current">4. 계약 완료</div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -556,19 +536,19 @@ select.form-input{appearance:auto}
           </div>
 
           <div class="card">
-            <div class="card-header"><div class="card-title">승인 이력</div></div>
+            <div class="card-header"><div class="card-title">계약 이력</div></div>
             <div class="timeline">
               <div class="timeline-item">
                 <div class="timeline-dot green"></div>
-                <div class="timeline-title">승인 완료 - 김팀장</div>
-                <div class="timeline-time">2026.04.01 11:15</div>
-                <div class="timeline-desc">할인 요금제 적용 승인. 코멘트: "강남 1권역 전략 상점, 할인 적용 타당"</div>
+                <div class="timeline-title">계약 확정 - 정혜연</div>
+                <div class="timeline-time">2026.04.01 10:35</div>
+                <div class="timeline-desc">할인 요금제 (3,800원/건) 적용. 12개월 계약 확정</div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-dot blue"></div>
-                <div class="timeline-title">승인 요청 - 정혜연</div>
+                <div class="timeline-title">계약서 생성 - 정혜연</div>
                 <div class="timeline-time">2026.04.01 10:30</div>
-                <div class="timeline-desc">할인 요금제 (3,800원/건) 적용 요청</div>
+                <div class="timeline-desc">시뮬레이션 결과 기반 계약서 생성. 상점주 서명 완료</div>
               </div>
             </div>
           </div>
@@ -586,7 +566,7 @@ select.form-input{appearance:auto}
               <dt>권역 코드</dt><dd>ZONE-GN-01</dd>
               <dt>S-form 상태</dt><dd><span class="badge badge-green">전송 완료</span></dd>
             </div>
-            <div class="form-hint">* 계약 승인 즉시 S-form이 자동으로 생성/전송되었습니다 (기존: 영업 종료 후 수작업 입력)</div>
+            <div class="form-hint">* 계약 확정 즉시 S-form이 자동으로 생성/전송되었습니다 (기존: 영업 종료 후 수작업 입력)</div>
           </div>
 
           <div class="card">
@@ -614,10 +594,10 @@ select.form-input{appearance:auto}
 
       <div class="kpi-row">
         <div class="kpi-card"><div class="kpi-label">전체 계약</div><div class="kpi-value">156</div><div class="kpi-sub">이번 달</div></div>
-        <div class="kpi-card"><div class="kpi-label">진행 중</div><div class="kpi-value" style="color:var(--blue)">23</div><div class="kpi-sub">계약서 작성 ~ 승인 대기</div></div>
+        <div class="kpi-card"><div class="kpi-label">진행 중</div><div class="kpi-value" style="color:var(--blue)">23</div><div class="kpi-sub">계약서 작성 중</div></div>
         <div class="kpi-card"><div class="kpi-label">온보딩 중</div><div class="kpi-value" style="color:var(--amber)">18</div><div class="kpi-sub">S-form ~ 첫주문 대기</div></div>
         <div class="kpi-card"><div class="kpi-label">완료</div><div class="kpi-value" style="color:var(--green)">112</div><div class="kpi-sub">첫주문 발생 완료</div></div>
-        <div class="kpi-card"><div class="kpi-label">반려/이탈</div><div class="kpi-value" style="color:var(--red)">3</div><div class="kpi-sub">이번 달 기준</div></div>
+        <div class="kpi-card"><div class="kpi-label">이탈</div><div class="kpi-value" style="color:var(--red)">3</div><div class="kpi-sub">이번 달 기준</div></div>
       </div>
 
       <div class="filter-bar">
@@ -625,11 +605,9 @@ select.form-input{appearance:auto}
         <select class="form-input" style="width:150px">
           <option>전체 상태</option>
           <option>계약서 작성 중</option>
-          <option>승인 대기</option>
-          <option>승인 완료</option>
+          <option>계약 확정</option>
           <option>온보딩 중</option>
           <option>완료</option>
-          <option>반려</option>
           <option>이탈</option>
         </select>
         <select class="form-input" style="width:130px">
@@ -670,20 +648,20 @@ select.form-input{appearance:auto}
               <td style="font-weight:600">행복 분식 서초점</td>
               <td>특별 3,500원</td>
               <td>5,250,000원</td>
-              <td><span class="badge badge-amber">승인 대기</span></td>
+              <td><span class="badge badge-green">계약 확정</span></td>
               <td>박철수</td>
               <td>04.01</td>
-              <td>-</td>
+              <td>04.01</td>
             </tr>
             <tr>
               <td style="font-weight:600;color:var(--blue)">G4-0401-003</td>
               <td style="font-weight:600">피자파는집 잠실점</td>
               <td>기본 4,300원</td>
               <td>2,150,000원</td>
-              <td><span class="badge badge-amber">승인 대기</span></td>
+              <td><span class="badge badge-green">계약 확정</span></td>
               <td>이민준</td>
               <td>04.01</td>
-              <td>-</td>
+              <td>04.01</td>
             </tr>
             <tr>
               <td style="font-weight:600;color:var(--blue)">G4-0331-012</td>
@@ -710,7 +688,7 @@ select.form-input{appearance:auto}
               <td style="font-weight:600">동네 중국집 방배점</td>
               <td>할인 3,800원</td>
               <td>2,660,000원</td>
-              <td><span class="badge badge-red">반려</span></td>
+              <td><span class="badge badge-red">이탈</span></td>
               <td>이민준</td>
               <td>03.30</td>
               <td>03.30</td>
