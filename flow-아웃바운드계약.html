@@ -210,11 +210,13 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-auto">절감액 계산<span class="tooltip">요금제 × 월 주문수 자동 계산. 경쟁사 대비 절감액 시각화</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">계약서 자동 생성<span class="tooltip">시뮬레이션 데이터 + 상점 정보 → 계약서 PDF 자동 생성</span></div>
+            <div class="node n-auto">계약서 자동 생성<span class="tooltip">시뮬레이션 데이터 + 상점 정보 → 웹 계약서 자동 생성 + 서명 완료 즉시 확정</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">S-form 자동 생성<span class="tooltip">계약 서명 완료 즉시 S-form 자동 변환 + 전송. 수작업 제거</span></div>
+            <div class="node n-auto">VAN 코드 발급<span class="tooltip">계약 확정 즉시 카드 결제 수신용 VAN 코드 자동 발급. 상점 주문 접수의 필수 전제</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">상점 계정 생성<span class="tooltip">S-form 기반 상점 마스터 등록 + 권역/요금제 세팅. 사장님사이트 접근 가능</span></div>
+            <div class="node n-auto">더존 코드 발급<span class="tooltip">정산/세무 처리를 위한 더존 코드 자동 발급. 계약 확정 후 순차 처리</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">상점 계정 생성<span class="tooltip">상점 마스터 등록 + 권역/요금제 세팅 완료. 사장님사이트 접근 가능</span></div>
             <div class="arr">→</div>
             <div class="node n-auto">이탈 모니터링<span class="tooltip">활성화 후 30일 주문 패턴 추적. 3일 무주문 → 영업사원 알림</span></div>
           </div>
@@ -248,7 +250,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-screen">📱 계약서 생성<span class="tooltip">자동 반영된 상점/요금 정보 + 상점주 터치 서명 → 계약 즉시 확정</span></div>
             <div class="arr">→</div>
-            <div class="node n-screen">📱 계약 완료<span class="tooltip">계약서 PDF, S-form 자동 생성 확인, 상점주 안내 발송 현황</span></div>
+            <div class="node n-screen">📱 계약 완료<span class="tooltip">계약서 PDF 확인, VAN/더존 코드 발급 상태, 상점주 안내 발송 현황</span></div>
             <div class="arr">→</div>
             <div class="node n-screen">📱 계약 상태<span class="tooltip">전체 계약 목록 + 상태 필터. 진행/완료/해지</span></div>
             <div class="arr">→</div>
@@ -263,8 +265,8 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
     <div class="card" style="margin-top:16px;border-left:4px solid var(--purple)">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px">핵심: 세일즈 웹이 해주는 것</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.8">
-        세일즈 웹 도입 전에는 영업사원이 <strong style="color:var(--red)">엑셀로 요금 계산 → 수작업 계약서 → 카톡 승인 → S-form 수동 입력</strong>을 했습니다.<br>
-        세일즈 웹 도입 후: <strong>1)</strong> 요금 시뮬레이션을 상점주에게 바로 보여주고, <strong>2)</strong> 현장에서 터치 서명으로 즉시 계약 확정하며, <strong>3)</strong> S-form → 상점 계정이 <strong style="color:var(--vroong)">자동</strong>으로 흘러갑니다. 별도 승인 단계 없이 계약 즉시 처리.<br>
+        세일즈 웹 도입 전에는 영업사원이 <strong style="color:var(--red)">엑셀로 요금 계산 → 수작업 계약서 → 카톡 승인 → VAN/더존 코드 수동 요청</strong>을 했습니다.<br>
+        세일즈 웹 도입 후: <strong>1)</strong> 요금 시뮬레이션을 상점주에게 바로 보여주고, <strong>2)</strong> 현장에서 터치 서명으로 즉시 계약 확정하며, <strong>3)</strong> VAN 코드 → 더존 코드 → 상점 계정이 <strong style="color:var(--vroong)">자동</strong>으로 흘러갑니다. 별도 승인 단계 없이 계약 즉시 처리.<br>
         <strong style="color:var(--purple)">→ 영업사원은 "판매"에 집중하고, 나머지는 시스템이 처리.</strong>
       </div>
     </div>
@@ -274,7 +276,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
   <div class="panel" id="panel-1">
     <div class="section">
       <div class="section-label">Step-by-Step + Mockup Mapping</div>
-      <div class="section-title">8단계 상세 플로우</div>
+      <div class="section-title">9단계 상세 플로우</div>
       <div style="font-size:12px;color:var(--text2);margin-bottom:16px">각 단계에서 세일즈 웹의 <strong style="color:#7c3aed">어떤 화면</strong>을 사용하는지 표시했습니다.</div>
     </div>
 
@@ -349,7 +351,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <em style="color:var(--purple)">→ 이전: 별도 계약서 준비 → 재방문 필요 → 2~3일 소요</em><br>
             <em style="color:var(--vroong)">→ 이후: 현장에서 즉시 완료 → 5분</em>
           </div>
-          <div class="v-system">⚡ 시스템: 입력 데이터 → 계약서 PDF 자동 생성 → 서명 완료 즉시 S-form + 상점 계정 자동 생성 트리거</div>
+          <div class="v-system">⚡ 시스템: 입력 데이터 → 웹 계약서 자동 생성 → 서명 완료 즉시 계약 확정 → VAN/더존 코드 발급 + 상점 계정 자동 생성 트리거</div>
           <div class="v-time">소요: ~5분</div>
         </div>
       </div>
@@ -360,25 +362,41 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="v-body">
           <div class="v-actor" style="background:var(--green-l);color:var(--green)">시스템 자동</div>
           <div class="v-screen">계약 완료</div>
-          <div class="v-title">Step 5. 계약 완료 & 자동 셋업</div>
+          <div class="v-title">Step 5. 계약 완료 & 웹 계약서 확정</div>
           <div class="v-desc">
             <strong>계약 완료</strong> 화면에서 확인 가능:<br>
-            • 계약서 PDF 미리보기/다운로드/이메일 전송<br>
-            • S-form 자동 생성 상태 (상점 코드, 요금제 코드, 권역 코드)<br>
+            • 웹 계약서 PDF 미리보기/다운로드/이메일 전송<br>
             • 처리 이력 타임라인<br>
             • 상점주 안내 발송 현황 (카카오톡 계약 완료 알림, SMS 가입 링크, 헥토 가이드, 포스 안내)
           </div>
-          <div class="v-system">⚡ 시스템: 상점 마스터 등록 → 권역/요금제 세팅 → 사장님사이트 계정 준비</div>
+          <div class="v-system">⚡ 시스템: 계약 확정 즉시 → VAN/더존 코드 발급 트리거 + 상점 계정 생성 준비</div>
           <div class="v-time">소요: 즉시 (자동)</div>
         </div>
       </div>
 
-      <!-- Step 6 -->
+      <!-- Step 6 (NEW) -->
+      <div class="v-step">
+        <div class="v-line"><div class="v-dot" style="border-color:var(--green)"></div><div class="v-bar"></div></div>
+        <div class="v-body">
+          <div class="v-actor" style="background:var(--green-l);color:var(--green)">시스템 자동</div>
+          <div class="v-title">Step 6. VAN 코드 + 더존 코드 발급</div>
+          <div class="v-desc">
+            계약 확정 후 상점 오픈 전 반드시 발급되어야 하는 두 가지 코드:<br>
+            • <strong>VAN 코드</strong>: 카드 결제 수신을 위한 코드. 상점이 주문을 받으려면 필수<br>
+            • <strong>더존 코드</strong>: 정산/세무 처리를 위한 코드. 매출 정산과 세금계산서 발행에 필요<br>
+            두 코드 모두 계약 확정 후 시스템이 자동으로 발급 요청하며, 발급 완료 시 상점 계정 생성이 이어집니다.
+          </div>
+          <div class="v-system">⚡ 시스템: VAN 코드 자동 발급 → 더존 코드 자동 발급 → 상점 마스터 등록 → 권역/요금제 세팅 → 사장님사이트 계정 준비</div>
+          <div class="v-time">소요: 즉시~수 시간 (자동, 외부 시스템 연동)</div>
+        </div>
+      </div>
+
+      <!-- Step 7 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--blue)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--blue-l);color:var(--blue)">상점주</div>
-          <div class="v-title">Step 6. 사장님사이트 가입 & 헥토 연동</div>
+          <div class="v-title">Step 7. 사장님사이트 가입 & 헥토 연동</div>
           <div class="v-desc">
             상점주가 SMS 링크로 사장님사이트 회원가입:<br>
             • 이미 생성된 상점 계정에 매핑<br>
@@ -389,33 +407,33 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
 
-      <!-- Step 7 -->
+      <!-- Step 8 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--purple)"></div><div class="v-bar"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--purple-l);color:var(--purple)">영업사원</div>
           <div class="v-screen">온보딩 추적</div>
-          <div class="v-title">Step 7. 포스 설치 & 테스트 주문</div>
+          <div class="v-title">Step 8. 포스 설치 & 테스트 주문</div>
           <div class="v-desc">
             <strong>온보딩 추적</strong> 화면에서 진행 상황 체크:<br>
             • 포스 설치 일정 조율 → <strong>재방문</strong> (현재 계약과 분리되어 있는 핵심 병목)<br>
             • 헥토 포스 설치 + 연동 확인 (30분~1시간)<br>
             • 사장님사이트 사용법 안내<br>
-            • <strong>테스트 주문</strong> 실행 → 정상 배달 확인<br>
+            • 영업사원이 직접 <strong>테스트 주문</strong> 실행 → POS ↔ 시스템 ↔ 라이더 배차 정상 동작 확인<br>
             <br>
-            온보딩 체크리스트: ✅ 계약 확정 → ✅ S-form → ✅ 사장님사이트 가입 → ✅ 헥토 가입 → ✅ 포스 설치 → ✅ 테스트 주문
+            온보딩 체크리스트: ✅ 계약 확정 → ✅ VAN 코드 → ✅ 더존 코드 → ✅ 사장님사이트 가입 → ✅ 헥토 가입 → ✅ 포스 설치 → ✅ 테스트 주문
           </div>
           <div class="v-time">소요: 30분~1시간 (재방문 필요)</div>
         </div>
       </div>
 
-      <!-- Step 8 -->
+      <!-- Step 9 -->
       <div class="v-step">
         <div class="v-line"><div class="v-dot" style="border-color:var(--vroong)"></div></div>
         <div class="v-body">
           <div class="v-actor" style="background:var(--vroong-l);color:var(--vroong)">시스템 + 영업사원</div>
           <div class="v-screen">온보딩 추적</div>
-          <div class="v-title">Step 8. 활성화 & 30일 모니터링</div>
+          <div class="v-title">Step 9. 활성화 & 30일 모니터링</div>
           <div class="v-desc">
             테스트 주문 성공 → 상점 상태 <strong>"Active"</strong>로 전환.<br>
             이후 30일간:<br>
@@ -442,7 +460,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         </div>
       </div>
       <div style="font-size:11px;color:var(--text3);margin-top:8px">
-        현장 계약: ~30분 | 자동 셋업: 즉시 | 사장님사이트 가입: 당일 | 포스 설치: 익일 방문 기준
+        현장 계약: ~30분 | VAN/더존 코드 발급: 즉시~수 시간 | 상점 계정 생성: 자동 | 사장님사이트 가입: 당일 | 포스 설치: 익일 방문 기준 | 테스트 주문: 포스 설치 시
       </div>
     </div>
 
@@ -456,9 +474,9 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <tr><td style="font-weight:700;color:var(--purple)">리드 상세</td><td>Step 2</td><td>영업사원</td><td>상점 정보, 방문 이력, 영업 메모, 기가입 체크</td></tr>
             <tr><td style="font-weight:700;color:var(--purple)">요금 시뮬레이션</td><td>Step 3</td><td>영업사원 → 상점주</td><td>요금제/할증/권역 선택 → 절감액 시각화</td></tr>
             <tr><td style="font-weight:700;color:var(--purple)">계약서 생성</td><td>Step 4</td><td>영업사원 + 상점주</td><td>자동 반영 + 터치 서명 → 계약 즉시 확정</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">계약 완료</td><td>Step 5</td><td>시스템 (자동)</td><td>PDF, S-form, 안내 발송, 처리 이력</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">계약 상태</td><td>Step 5</td><td>영업사원/관리자</td><td>전체 계약 필터링, 상태별 조회, 성과 모니터링</td></tr>
-            <tr><td style="font-weight:700;color:var(--purple)">온보딩 추적</td><td>Step 7~8</td><td>영업사원</td><td>체크리스트, D+7 주문율, 이탈 경보</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약 완료</td><td>Step 5~6</td><td>시스템 (자동)</td><td>PDF, VAN/더존 코드 발급 상태, 안내 발송, 처리 이력</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">계약 상태</td><td>Step 5~6</td><td>영업사원/관리자</td><td>전체 계약 필터링, 상태별 조회, 성과 모니터링</td></tr>
+            <tr><td style="font-weight:700;color:var(--purple)">온보딩 추적</td><td>Step 8~9</td><td>영업사원</td><td>체크리스트, 테스트 주문, D+7 주문율, 이탈 경보</td></tr>
           </tbody>
         </table>
       </div>
@@ -503,8 +521,8 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <td>온라인 전자서명 (자택/가게에서)</td>
           </tr>
           <tr>
-            <td style="font-weight:700">S-form</td>
-            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 시스템 자동 생성 (수작업 0)</td>
+            <td style="font-weight:700">VAN/더존 코드 발급</td>
+            <td colspan="2" style="text-align:center;color:var(--vroong);font-weight:600">동일: 계약 확정 후 시스템 자동 발급 (수작업 0)</td>
           </tr>
           <tr>
             <td style="font-weight:700">승인 프로세스</td>

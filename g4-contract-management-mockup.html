@@ -556,17 +556,19 @@ select.form-input{appearance:auto}
 
         <div>
           <div class="card">
-            <div class="card-title" style="margin-bottom:14px">S-form 자동 생성</div>
+            <div class="card-title" style="margin-bottom:14px">VAN/더존 코드 발급</div>
+            <div style="padding:12px;background:var(--green-l);border-radius:var(--radius-sm);font-size:13px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:8px">
+              <span class="material-symbols-rounded" style="font-size:20px">check_circle</span> VAN 코드 발급 완료 (2026.04.01 11:16)
+            </div>
             <div style="padding:12px;background:var(--green-l);border-radius:var(--radius-sm);font-size:13px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:14px">
-              <span class="material-symbols-rounded" style="font-size:20px">check_circle</span> S-form 자동 생성 완료 (2026.04.01 11:16)
+              <span class="material-symbols-rounded" style="font-size:20px">check_circle</span> 더존 코드 발급 완료 (2026.04.01 11:16)
             </div>
             <div class="info-grid" style="margin-bottom:14px">
-              <dt>상점 코드</dt><dd>ST-GN-2026-0892</dd>
-              <dt>요금제 코드</dt><dd>PLAN-DISC-3800</dd>
-              <dt>권역 코드</dt><dd>ZONE-GN-01</dd>
-              <dt>S-form 상태</dt><dd><span class="badge badge-green">전송 완료</span></dd>
+              <dt>VAN 코드</dt><dd>VAN-GN-2026-0892</dd>
+              <dt>더존 코드</dt><dd>DZ-GN-2026-0892</dd>
+              <dt>발급 상태</dt><dd><span class="badge badge-green">발급 완료</span></dd>
             </div>
-            <div class="form-hint">* 계약 확정 즉시 S-form이 자동으로 생성/전송되었습니다 (기존: 영업 종료 후 수작업 입력)</div>
+            <div class="form-hint">* 계약 확정 즉시 VAN 코드와 더존 코드가 자동 발급됩니다 (기존: 영업 종료 후 수작업 입력)</div>
           </div>
 
           <div class="card">
@@ -595,8 +597,8 @@ select.form-input{appearance:auto}
       <div class="kpi-row">
         <div class="kpi-card"><div class="kpi-label">전체 계약</div><div class="kpi-value">156</div><div class="kpi-sub">이번 달</div></div>
         <div class="kpi-card"><div class="kpi-label">진행 중</div><div class="kpi-value" style="color:var(--blue)">23</div><div class="kpi-sub">계약서 작성 중</div></div>
-        <div class="kpi-card"><div class="kpi-label">온보딩 중</div><div class="kpi-value" style="color:var(--amber)">18</div><div class="kpi-sub">S-form ~ 첫주문 대기</div></div>
-        <div class="kpi-card"><div class="kpi-label">완료</div><div class="kpi-value" style="color:var(--green)">112</div><div class="kpi-sub">첫주문 발생 완료</div></div>
+        <div class="kpi-card"><div class="kpi-label">온보딩 중</div><div class="kpi-value" style="color:var(--amber)">18</div><div class="kpi-sub">VAN/더존 발급 ~ 테스트주문 대기</div></div>
+        <div class="kpi-card"><div class="kpi-label">완료</div><div class="kpi-value" style="color:var(--green)">112</div><div class="kpi-sub">테스트주문 발생 완료</div></div>
         <div class="kpi-card"><div class="kpi-label">이탈</div><div class="kpi-value" style="color:var(--red)">3</div><div class="kpi-sub">이번 달 기준</div></div>
       </div>
 
@@ -721,7 +723,7 @@ select.form-input{appearance:auto}
     <!-- 7. 온보딩 추적 -->
     <div class="page" id="page-onboarding">
       <div class="page-title">온보딩 추적</div>
-      <div class="page-subtitle">계약 완료 후 첫 주문까지의 진행 상황을 추적합니다</div>
+      <div class="page-subtitle">계약 완료 후 테스트 주문까지의 진행 상황을 추적합니다</div>
 
       <div class="kpi-row">
         <div class="kpi-card"><div class="kpi-label">온보딩 진행 중</div><div class="kpi-value" style="color:var(--blue)">18</div><div class="kpi-sub">이번 달</div></div>
@@ -750,7 +752,7 @@ select.form-input{appearance:auto}
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">VAN/더존</div>
             <div style="font-size:10px;color:var(--text3)">완료 11:16</div>
           </div>
           <div style="text-align:center">
@@ -770,7 +772,7 @@ select.form-input{appearance:auto}
           </div>
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">테스트 주문</div>
             <div style="font-size:10px;color:var(--text3)">대기</div>
           </div>
         </div>
@@ -788,7 +790,7 @@ select.form-input{appearance:auto}
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">VAN/더존</div>
             <div style="font-size:10px;color:var(--text3)">완료</div>
           </div>
           <div style="text-align:center">
@@ -808,7 +810,7 @@ select.form-input{appearance:auto}
           </div>
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">테스트 주문</div>
             <div style="font-size:10px;color:var(--text3)">대기</div>
           </div>
         </div>
@@ -826,7 +828,7 @@ select.form-input{appearance:auto}
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">VAN/더존</div>
             <div style="font-size:10px;color:var(--text3)">완료</div>
           </div>
           <div style="text-align:center">
@@ -846,7 +848,7 @@ select.form-input{appearance:auto}
           </div>
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">테스트 주문</div>
             <div style="font-size:10px;color:var(--text3)">대기</div>
           </div>
         </div>
@@ -873,7 +875,7 @@ select.form-input{appearance:auto}
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px">
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:var(--green);margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--green)">S-form</div>
+            <div style="font-size:11px;font-weight:600;color:var(--green)">VAN/더존</div>
             <div style="font-size:10px;color:var(--text3)">완료</div>
           </div>
           <div style="text-align:center">
@@ -893,7 +895,7 @@ select.form-input{appearance:auto}
           </div>
           <div style="text-align:center">
             <div style="width:100%;height:6px;border-radius:3px;background:#e5e7eb;margin-bottom:4px"></div>
-            <div style="font-size:11px;font-weight:600;color:var(--text3)">첫 주문</div>
+            <div style="font-size:11px;font-weight:600;color:var(--text3)">테스트 주문</div>
             <div style="font-size:10px;color:var(--text3)">대기</div>
           </div>
         </div>

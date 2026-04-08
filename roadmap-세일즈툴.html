@@ -299,8 +299,8 @@
 
   <!-- Mission -->
   <div class="mission">
-    <h2>목표: 영업 → 계약 → 첫주문 리드타임을 절반으로</h2>
-    <p>현재 계약 후 포스 설치까지 분리되어 있고, S-form 수작업이 병목. 웹계약으로 계약 자체를 빠르게 하면서, 온보딩까지의 전체 리드타임을 줄인다.</p>
+    <h2>목표: 영업 → 계약 → 테스트 주문 리드타임을 절반으로</h2>
+    <p>현재 계약 후 포스 설치까지 분리되어 있고, VAN/더존 코드 발급 등 수작업이 병목. 웹계약으로 계약 자체를 빠르게 하면서, 온보딩까지의 전체 리드타임을 줄인다.</p>
     <div class="mission-metrics">
       <div class="mission-metric">
         <div class="mm-label">리드 → 계약 전환율</div>
@@ -321,13 +321,13 @@
         <div class="mm-note">대시보드 실측 평균 34일 (현장 즉시 계약으로 단축)</div>
       </div>
       <div class="mission-metric">
-        <div class="mm-label">계약 → 첫주문 리드타임</div>
+        <div class="mm-label">계약 → 테스트 주문 리드타임</div>
         <div class="mm-row">
           <span class="mm-from">7일+</span>
           <span class="mm-arrow">→</span>
           <span class="mm-to">2일</span>
         </div>
-        <div class="mm-note">S-form + 회원가입 + 헥토 + 포스설치 일원화</div>
+        <div class="mm-note">VAN/더존 코드 자동 발급 + 회원가입 + 헥토 + 포스설치 일원화</div>
       </div>
     </div>
   </div>
@@ -352,8 +352,8 @@
         <div class="cs-item"><span class="cs-cross">✗</span> 요금 시뮬레이션 (요금제 + 할증)</div>
         <div class="cs-item"><span class="cs-cross">✗</span> 웹 계약서 생성 / 전자서명</div>
         <div class="cs-item"><span class="cs-cross">✗</span> 계약 모니터링 대시보드</div>
-        <div class="cs-item"><span class="cs-cross">✗</span> S-form 자동 기입 연동</div>
-        <div class="cs-item"><span class="cs-cross">✗</span> 온보딩 추적 (계약→포스→첫주문)</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> VAN/더존 코드 자동 발급</div>
+        <div class="cs-item"><span class="cs-cross">✗</span> 온보딩 추적 (계약→포스→테스트 주문)</div>
         <div class="cs-item"><span class="cs-cross">✗</span> 기가입/해지 매장 표시</div>
         <div class="cs-item"><span class="cs-cross">✗</span> 모바일 최적화 (현재 데스크톱 위주)</div>
         <div class="cs-item"><span class="cs-cross">✗</span> SLA 지표 시각화 (피칭 자료)</div>
@@ -368,7 +368,7 @@
       <div class="pain-card high">
         <div class="pain-severity">🔴 심각 — 매출 직결</div>
         <div class="pain-title">계약 → 온보딩 리드타임 과다</div>
-        <div class="pain-desc">영업 → 계약 → S-form → 회원가입 → 헥토 → 포스설치 → 테스트주문. 계약과 포스 설치가 분리되어 영업 리소스 낭비.</div>
+        <div class="pain-desc">영업 → 계약 → VAN/더존 코드 발급 → 회원가입 → 헥토 → 포스설치 → 테스트 주문. 계약과 포스 설치가 분리되어 영업 리소스 낭비.</div>
         <div class="pain-quote">"계약과 포스 설치가 분리되어 영업 리소스 낭비 발생"</div>
       </div>
       <div class="pain-card high">
@@ -406,7 +406,7 @@
 
   <!-- Leadtime Flow -->
   <div class="leadtime">
-    <div class="section-title">리드타임 분석 — 계약부터 첫주문까지</div>
+    <div class="section-title">리드타임 분석 — 계약부터 테스트 주문까지</div>
     <div class="lt-flow">
       <h3>AS-IS → TO-BE 프로세스</h3>
       <div class="lt-stages">
@@ -423,10 +423,10 @@
           <div class="lt-to-be">웹 시뮬레이션 → 즉시 계약</div>
         </div>
         <div class="lt-stage">
-          <div class="lt-stage-name">S-form 기입</div>
-          <div class="lt-stage-time">상점 정보 입력</div>
+          <div class="lt-stage-name">VAN/더존 코드 발급</div>
+          <div class="lt-stage-time">카드결제 + 정산/세금</div>
           <div class="lt-as-is">영업 후 일괄 or 내근자 대행</div>
-          <div class="lt-to-be">계약 시 자동 생성</div>
+          <div class="lt-to-be">계약 시 자동 발급</div>
         </div>
         <div class="lt-stage">
           <div class="lt-stage-name">회원가입/헥토</div>
@@ -441,7 +441,7 @@
           <div class="lt-to-be">포스리스 옵션 / 간소화</div>
         </div>
         <div class="lt-stage">
-          <div class="lt-stage-name">첫 주문</div>
+          <div class="lt-stage-name">테스트 주문</div>
           <div class="lt-stage-time">서비스 시작</div>
           <div class="lt-as-is">추적 안됨</div>
           <div class="lt-to-be">자동 추적 + 알림</div>
@@ -473,7 +473,7 @@
           <div class="phase-name">현장 계약 + 리드타임 단축</div>
           <div class="phase-period">2026 Q2 (Now)</div>
         </div>
-        <div class="phase-goal">현장에서 시뮬레이션 → 계약 → S-form까지 원스톱. 모바일 필수.</div>
+        <div class="phase-goal">현장에서 시뮬레이션 → 계약 → VAN/더존 코드 자동 발급까지 원스톱. 모바일 필수.</div>
         <div class="phase-body">
           <div class="fg">
             <div class="fg-label">웹계약 (신규 개발)</div>
@@ -511,8 +511,8 @@
             <div class="fi">
               <div class="fi-dot new"></div>
               <div>
-                <div class="fi-text">S-form 자동 생성 <span class="fi-tag interview">인터뷰</span></div>
-                <div class="fi-sub">계약 완료 시 S-form 자동 기입 (수작업 제거)</div>
+                <div class="fi-text">VAN/더존 코드 자동 발급 <span class="fi-tag interview">인터뷰</span></div>
+                <div class="fi-sub">계약 완료 시 VAN 코드(카드결제) + 더존 코드(정산/세금) 자동 발급</div>
               </div>
             </div>
             <div class="fi">
@@ -548,7 +548,7 @@
             <div class="impact-icon time">⏱</div>
             <div class="impact-body">
               <div class="impact-metric">온보딩 리드타임 70% 단축</div>
-              <div class="impact-detail">계약→첫주문 7일+ → 2일. S-form 자동화 + 프로세스 일원화</div>
+              <div class="impact-detail">계약→테스트 주문 7일+ → 2일. VAN/더존 코드 자동 발급 + 프로세스 일원화</div>
             </div>
             <div class="impact-number green">-5일</div>
           </div>
@@ -572,7 +572,7 @@
             <div class="impact-icon efficiency">⚡</div>
             <div class="impact-body">
               <div class="impact-metric">영업사원 1인당 처리량 증가</div>
-              <div class="impact-detail">재방문 제거 + S-form 수작업 제거 → 1인당 하루 방문 가능 상점 수 증가</div>
+              <div class="impact-detail">재방문 제거 + VAN/더존 코드 수작업 제거 → 1인당 하루 방문 가능 상점 수 증가</div>
             </div>
             <div class="impact-number green">+30%</div>
           </div>
@@ -586,7 +586,7 @@
           <div class="phase-name">영업 효율 + 온보딩 추적</div>
           <div class="phase-period">2026 Q3</div>
         </div>
-        <div class="phase-goal">계약 전후의 비효율을 줄이고, 계약→첫주문 과정을 추적 가능하게.</div>
+        <div class="phase-goal">계약 전후의 비효율을 줄이고, 계약→테스트 주문 과정을 추적 가능하게.</div>
         <div class="phase-body">
           <div class="fg">
             <div class="fg-label">영업 효율화</div>
@@ -625,7 +625,7 @@
               <div class="fi-dot new"></div>
               <div>
                 <div class="fi-text">온보딩 체크리스트</div>
-                <div class="fi-sub">계약 → S-form → 회원가입 → 포스설치 → 첫주문 추적</div>
+                <div class="fi-sub">계약 → VAN/더존 코드 발급 → 회원가입 → 포스설치 → 테스트 주문 추적</div>
               </div>
             </div>
             <div class="fi">
@@ -809,12 +809,12 @@
       <div class="pr-card">
         <div class="pr-num">2</div>
         <div class="pr-title">원스톱 계약 → 온보딩</div>
-        <div class="pr-desc">계약-S-form-회원가입이 따로 놀면 리드타임이 늘어난다. 한 번에 흘러가게 설계.</div>
+        <div class="pr-desc">계약-VAN/더존 코드 발급-회원가입이 따로 놀면 리드타임이 늘어난다. 한 번에 흘러가게 설계.</div>
       </div>
       <div class="pr-card">
         <div class="pr-num">3</div>
         <div class="pr-title">계약 후 이탈 방지</div>
-        <div class="pr-desc">계약이 목표가 아니라 첫주문이 목표. 계약 후 이탈을 추적하고 막는 것까지가 영업.</div>
+        <div class="pr-desc">계약이 목표가 아니라 테스트 주문이 목표. 계약 후 이탈을 추적하고 막는 것까지가 영업.</div>
       </div>
     </div>
   </div>

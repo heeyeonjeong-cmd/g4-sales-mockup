@@ -209,17 +209,19 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-auto">기가입/해지 체크<span class="tooltip">기존 부릉 계약 이력 조회. 기가입 → 중복 안내, 해지 이력 → 재가입 플래그</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">계약서 자동 생성<span class="tooltip">입력 정보 + 요금제 + 권역으로 계약서 초안 자동 생성. 표준 약관 자동 적용</span></div>
+            <div class="node n-auto">계약서 자동 생성<span class="tooltip">입력 정보 + 요금제 + 권역으로 웹 계약서 자동 생성. 표준 약관 자동 적용</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">S-form 자동 생성<span class="tooltip">계약 정보 → S-form(상점 등록 양식) 자동 변환. 수작업 제거</span></div>
+            <div class="node n-auto">VAN 코드 발급<span class="tooltip">계약 확정 즉시 VAN 코드 자동 발급. 카드 결제 수신을 위한 필수 코드</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">더존 코드 발급<span class="tooltip">VAN 코드 발급과 동시에 더존 코드 자동 발급. 정산/세무 연동용 필수 코드</span></div>
+            <div class="arr">→</div>
+            <div class="node n-auto">상점 계정 생성<span class="tooltip">VAN/더존 코드 발급 완료 후 → 부릉 상점 계정 자동 생성. 사장님사이트 접근 권한 부여</span></div>
             <div class="arr">→</div>
             <div class="node n-auto">리드 스코어링<span class="tooltip">예상 물량, 플랫폼 입점 수, 권역, 업종 등으로 리드 점수 산출. 앵커 여부 자동 판정</span></div>
             <div class="arr">→</div>
             <div class="node n-auto">영업사원 자동 배정<span class="tooltip">권역 + 리드 스코어 기반 영업사원 자동 배정. 앵커 → 시니어 영업사원 우선</span></div>
             <div class="arr">→</div>
-            <div class="node n-auto">상점 계정 생성<span class="tooltip">모든 검증 통과 후 → 부릉 상점 계정 자동 생성. 사장님사이트 접근 권한 부여</span></div>
-            <div class="arr">→</div>
-            <div class="node n-auto">모니터링 시작<span class="tooltip">첫 주문 발생 여부, 이탈 조기경보 등 자동 모니터링 시작</span></div>
+            <div class="node n-auto">모니터링 시작<span class="tooltip">테스트 주문 성공 여부, 이탈 조기경보 등 자동 모니터링 시작</span></div>
           </div>
         </div>
 
@@ -237,7 +239,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <div class="arr">→</div>
             <div class="node n-user">현장 방문 & 포스 설치<span class="tooltip">포스 설치 + 연동 확인 + 사용법 안내. 평균 30분~1시간 소요</span></div>
             <div class="arr">→</div>
-            <div class="node n-user">첫 주문 지원<span class="tooltip">테스트 주문 함께 진행 + 정상 수신 확인. 초기 운영 가이드 제공</span></div>
+            <div class="node n-user">테스트 주문 지원<span class="tooltip">영업사원이 직접 테스트 주문 실행 → POS 정상 수신 확인. 초기 운영 가이드 제공</span></div>
             <div class="arr">→</div>
             <div class="node n-end">온보딩 완료 처리<span class="tooltip">세일즈 툴에서 온보딩 완료 마킹. 이후 30일간 이탈 모니터링</span></div>
           </div>
@@ -272,8 +274,8 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
     <div class="card" style="margin-top:16px;border-left:4px solid var(--vroong)">
       <div style="font-size:13px;font-weight:700;margin-bottom:6px">핵심 포인트: 뒷단에서 일어나는 일</div>
       <div style="font-size:12px;color:var(--text2);line-height:1.8">
-        사장님은 "가입 → 계약 → 포스 설치 → 첫 주문"만 경험하지만, 뒤에서는:<br>
-        <strong>1)</strong> 시스템이 배달 가능 여부 · 사업자 진위 · 기가입 여부 · 리드 스코어링 · S-form 생성 · 상점 계정 생성까지 <strong>전부 자동</strong>으로 처리하고,<br>
+        사장님은 "가입 → 계약 → 포스 설치 → 테스트 주문"만 경험하지만, 뒤에서는:<br>
+        <strong>1)</strong> 시스템이 배달 가능 여부 · 사업자 진위 · 기가입 여부 · VAN/더존 코드 발급 · 리드 스코어링 · 상점 계정 생성까지 <strong>전부 자동</strong>으로 처리하고,<br>
         <strong>2)</strong> 영업사원이 리드를 확인 → 포스 설치 → 초기 케어까지 <strong>마무리 터치</strong>를 담당하며,<br>
         <strong>3)</strong> 관리자는 온보딩 KPI를 통해 <strong>성과를 모니터링</strong>합니다.<br>
         <strong style="color:var(--vroong)">→ 별도 승인 단계 없이, 전자서명 완료 즉시 시스템이 자동으로 모든 셋업을 처리하는 구조.</strong>
@@ -330,7 +332,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             요금제 선택 (시뮬레이션 결과 자동 반영), 배달 희망 권역, 영업시간 입력.<br>
             약관 동의 + <strong>전자서명</strong>. 계약서 PDF가 자동 생성되어 이메일로 즉시 발송됩니다.
           </div>
-          <div class="v-system">⚡ 시스템: 계약서 자동 생성 + S-form 자동 생성 + 리드 스코어링 (예상 물량 산출)</div>
+          <div class="v-system">⚡ 시스템: 웹 계약서 확정 → VAN 코드 자동 발급 → 더존 코드 자동 발급 → 리드 스코어링 (예상 물량 산출)</div>
           <div class="v-time">소요: ~5분</div>
         </div>
       </div>
@@ -343,14 +345,15 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           <div class="v-title">Step 4. 자동 분류 · 배정 · 상점 계정 생성</div>
           <div class="v-desc">
             전자서명 완료 즉시 시스템이 자동으로 처리:<br>
-            • S-form 자동 생성 + 리드 스코어링 → 물량 등급 판정<br>
+            • VAN 코드 자동 발급 (카드 결제 수신용) + 더존 코드 자동 발급 (정산/세무 연동용)<br>
+            • 리드 스코어링 → 물량 등급 판정<br>
             • <strong style="color:var(--text3)">소물량 (~100건/월)</strong>: 일반 영업사원 배정<br>
             • <strong style="color:var(--amber)">앵커 (500건+/월)</strong>: 시니어 영업사원 우선 배정<br>
             • <strong style="color:var(--purple)">메가 (1,000건+/월)</strong>: Key Account 매니저 직접 배정<br>
             • <strong>상점 계정 자동 생성</strong> + 권역 세팅 + 포스 연동 준비<br>
             영업사원에게 <strong>즉시 알림</strong> (앱 푸시 + 세일즈 툴 알림). 사장님에게 "계약 완료! 포스 설치 일정을 잡아주세요" 안내 발송.
           </div>
-          <div class="v-system">⚡ 시스템: 물량 등급 판정 → 영업사원 매칭 → 상점 계정 생성 → 알림 발송 (전부 자동, 승인 없음)</div>
+          <div class="v-system">⚡ 시스템: VAN/더존 코드 발급 → 상점 계정 생성 → 물량 등급 판정 → 영업사원 매칭 → 알림 발송 (전부 자동, 승인 없음)</div>
           <div class="v-time">소요: 즉시 (자동)</div>
         </div>
       </div>
@@ -409,7 +412,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
         <div>
           <div style="font-size:13px;font-weight:700">셀프 온보딩 전체 리드타임</div>
-          <div style="font-size:12px;color:var(--text2);margin-top:2px">사장님 가입 시작 → 첫 주문 가능</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:2px">사장님 가입 시작 → 테스트 주문 성공</div>
         </div>
         <div style="display:flex;gap:20px;align-items:center">
           <div style="text-align:center"><div style="font-size:10px;color:var(--text3);font-weight:600">AS-IS</div><div style="font-size:18px;font-weight:900;color:var(--red);text-decoration:line-through">7일+</div></div>
@@ -460,9 +463,9 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <td><span class="badge b-green">-97% 시간</span></td>
           </tr>
           <tr>
-            <td style="font-weight:700">S-form 작성</td>
-            <td>영업사원이 영업 후 일괄 수작업 / 내근자 대행</td>
-            <td><strong>시스템 자동 생성</strong> (계약 정보 기반)</td>
+            <td style="font-weight:700">VAN/더존 코드 발급</td>
+            <td>수동 신청 → 2~3일 소요</td>
+            <td><strong>시스템 자동 발급 (즉시)</strong></td>
             <td><span class="badge b-green">수작업 0</span></td>
           </tr>
           <tr>
@@ -479,7 +482,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
           </tr>
           <tr>
             <td style="font-weight:700">상점 계정 생성</td>
-            <td>S-form → 운영팀 수동 등록 → 1~2일</td>
+            <td>수동 등록 요청 → 운영팀 처리 → 1~2일</td>
             <td><strong>전자서명 즉시 자동 생성</strong></td>
             <td><span class="badge b-green">-100% 시간</span></td>
           </tr>
@@ -556,7 +559,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
 
         <div style="text-align:center">
           <div style="padding:12px 20px;background:var(--purple);color:#fff;border-radius:12px;font-size:13px;font-weight:700;min-width:110px">계약 완료<br><span style="font-size:10px;opacity:.8">셋업 중</span></div>
-          <div style="font-size:10px;color:var(--text3);margin-top:4px">자동 계정 생성 · 포스 대기</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px">VAN/더존 코드 발급 · 계정 생성</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center">
           <div style="font-size:16px;color:var(--text3)">→</div>
@@ -617,7 +620,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
             <td>계약 확정, 자동 셋업 진행 중</td>
             <td>전자서명 완료</td>
             <td>"포스 설치 일정을 잡아주세요"</td>
-            <td>S-form 생성, 리드 스코어링, 영업사원 배정, 상점 계정 생성, 권역 세팅, 포스 준비</td>
+            <td>VAN 코드 + 더존 코드 발급, 상점 계정 생성, 리드 스코어링, 영업사원 배정, 권역 세팅, 포스 준비</td>
           </tr>
           <tr>
             <td><span class="badge b-green">활성 (Active)</span></td>

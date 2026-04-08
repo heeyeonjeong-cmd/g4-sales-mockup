@@ -93,7 +93,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
 <div class="container">
   <div class="header">
     <h1>G4 계약 관리 워크플로</h1>
-    <p>리드 → 시뮬레이션 → 계약 + 서명 → S-form 자동생성 → 온보딩 → 첫주문 전체 사이클</p>
+    <p>리드 → 시뮬레이션 → 계약 + 서명 → VAN/더존 코드 발급 → 온보딩 → 테스트주문 전체 사이클</p>
   </div>
 
   <div class="legend">
@@ -113,7 +113,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
   <!-- Happy Path -->
   <div class="flow-panel active" id="flow-happy">
     <div class="flow-section">
-      <h3><span class="badge badge-happy">HAPPY PATH</span> 리드 → 시뮬레이션 → 계약 + 서명 → 자동처리 → 온보딩 → 첫주문</h3>
+      <h3><span class="badge badge-happy">HAPPY PATH</span> 리드 → 시뮬레이션 → 계약 + 서명 → 자동처리 → 온보딩 → 테스트주문</h3>
       <div class="step-connector">
         <div class="step-node">
           <div class="step-actor actor-sales">영업사원</div>
@@ -141,8 +141,8 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="step-arrow">→</div>
         <div class="step-node">
           <div class="step-actor actor-system">시스템</div>
-          <div class="step-box node-auto">S-form 자동생성</div>
-          <div class="step-note">서명 완료 즉시 자동 기입</div>
+          <div class="step-box node-auto">VAN/더존 코드 발급</div>
+          <div class="step-note">서명 완료 즉시 자동 발급</div>
         </div>
         <div class="step-arrow">→</div>
         <div class="step-node">
@@ -171,7 +171,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="step-arrow">→</div>
         <div class="step-node">
           <div class="step-actor actor-system">시스템</div>
-          <div class="step-box node-end">첫 주문 확인</div>
+          <div class="step-box node-end">테스트 주문 확인</div>
           <div class="step-note">온보딩 완료!</div>
         </div>
       </div>
@@ -184,12 +184,12 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="desc-item"><strong>요금 시뮬레이션</strong> 요금제(기본 4,300원 / 할인 3,800원), 할증 코드 체크박스, 희망 배송 권역 입력</div>
         <div class="desc-item"><strong>상점주 시연</strong> 계산된 예상 요금을 상점주에게 보여주며 피칭. SLA 지표 등 활용</div>
         <div class="desc-item"><strong>계약서 생성 + 서명</strong> 시뮬레이션 결과 + 상점 정보가 자동 반영된 계약서. 현장에서 상점주 서명까지 완료</div>
-        <div class="desc-item"><strong>S-form 자동생성</strong> 서명 완료 즉시 S-form 자동 기입. 기존 수작업(영업 종료 후 일괄/내근자 대행) 제거</div>
+        <div class="desc-item"><strong>VAN/더존 코드 발급</strong> 서명 완료 즉시 VAN 코드와 더존 코드 자동 발급. 기존 수작업(영업 종료 후 일괄/내근자 대행) 제거</div>
         <div class="desc-item"><strong>상점 계정 생성</strong> 계약 정보 기반으로 상점 계정 자동 생성. 별도 승인 절차 없이 즉시 처리</div>
         <div class="desc-item"><strong>상점주 안내</strong> 사장님사이트 회원가입 + 헥토 가입 안내 자동 발송 (SMS/카톡)</div>
         <div class="desc-item"><strong>회원가입+헥토</strong> 상점주가 직접 진행. 고령자 대상 간소화 가이드 제공</div>
         <div class="desc-item"><strong>포스 설치</strong> 설치 일정 자동 배정. 포스리스 옵션 향후 검토</div>
-        <div class="desc-item"><strong>첫 주문 확인</strong> 시스템이 첫 주문 발생 자동 감지. 온보딩 완료 처리</div>
+        <div class="desc-item"><strong>테스트 주문 확인</strong> 시스템이 테스트 주문 발생 자동 감지. 온보딩 완료 처리</div>
       </div>
     </div>
   </div>
@@ -202,7 +202,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="step-node">
           <div class="step-actor actor-system">시스템</div>
           <div class="step-box node-end" style="border-color:var(--green)">계약 완료</div>
-          <div class="step-note">서명 + S-form 자동 완료</div>
+          <div class="step-note">서명 + VAN/더존 자동 발급</div>
         </div>
         <div class="step-arrow">→</div>
         <div class="step-node">
@@ -244,7 +244,7 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
         <div class="step-node">
           <div class="step-actor actor-system">시스템</div>
           <div class="step-box node-end">온보딩 재개</div>
-          <div class="step-note">→ 첫주문까지 추적</div>
+          <div class="step-note">→ 테스트주문까지 추적</div>
         </div>
       </div>
     </div>
@@ -312,10 +312,10 @@ body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);colo
               <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
             </tr>
             <tr style="border-bottom:1px solid #f0f0f0">
-              <td style="padding:10px;font-weight:600">S-form 기입</td>
+              <td style="padding:10px;font-weight:600">VAN/더존 코드 발급</td>
               <td style="padding:10px"><span class="step-actor actor-system" style="font-size:11px">시스템</span></td>
               <td style="padding:10px;color:var(--text2)">영업 후 일괄/내근자 대행</td>
-              <td style="padding:10px">서명 완료 즉시 자동 생성</td>
+              <td style="padding:10px">서명 완료 즉시 자동 발급</td>
               <td style="padding:10px;text-align:center;color:var(--green);font-weight:700">-1~3일</td>
               <td style="padding:10px;text-align:center"><span style="background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">P0</span></td>
             </tr>
