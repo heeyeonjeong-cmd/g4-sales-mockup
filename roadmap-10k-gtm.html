@@ -7,684 +7,491 @@
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0f172a;--surface:#1e293b;--surface2:#334155;--border:#475569;
-  --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
-  --vroong:#00c73c;--vroong-d:#00a832;--vroong-l:rgba(0,199,60,.12);
-  --blue:#3b82f6;--blue-l:rgba(59,130,246,.12);
-  --amber:#f59e0b;--amber-l:rgba(245,158,11,.12);
-  --red:#ef4444;--red-l:rgba(239,68,68,.12);
-  --purple:#a78bfa;--purple-l:rgba(167,139,250,.12);
-  --cyan:#22d3ee;--cyan-l:rgba(34,211,238,.12);
-  --pink:#f472b6;--pink-l:rgba(244,114,182,.12);
+  --bg:#ffffff;--bg2:#f8fafc;--surface:#fff;--border:#e5e7eb;--border2:#d1d5db;
+  --text:#111827;--text2:#6b7280;--text3:#9ca3af;
+  --vroong:#00c73c;--vroong-d:#00a832;--vroong-l:#ecfdf5;--vroong-bg:rgba(0,199,60,.06);
+  --blue:#2563eb;--blue-l:#eff6ff;--blue-d:#1d4ed8;
+  --amber:#d97706;--amber-l:#fffbeb;
+  --red:#dc2626;--red-l:#fef2f2;
+  --purple:#7c3aed;--purple-l:#f5f3ff;
+  --cyan:#0891b2;--cyan-l:#ecfeff;
+  --pink:#db2777;--pink-l:#fdf2f8;
+  --indigo:#4f46e5;--indigo-l:#eef2ff;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-.container{max-width:1200px;margin:0 auto;padding:48px 24px}
+body{font-family:'Pretendard',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
+.page{max-width:1100px;margin:0 auto;padding:40px 32px 60px}
 
-/* Hero */
-.hero{text-align:center;margin-bottom:48px;padding:48px 24px;background:linear-gradient(135deg,rgba(0,199,60,.08),rgba(59,130,246,.08));border:1px solid rgba(0,199,60,.15);border-radius:16px}
-.hero-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vroong);background:var(--vroong-l);padding:4px 14px;border-radius:100px;margin-bottom:12px}
-.hero h1{font-size:36px;font-weight:900;letter-spacing:-1px;margin-bottom:8px}
-.hero h1 span{color:var(--vroong)}
-.hero p{font-size:15px;color:var(--text2);max-width:600px;margin:0 auto}
+/* Header */
+.header{margin-bottom:36px;padding-bottom:24px;border-bottom:2px solid var(--border)}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.header-badge{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--vroong);background:var(--vroong-l);padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:8px}
+.header h1{font-size:32px;font-weight:900;letter-spacing:-0.5px;line-height:1.2}
+.header h1 span{color:var(--vroong)}
+.header-meta{font-size:12px;color:var(--text3);margin-top:4px}
+.header-summary{font-size:14px;color:var(--text2);max-width:700px;margin-top:8px}
 
 /* Section */
-.section{margin-bottom:40px}
-.section-title{font-size:20px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.section-title .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.section{margin-bottom:32px}
+.section-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.section-title{font-size:18px;font-weight:800;margin-bottom:14px}
+.section-divider{height:1px;background:var(--border);margin:32px 0}
 
-/* Tabs */
-.tabs{display:flex;gap:4px;margin-bottom:24px;overflow-x:auto;padding-bottom:2px}
-.tab{padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;border-radius:8px;white-space:nowrap;transition:all .15s;color:var(--text3);background:var(--surface)}
-.tab:hover{color:var(--text)}
-.tab.active{color:#fff;background:var(--vroong)}
+/* Cards */
+.card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px}
+.card-sm{padding:14px}
 
-.panel{display:none}
-.panel.active{display:block}
+/* Grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 
-/* Number Model */
-.model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.model-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden}
-.model-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.model-card.conservative::before{background:var(--text3)}
-.model-card.base::before{background:var(--vroong)}
-.model-card.aggressive::before{background:var(--blue)}
-.model-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.model-label.con{color:var(--text3)}
-.model-label.bas{color:var(--vroong)}
-.model-label.agg{color:var(--blue)}
-.model-number{font-size:32px;font-weight:900;margin-bottom:4px}
-.model-sub{font-size:12px;color:var(--text2);margin-bottom:12px}
-.model-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}
-.model-row:last-child{border-bottom:none}
-.model-row .label{color:var(--text3)}
-.model-row .value{font-weight:600}
+/* Stat */
+.stat{text-align:center;padding:14px;background:var(--bg2);border-radius:10px;border:1px solid var(--border)}
+.stat-value{font-size:26px;font-weight:900}
+.stat-label{font-size:11px;color:var(--text3);font-weight:600;margin-top:2px}
+.stat-sub{font-size:10px;color:var(--text3);margin-top:1px}
 
-/* Gauge */
-.gauge-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-.gauge-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
-.gauge-value{font-size:28px;font-weight:900}
-.gauge-label{font-size:11px;color:var(--text3);font-weight:600;margin-top:2px}
-.gauge-bar{height:4px;border-radius:2px;background:var(--surface2);margin-top:8px;overflow:hidden}
-.gauge-fill{height:100%;border-radius:2px;transition:width .6s ease}
+/* Flow diagram */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center}
+.flow-node{padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;text-align:center;border:2px solid;min-width:90px}
+.flow-arrow{color:var(--text3);font-size:18px;padding:0 6px}
+.flow-arrow-down{display:flex;justify-content:center;color:var(--text3);font-size:18px;padding:4px 0}
+.flow-label{font-size:9px;color:var(--text3);text-align:center;margin-top:2px}
 
-/* Monthly Waterfall */
-.waterfall{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
-.waterfall-col{text-align:center}
-.waterfall-bar-wrap{height:140px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
-.waterfall-bar{width:48px;border-radius:6px 6px 0 0;transition:height .6s ease;position:relative}
-.waterfall-bar .bar-val{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;white-space:nowrap}
-.waterfall-month{font-size:12px;font-weight:600;margin-top:6px;color:var(--text2)}
-.waterfall-cumul{font-size:11px;color:var(--text3);margin-top:2px}
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:left;padding:8px 10px;font-weight:600;color:var(--text2);border-bottom:2px solid var(--border);font-size:11px}
+.tbl td{padding:8px 10px;border-bottom:1px solid #f3f4f6}
+.tbl tr:last-child td{border-bottom:none}
 
-/* Gantt */
-.gantt{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.gantt-header{display:grid;grid-template-columns:160px repeat(6,1fr);border-bottom:1px solid var(--border)}
-.gantt-header div{padding:10px 12px;font-size:11px;font-weight:700;color:var(--text3);text-align:center}
-.gantt-header div:first-child{text-align:left}
-.gantt-row{display:grid;grid-template-columns:160px repeat(6,1fr);border-bottom:1px solid rgba(255,255,255,.03);align-items:center}
-.gantt-row:last-child{border-bottom:none}
-.gantt-track{padding:12px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
-.gantt-track .track-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.gantt-cell{padding:4px 6px;text-align:center}
-.gantt-bar{padding:6px 10px;border-radius:6px;font-size:10px;font-weight:600;text-align:center;line-height:1.3}
+/* Badge */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-weight:700}
+.b-green{background:var(--vroong-l);color:var(--vroong)}
+.b-blue{background:var(--blue-l);color:var(--blue)}
+.b-amber{background:var(--amber-l);color:var(--amber)}
+.b-red{background:var(--red-l);color:var(--red)}
+.b-purple{background:var(--purple-l);color:var(--purple)}
+.b-cyan{background:var(--cyan-l);color:var(--cyan)}
+.b-pink{background:var(--pink-l);color:var(--pink)}
+.b-gray{background:#f3f4f6;color:var(--text3)}
+.b-indigo{background:var(--indigo-l);color:var(--indigo)}
 
-/* Phase Cards */
-.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.phase-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative}
-.phase-badge{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:10px;display:inline-block}
-.phase-title{font-size:16px;font-weight:800;margin-bottom:4px}
-.phase-period{font-size:12px;color:var(--text3);margin-bottom:14px}
-.phase-items{list-style:none}
-.phase-items li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px;display:flex;gap:8px;align-items:flex-start}
-.phase-items li:last-child{border-bottom:none}
-.phase-items .bullet{flex-shrink:0;margin-top:4px;width:6px;height:6px;border-radius:50%}
+/* Phase bar */
+.phase-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.phase-col{border-radius:10px;padding:16px;border:1px solid var(--border)}
+.phase-head{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.phase-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.phase-name{font-size:13px;font-weight:800}
+.phase-period{font-size:10px;color:var(--text3);font-weight:600}
+.phase-items{list-style:none;font-size:11px}
+.phase-items li{padding:3px 0;display:flex;gap:6px;align-items:flex-start}
+.phase-items .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.track-label{font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-bottom:6px;display:inline-block}
 
-/* Benchmark */
-.bench-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.bench-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
-.bench-name{font-size:14px;font-weight:800;margin-bottom:4px}
-.bench-year{font-size:11px;color:var(--text3);margin-bottom:10px}
-.bench-point{font-size:12px;color:var(--text2);padding:4px 0;display:flex;gap:6px}
-.bench-point strong{color:var(--text);font-weight:600}
+/* Waterfall */
+.wf{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;align-items:end}
+.wf-col{text-align:center}
+.wf-bar{border-radius:6px 6px 0 0;margin:0 auto;width:40px;position:relative;transition:height .4s}
+.wf-val{font-size:10px;font-weight:800;margin-bottom:2px}
+.wf-month{font-size:11px;font-weight:600;color:var(--text2);margin-top:4px}
+.wf-cumul{font-size:10px;color:var(--text3)}
 
-/* KPI */
-.kpi-table{width:100%;border-collapse:collapse;font-size:13px}
-.kpi-table th{text-align:left;padding:10px 12px;font-weight:600;color:var(--text3);border-bottom:2px solid var(--border);font-size:11px}
-.kpi-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05)}
-.kpi-table tr:hover td{background:rgba(255,255,255,.02)}
+/* Inbound section */
+.ib-flow{display:grid;grid-template-columns:140px 1fr 140px;gap:0;font-size:11px}
+.ib-actor{padding:10px;font-weight:700;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid #f3f4f6}
+.ib-center{padding:8px 12px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:8px}
+.ib-right{padding:10px;text-align:center;border-left:1px solid var(--border);border-bottom:1px solid #f3f4f6}
 
-/* Mapping */
-.map-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
-.map-arrow{color:var(--text3);font-size:16px}
-.map-tag{padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600}
+/* Callout */
+.callout{padding:12px 16px;border-radius:8px;font-size:12px;display:flex;gap:8px;align-items:flex-start}
+.callout strong{font-weight:700}
 
 /* Responsive */
-@media(max-width:900px){
-  .model-grid,.phase-grid,.bench-grid{grid-template-columns:1fr}
-  .gauge-row{grid-template-columns:repeat(2,1fr)}
-  .gantt-header,.gantt-row{grid-template-columns:120px repeat(6,1fr)}
-  .waterfall{grid-template-columns:repeat(3,1fr)}
-}
+@media(max-width:800px){.g2,.g3,.g4,.g5,.phase-bar{grid-template-columns:1fr}.ib-flow{grid-template-columns:1fr}}
+@media print{body{font-size:11px}.page{padding:20px}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="page">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-badge">G4 Sales GTM Strategy</div>
-    <h1>상점 영업 <span>10,000</span>건 로드맵</h1>
-    <p>2026 Q3~Q4 (6개월) 내 신규 계약 누적 10,000건 달성을 위한 전체 Go-to-Market 전략. 세일즈 툴 + 영업 운영 + 마케팅 + 데이터 4개 트랙을 동시 가동합니다.</p>
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="header-badge">G4 Sales GTM Strategy</div>
+        <h1>상점 영업 <span>10,000</span>건 로드맵</h1>
+        <div class="header-meta">2026 Q3~Q4 (6개월) | 작성: 희연 | 최종 업데이트: 2026.04</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:11px;color:var(--text3);font-weight:600">목표</div>
+        <div style="font-size:28px;font-weight:900;color:var(--vroong)">10,000건</div>
+        <div style="font-size:11px;color:var(--text3)">신규 계약 누적 (6개월)</div>
+      </div>
+    </div>
+    <div class="header-summary">
+      아웃바운드(영업사원 방문) + <strong>인바운드(상점주 셀프 가입)</strong> 두 채널을 동시에 가동하여, 세일즈 툴 프로덕트 중심으로 전환율을 끌어올리고 10,000건 신규 계약을 달성합니다.
+    </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" onclick="show('numbers')">숫자 모델</div>
-    <div class="tab" onclick="show('gantt')">간트 차트</div>
-    <div class="tab" onclick="show('phases')">Phase 상세</div>
-    <div class="tab" onclick="show('benchmark')">벤치마크</div>
-    <div class="tab" onclick="show('kpi')">KPI 트래커</div>
-    <div class="tab" onclick="show('mapping')">기존 로드맵 매핑</div>
+  <!-- ===== 1. 목적과 배경 ===== -->
+  <div class="section">
+    <div class="section-label">Purpose & Background</div>
+    <div class="section-title">왜 10,000건인가</div>
+    <div class="g2">
+      <div>
+        <div class="card" style="height:100%">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px">문제 정의</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.8">
+            <div style="margin-bottom:6px"><strong style="color:var(--text)">1. 높은 이탈률:</strong> 12개월 잔존율 40~50%. 10명 가입하면 5~6명 이탈. <span style="color:var(--red);font-weight:600">신규 확보 속도 > 이탈 속도</span>여야 성장 가능</div>
+            <div style="margin-bottom:6px"><strong style="color:var(--text)">2. 아웃바운드 한계:</strong> 영업사원 1인당 처리량에 물리적 한계. 현재 1개 권역, 인력 제한. <span style="color:var(--red);font-weight:600">사람을 늘리는 것만으로는 비용 비효율</span></div>
+            <div><strong style="color:var(--text)">3. 인바운드 부재:</strong> 상점주가 부릉에 관심 있어도 <span style="color:var(--red);font-weight:600">알아서 가입할 수 있는 경로가 0%</span>. 모든 계약이 영업사원 방문에 의존</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="height:100%">
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px">해결 방향</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.8">
+            <div style="margin-bottom:6px"><strong style="color:var(--vroong)">레버 1 — 전환율 향상:</strong> 세일즈 툴이 현장 계약을 즉시 가능하게 (15% → 30%)</div>
+            <div style="margin-bottom:6px"><strong style="color:var(--blue)">레버 2 — 커버리지 확대:</strong> 8개 권역 확장 + 인력 30% 증원</div>
+            <div style="margin-bottom:6px"><strong style="color:var(--purple)">레버 3 — 인바운드 채널:</strong> 프로덕트가 스스로 판매하는 구조. 셀프 시뮬레이션 → 가입 신청 → 영업사원 마무리</div>
+            <div><strong style="color:var(--amber)">레버 4 — 이탈 방지:</strong> 온보딩 자동화 + 조기경보로 잔존율 65% → 75%</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- 1. Numbers Model -->
-  <div class="panel active" id="panel-numbers">
-    <div class="section">
-      <div class="section-title"><div class="dot" style="background:var(--vroong)"></div>목표 역산 숫자 모델</div>
+  <!-- ===== 2. 숫자 모델 ===== -->
+  <div class="section">
+    <div class="section-label">Number Model</div>
+    <div class="section-title">목표 역산</div>
 
-      <div class="gauge-row">
-        <div class="gauge-card">
-          <div class="gauge-value" style="color:var(--vroong)">10,000</div>
-          <div class="gauge-label">누적 계약 목표 (6개월)</div>
-          <div class="gauge-bar"><div class="gauge-fill" style="width:100%;background:var(--vroong)"></div></div>
+    <div class="g4" style="margin-bottom:16px">
+      <div class="stat"><div class="stat-value" style="color:var(--vroong)">10,000</div><div class="stat-label">누적 계약 목표</div><div class="stat-sub">6개월</div></div>
+      <div class="stat"><div class="stat-value" style="color:var(--blue)">~1,800</div><div class="stat-label">월 평균 필요 계약</div><div class="stat-sub">아웃바운드 + 인바운드</div></div>
+      <div class="stat"><div class="stat-value" style="color:var(--amber)">7,500+</div><div class="stat-label">활성 상점 (6M 잔존)</div><div class="stat-sub">잔존율 75% 기준</div></div>
+      <div class="stat"><div class="stat-value" style="color:var(--purple)">15~20%</div><div class="stat-label">인바운드 비율 (P3)</div><div class="stat-sub">영업사원 없이 유입</div></div>
+    </div>
+
+    <div class="g2">
+      <!-- Waterfall -->
+      <div class="card">
+        <div style="font-size:12px;font-weight:700;margin-bottom:12px">월별 신규 계약 (기본 시나리오)</div>
+        <div class="wf" style="height:130px;align-items:flex-end">
+          <div class="wf-col"><div class="wf-val" style="color:var(--vroong)">1,400</div><div class="wf-bar" style="height:45px;background:var(--vroong)"></div><div class="wf-month">4월</div><div class="wf-cumul">1,400</div></div>
+          <div class="wf-col"><div class="wf-val" style="color:var(--vroong)">1,600</div><div class="wf-bar" style="height:55px;background:var(--vroong)"></div><div class="wf-month">5월</div><div class="wf-cumul">3,000</div></div>
+          <div class="wf-col"><div class="wf-val" style="color:var(--blue)">1,800</div><div class="wf-bar" style="height:65px;background:var(--blue)"></div><div class="wf-month">6월</div><div class="wf-cumul">4,800</div></div>
+          <div class="wf-col"><div class="wf-val" style="color:var(--blue)">2,000</div><div class="wf-bar" style="height:75px;background:var(--blue)"></div><div class="wf-month">7월</div><div class="wf-cumul">6,800</div></div>
+          <div class="wf-col"><div class="wf-val" style="color:var(--purple)">2,000</div><div class="wf-bar" style="height:75px;background:var(--purple)"></div><div class="wf-month">8월</div><div class="wf-cumul">8,800</div></div>
+          <div class="wf-col"><div class="wf-val" style="color:var(--amber)">2,000</div><div class="wf-bar" style="height:75px;background:var(--amber)"></div><div class="wf-month">9월</div><div class="wf-cumul" style="color:var(--vroong);font-weight:700">10,800</div></div>
         </div>
-        <div class="gauge-card">
-          <div class="gauge-value" style="color:var(--blue)">~1,667</div>
-          <div class="gauge-label">월 평균 필요 계약</div>
-          <div class="gauge-bar"><div class="gauge-fill" style="width:67%;background:var(--blue)"></div></div>
-        </div>
-        <div class="gauge-card">
-          <div class="gauge-value" style="color:var(--amber)">7,000+</div>
-          <div class="gauge-label">6개월 후 활성 상점 (잔존)</div>
-          <div class="gauge-bar"><div class="gauge-fill" style="width:70%;background:var(--amber)"></div></div>
-        </div>
-        <div class="gauge-card">
-          <div class="gauge-value" style="color:var(--purple)">8+</div>
-          <div class="gauge-label">영업 권역 수</div>
-          <div class="gauge-bar"><div class="gauge-fill" style="width:80%;background:var(--purple)"></div></div>
+        <div style="display:flex;gap:12px;margin-top:10px;font-size:10px;color:var(--text3);justify-content:center">
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--vroong);vertical-align:middle;margin-right:3px"></span>P1: 기반</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--blue);vertical-align:middle;margin-right:3px"></span>P2: 확장</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--purple);vertical-align:middle;margin-right:3px"></span>P3: 인텔리전스</span>
         </div>
       </div>
 
       <!-- 3 Scenarios -->
-      <div class="model-grid">
-        <div class="model-card conservative">
-          <div class="model-label con">보수적 시나리오</div>
-          <div class="model-number" style="color:var(--text3)">9,000건</div>
-          <div class="model-sub">목표 미달 (90%)</div>
-          <div class="model-row"><span class="label">월 평균 계약</span><span class="value">1,500건</span></div>
-          <div class="model-row"><span class="label">전환율</span><span class="value">20% (AS-IS +5%p)</span></div>
-          <div class="model-row"><span class="label">권역 확장</span><span class="value">+5개 (서울만)</span></div>
-          <div class="model-row"><span class="label">영업사원</span><span class="value">현행 유지</span></div>
-          <div class="model-row"><span class="label">툴 효과</span><span class="value">리드타임 30% 단축</span></div>
-          <div class="model-row"><span class="label">잔존율 (6M)</span><span class="value">65% → 활성 5,850</span></div>
-        </div>
-
-        <div class="model-card base" style="border-color:var(--vroong)">
-          <div class="model-label bas">기본 시나리오 (목표)</div>
-          <div class="model-number" style="color:var(--vroong)">10,800건</div>
-          <div class="model-sub">목표 달성 (108%)</div>
-          <div class="model-row"><span class="label">월 평균 계약</span><span class="value" style="color:var(--vroong)">1,800건</span></div>
-          <div class="model-row"><span class="label">전환율</span><span class="value" style="color:var(--vroong)">25% (AS-IS +10%p)</span></div>
-          <div class="model-row"><span class="label">권역 확장</span><span class="value" style="color:var(--vroong)">+8개 (서울+경기+부산)</span></div>
-          <div class="model-row"><span class="label">영업사원</span><span class="value" style="color:var(--vroong)">+30% 증원</span></div>
-          <div class="model-row"><span class="label">툴 효과</span><span class="value" style="color:var(--vroong)">리드타임 60% 단축</span></div>
-          <div class="model-row"><span class="label">잔존율 (6M)</span><span class="value" style="color:var(--vroong)">70% → 활성 7,560</span></div>
-        </div>
-
-        <div class="model-card aggressive">
-          <div class="model-label agg">공격적 시나리오</div>
-          <div class="model-number" style="color:var(--blue)">13,200건</div>
-          <div class="model-sub">목표 초과 (132%)</div>
-          <div class="model-row"><span class="label">월 평균 계약</span><span class="value" style="color:var(--blue)">2,200건</span></div>
-          <div class="model-row"><span class="label">전환율</span><span class="value" style="color:var(--blue)">35% (AS-IS +20%p)</span></div>
-          <div class="model-row"><span class="label">권역 확장</span><span class="value" style="color:var(--blue)">+8개 + 추가 2개</span></div>
-          <div class="model-row"><span class="label">영업사원</span><span class="value" style="color:var(--blue)">+50% 증원</span></div>
-          <div class="model-row"><span class="label">툴 효과</span><span class="value" style="color:var(--blue)">리드타임 80% 단축 + AI</span></div>
-          <div class="model-row"><span class="label">잔존율 (6M)</span><span class="value" style="color:var(--blue)">80% → 활성 10,560</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Monthly Waterfall -->
-    <div class="section" style="margin-top:32px">
-      <div class="section-title"><div class="dot" style="background:var(--blue)"></div>월별 누적 계약 (기본 시나리오)</div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px">
-        <div class="waterfall">
-          <div class="waterfall-col">
-            <div class="waterfall-bar-wrap">
-              <div class="waterfall-bar" style="height:20%;background:linear-gradient(180deg,var(--vroong),#059669)">
-                <div class="bar-val" style="color:var(--vroong)">1,400</div>
-              </div>
-            </div>
-            <div class="waterfall-month">4월</div>
-            <div class="waterfall-cumul">누적 1,400</div>
-          </div>
-          <div class="waterfall-col">
-            <div class="waterfall-bar-wrap">
-              <div class="waterfall-bar" style="height:33%;background:linear-gradient(180deg,var(--vroong),#059669)">
-                <div class="bar-val" style="color:var(--vroong)">1,600</div>
-              </div>
-            </div>
-            <div class="waterfall-month">5월</div>
-            <div class="waterfall-cumul">누적 3,000</div>
-          </div>
-          <div class="waterfall-col">
-            <div class="waterfall-bar-wrap">
-              <div class="waterfall-bar" style="height:50%;background:linear-gradient(180deg,var(--vroong),#059669)">
-                <div class="bar-val" style="color:var(--vroong)">1,800</div>
-              </div>
-            </div>
-            <div class="waterfall-month">6월</div>
-            <div class="waterfall-cumul">누적 4,800</div>
-          </div>
-          <div class="waterfall-col">
-            <div class="waterfall-bar-wrap">
-              <div class="waterfall-bar" style="height:66%;background:linear-gradient(180deg,var(--blue),#2563eb)">
-                <div class="bar-val" style="color:var(--blue)">2,000</div>
-              </div>
-            </div>
-            <div class="waterfall-month">7월</div>
-            <div class="waterfall-cumul">누적 6,800</div>
-          </div>
-          <div class="waterfall-col">
-            <div class="waterfall-bar-wrap">
-              <div class="waterfall-bar" style="height:83%;background:linear-gradient(180deg,var(--blue),#2563eb)">
-                <div class="bar-val" style="color:var(--blue)">2,000</div>
-              </div>
-            </div>
-            <div class="waterfall-month">8월</div>
-            <div class="waterfall-cumul">누적 8,800</div>
-          </div>
-          <div class="waterfall-col">
-            <div class="waterfall-bar-wrap">
-              <div class="waterfall-bar" style="height:100%;background:linear-gradient(180deg,var(--amber),#d97706)">
-                <div class="bar-val" style="color:var(--amber)">2,000</div>
-              </div>
-            </div>
-            <div class="waterfall-month">9월</div>
-            <div class="waterfall-cumul" style="color:var(--vroong);font-weight:700">누적 10,800</div>
-          </div>
-        </div>
-        <div style="margin-top:16px;font-size:12px;color:var(--text3);text-align:center">
-          Phase 1 (4~5월): 툴 구축 + 기존 권역 집중 | Phase 2 (6~7월): 권역 확장 효과 본격화 | Phase 3 (8~9월): AI + 최적화로 정점
-        </div>
-      </div>
-    </div>
-
-    <!-- Levers -->
-    <div class="section" style="margin-top:32px">
-      <div class="section-title"><div class="dot" style="background:var(--amber)"></div>3가지 성장 레버</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">&#9889;</div>
-          <div style="font-size:14px;font-weight:800;margin-bottom:4px">레버 1: 전환율 향상</div>
-          <div style="font-size:12px;color:var(--text2);margin-bottom:10px">AS-IS 15% → TO-BE 25%</div>
-          <div style="font-size:12px;color:var(--text3)">
-            <div style="padding:3px 0">- 현장 즉시 계약 (웹 계약서)</div>
-            <div style="padding:3px 0">- 요금 시뮬레이션 (피칭 무기)</div>
-            <div style="padding:3px 0">- SLA 지표 시각화</div>
-            <div style="padding:3px 0">- 승인 워크플로 (대기 시간 제거)</div>
-          </div>
-        </div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">&#127760;</div>
-          <div style="font-size:14px;font-weight:800;margin-bottom:4px">레버 2: 커버리지 확대</div>
-          <div style="font-size:12px;color:var(--text2);margin-bottom:10px">1개 권역 → 8+ 권역</div>
-          <div style="font-size:12px;color:var(--text3)">
-            <div style="padding:3px 0">- 서울 5개 권역 순차 오픈</div>
-            <div style="padding:3px 0">- 부천/원미/부산 확장</div>
-            <div style="padding:3px 0">- 영업사원 30% 증원</div>
-            <div style="padding:3px 0">- 루트 최적화로 1인당 방문 수 증가</div>
-          </div>
-        </div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-          <div style="font-size:24px;margin-bottom:8px">&#128737;</div>
-          <div style="font-size:14px;font-weight:800;margin-bottom:4px">레버 3: 이탈 방지</div>
-          <div style="font-size:12px;color:var(--text2);margin-bottom:10px">잔존율 65% → 75%</div>
-          <div style="font-size:12px;color:var(--text3)">
-            <div style="padding:3px 0">- S-form 자동화 (온보딩 가속)</div>
-            <div style="padding:3px 0">- D+3/D+7 이탈 조기경보</div>
-            <div style="padding:3px 0">- 권역 가능 여부 사전 체크</div>
-            <div style="padding:3px 0">- 포스리스 옵션 검토</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Gantt Chart -->
-  <div class="panel" id="panel-gantt">
-    <div class="section">
-      <div class="section-title"><div class="dot" style="background:var(--cyan)"></div>4트랙 x 6개월 간트 차트</div>
-      <div class="gantt">
-        <div class="gantt-header">
-          <div>트랙</div>
-          <div>4월</div><div>5월</div><div>6월</div><div>7월</div><div>8월</div><div>9월</div>
-        </div>
-
-        <!-- Track 1: Product -->
-        <div class="gantt-row">
-          <div class="gantt-track"><div class="track-dot" style="background:var(--vroong)"></div>세일즈 툴</div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--vroong-l);color:var(--vroong)">시뮬레이션<br>MVP</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--vroong-l);color:var(--vroong)">계약+승인<br>S-form</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--blue-l);color:var(--blue)">기가입 표시<br>개인 대시보드</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--blue-l);color:var(--blue)">루트 최적화<br>SLA 시각화</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--purple-l);color:var(--purple)">AI 리드<br>스코어링</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--purple-l);color:var(--purple)">이탈 예측<br>자동 리마인드</div></div>
-        </div>
-
-        <!-- Track 2: Operations -->
-        <div class="gantt-row">
-          <div class="gantt-track"><div class="track-dot" style="background:var(--amber)"></div>영업 운영</div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--amber-l);color:var(--amber)">프로세스<br>표준화</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--amber-l);color:var(--amber)">플레이북<br>제작</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--amber-l);color:var(--amber)">서울 5개<br>권역 오픈</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--amber-l);color:var(--amber)">부천/부산<br>확장</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--amber-l);color:var(--amber)">인센티브<br>체계</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--amber-l);color:var(--amber)">스케일업<br>최적화</div></div>
-        </div>
-
-        <!-- Track 3: GTM -->
-        <div class="gantt-row">
-          <div class="gantt-track"><div class="track-dot" style="background:var(--pink)"></div>마케팅/피칭</div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--pink-l);color:var(--pink)">SLA 자료<br>디지털화</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--pink-l);color:var(--pink)">리플렛<br>고도화</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--pink-l);color:var(--pink)">성공 사례<br>케이스</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--pink-l);color:var(--pink)">경쟁사<br>비교 자료</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--pink-l);color:var(--pink)">인바운드<br>채널</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--pink-l);color:var(--pink)">추천<br>프로그램</div></div>
-        </div>
-
-        <!-- Track 4: Data -->
-        <div class="gantt-row">
-          <div class="gantt-track"><div class="track-dot" style="background:var(--cyan)"></div>데이터/측정</div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--cyan-l);color:var(--cyan)">핵심 KPI<br>대시보드</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--cyan-l);color:var(--cyan)">전환 퍼널<br>추적</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--cyan-l);color:var(--cyan)">코호트<br>자동화</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--cyan-l);color:var(--cyan)">권역별<br>비교</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--cyan-l);color:var(--cyan)">예측<br>모델</div></div>
-          <div class="gantt-cell"><div class="gantt-bar" style="background:var(--cyan-l);color:var(--cyan)">ROI<br>측정</div></div>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:24px;margin-top:16px;font-size:11px;color:var(--text3);justify-content:center">
-        <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--vroong-l);border:1px solid var(--vroong)"></div>Phase 1 (기반 구축)</div>
-        <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--blue-l);border:1px solid var(--blue)"></div>Phase 2 (확장)</div>
-        <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:var(--purple-l);border:1px solid var(--purple)"></div>Phase 3 (인텔리전스)</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. Phase Detail -->
-  <div class="panel" id="panel-phases">
-    <div class="section">
-      <div class="section-title"><div class="dot" style="background:var(--vroong)"></div>Phase별 상세 액션</div>
-      <div class="phase-grid">
-
-        <!-- Phase 1 -->
-        <div class="phase-card" style="border-top:3px solid var(--vroong)">
-          <div class="phase-badge" style="background:var(--vroong-l);color:var(--vroong)">Phase 1</div>
-          <div class="phase-title">기반 구축 + 현장 계약</div>
-          <div class="phase-period">4~5월 (2개월) | 목표: 3,000건</div>
-          <ul class="phase-items">
-            <li><div class="bullet" style="background:var(--vroong)"></div><div><strong style="color:var(--vroong)">세일즈 툴</strong> 요금 시뮬레이션 MVP, 웹 계약서 생성, 승인 워크플로, S-form 자동화</div></li>
-            <li><div class="bullet" style="background:var(--amber)"></div><div><strong style="color:var(--amber)">운영</strong> 영업 표준 프로세스 정립, 플레이북 v1.0 제작, 기존 권역 집중 영업</div></li>
-            <li><div class="bullet" style="background:var(--pink)"></div><div><strong style="color:var(--pink)">마케팅</strong> SLA 지표 시각화 피칭 자료, 디지털 리플렛, 경쟁사 비교 1-pager</div></li>
-            <li><div class="bullet" style="background:var(--cyan)"></div><div><strong style="color:var(--cyan)">데이터</strong> 핵심 KPI 대시보드 (전환율, 리드타임), 전환 퍼널 추적 시작</div></li>
-          </ul>
-          <div style="margin-top:12px;padding:10px;background:var(--vroong-l);border-radius:8px;font-size:11px;color:var(--vroong)">
-            <strong>핵심 목표:</strong> 현장 즉시 계약 가능하게 만들기. 계약 소요일 34일 → 14일
-          </div>
-        </div>
-
-        <!-- Phase 2 -->
-        <div class="phase-card" style="border-top:3px solid var(--blue)">
-          <div class="phase-badge" style="background:var(--blue-l);color:var(--blue)">Phase 2</div>
-          <div class="phase-title">권역 확장 + 효율화</div>
-          <div class="phase-period">6~7월 (2개월) | 목표: 누적 6,800건</div>
-          <ul class="phase-items">
-            <li><div class="bullet" style="background:var(--vroong)"></div><div><strong style="color:var(--vroong)">세일즈 툴</strong> 기가입/해지 상점 표시, 개인별 대시보드, 루트 최적화, SLA 피칭 뷰</div></li>
-            <li><div class="bullet" style="background:var(--amber)"></div><div><strong style="color:var(--amber)">운영</strong> 서울 5개 + 부천/부산 권역 순차 오픈, 인력 +30% 채용/배치, 온보딩 프로그램</div></li>
-            <li><div class="bullet" style="background:var(--pink)"></div><div><strong style="color:var(--pink)">마케팅</strong> 상점주 성공 사례 3건+, 경쟁사 전환 가이드, 지역별 맞춤 자료</div></li>
-            <li><div class="bullet" style="background:var(--cyan)"></div><div><strong style="color:var(--cyan)">데이터</strong> 코호트 분석 자동화, 권역별 성과 비교, 이탈 패턴 분석</div></li>
-          </ul>
-          <div style="margin-top:12px;padding:10px;background:var(--blue-l);border-radius:8px;font-size:11px;color:var(--blue)">
-            <strong>핵심 목표:</strong> 8개 권역 동시 가동 + 1인당 계약 수 1.5배 향상
-          </div>
-        </div>
-
-        <!-- Phase 3 -->
-        <div class="phase-card" style="border-top:3px solid var(--purple)">
-          <div class="phase-badge" style="background:var(--purple-l);color:var(--purple)">Phase 3</div>
-          <div class="phase-title">인텔리전스 + 정점</div>
-          <div class="phase-period">8~9월 (2개월) | 목표: 누적 10,800건</div>
-          <ul class="phase-items">
-            <li><div class="bullet" style="background:var(--vroong)"></div><div><strong style="color:var(--vroong)">세일즈 툴</strong> AI 리드 스코어링, 이탈 예측 모델, 자동 리마인드, 챗봇 FAQ</div></li>
-            <li><div class="bullet" style="background:var(--amber)"></div><div><strong style="color:var(--amber)">운영</strong> 성과 기반 인센티브 가동, 영업사원 스케일업, 권역 미세 조정</div></li>
-            <li><div class="bullet" style="background:var(--pink)"></div><div><strong style="color:var(--pink)">마케팅</strong> 인바운드 리드 채널 (웹/소셜), 상점주 추천 프로그램, 자동화 캠페인</div></li>
-            <li><div class="bullet" style="background:var(--cyan)"></div><div><strong style="color:var(--cyan)">데이터</strong> 전환 가능성 예측, 이탈 확률 모델, 영업 ROI 측정 체계 완성</div></li>
-          </ul>
-          <div style="margin-top:12px;padding:10px;background:var(--purple-l);border-radius:8px;font-size:11px;color:var(--purple)">
-            <strong>핵심 목표:</strong> 데이터 기반 의사결정 완성 + 10,000건 돌파
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. Benchmark -->
-  <div class="panel" id="panel-benchmark">
-    <div class="section">
-      <div class="section-title"><div class="dot" style="background:var(--pink)"></div>업계 벤치마크: 세일즈 툴 방향성</div>
-      <div class="bench-grid">
-
-        <div class="bench-card" style="border-top:3px solid #00a1e0">
-          <div class="bench-name">Salesforce</div>
-          <div class="bench-year">2026 Sales Cloud Roadmap</div>
-          <div class="bench-point"><strong>AI 에이전트:</strong> 수동 작업 제거. Einstein Copilot으로 가격 조회, 계정 조사, 거래 우선순위 자동화</div>
-          <div class="bench-point"><strong>통합 데이터:</strong> 신뢰할 수 있는 데이터 기반 수익 예측 + 성장 최적화</div>
-          <div class="bench-point"><strong>유연한 플랫폼:</strong> 설정하기 쉬운 완전한 성장 플랫폼 지향</div>
-          <div class="bench-point"><strong>핵심 수치:</strong> 18,500+ Agentforce 거래, $1.4B ARR (114% YoY)</div>
-          <div style="margin-top:10px;padding:8px;background:rgba(0,161,224,.1);border-radius:6px;font-size:11px;color:#00a1e0">
-            <strong>우리에게 적용:</strong> S-form 자동화, 승인 워크플로가 바로 "수동 작업 제거" 영역
-          </div>
-        </div>
-
-        <div class="bench-card" style="border-top:3px solid #ff7a59">
-          <div class="bench-name">HubSpot</div>
-          <div class="bench-year">2026 Growth Platform</div>
-          <div class="bench-point"><strong>200+ 신기능:</strong> 인간+AI 하이브리드팀 구축. Data Hub 중심 통합</div>
-          <div class="bench-point"><strong>PLG+세일즈:</strong> 제품 주도 성장 + 세일즈 조합 시 3x 전환율, CAC 40~60% 절감</div>
-          <div class="bench-point"><strong>Breeze Agents:</strong> AI 에이전트가 데이터 연결 + 팀 지원</div>
-          <div style="margin-top:10px;padding:8px;background:rgba(255,122,89,.1);border-radius:6px;font-size:11px;color:#ff7a59">
-            <strong>우리에게 적용:</strong> 시뮬레이션 → 계약이 "제품이 스스로 판매하는" PLG 구조
-          </div>
-        </div>
-
-        <div class="bench-card" style="border-top:3px solid var(--amber)">
-          <div class="bench-name">Field Sales 특화 (BeatRoute, LeadBeam)</div>
-          <div class="bench-year">2026 Field Sales Automation</div>
-          <div class="bench-point"><strong>30% 적은 인력:</strong> AI 루트 최적화로 동일 매출을 30% 적은 인력으로 달성</div>
-          <div class="bench-point"><strong>2시간+ 회수:</strong> 수동 데이터 입력, 루트 계획 등 비판매 시간 제거</div>
-          <div class="bench-point"><strong>34% 문제:</strong> 영업사원은 시간의 34%만 실제 판매에 사용 → 이 비율을 높이는 것이 핵심</div>
-          <div style="margin-top:10px;padding:8px;background:var(--amber-l);border-radius:6px;font-size:11px;color:var(--amber)">
-            <strong>우리에게 적용:</strong> 루트 최적화(P2), S-form 자동화(P1)가 "판매 시간 극대화" 직결
-          </div>
-        </div>
-
-        <div class="bench-card" style="border-top:3px solid var(--purple)">
-          <div class="bench-name">SMB 고효율 모델 (Mangomint)</div>
-          <div class="bench-year">7.2x ARR-to-OTE Efficiency</div>
-          <div class="bench-point"><strong>도구 통합:</strong> 150명 조직이 Slack + Notion 2개 도구만으로 운영 (복잡한 스택 제거)</div>
-          <div class="bench-point"><strong>3단계 모델:</strong> Clarity (정보 접근) → Cadence (리듬) → Co-pilot (자동화)</div>
-          <div class="bench-point"><strong>핵심 원칙:</strong> "자동화 전에 기반을 먼저 만들어라"</div>
-          <div style="margin-top:10px;padding:8px;background:var(--purple-l);border-radius:6px;font-size:11px;color:var(--purple)">
-            <strong>우리에게 적용:</strong> Phase 1이 Clarity(플레이북), Phase 2가 Cadence(루틴), Phase 3이 Co-pilot(AI)
-          </div>
-        </div>
-      </div>
-
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:16px">
-        <div style="font-size:14px;font-weight:800;margin-bottom:10px">공통 시사점: "영업사원이 판매에만 집중하게 하라"</div>
-        <div style="font-size:13px;color:var(--text2);line-height:1.8">
-          모든 세일즈 툴의 2026년 방향은 <strong style="color:var(--text)">수동 작업 제거 → 판매 시간 극대화 → 데이터 기반 의사결정</strong> 순서입니다.
-          우리의 Phase 1 → 2 → 3도 정확히 이 순서를 따릅니다. Phase 1에서 계약 프로세스 자동화(수동 제거), Phase 2에서 루트/영역 최적화(효율 극대화), Phase 3에서 AI 예측(의사결정 자동화).
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. KPI Tracker -->
-  <div class="panel" id="panel-kpi">
-    <div class="section">
-      <div class="section-title"><div class="dot" style="background:var(--cyan)"></div>KPI 트래커</div>
-
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-        <table class="kpi-table">
-          <thead>
-            <tr>
-              <th>KPI</th>
-              <th>AS-IS</th>
-              <th>Phase 1 목표</th>
-              <th>Phase 2 목표</th>
-              <th>Phase 3 목표</th>
-              <th>트랙</th>
-            </tr>
-          </thead>
+      <div class="card">
+        <div style="font-size:12px;font-weight:700;margin-bottom:10px">3가지 시나리오</div>
+        <table class="tbl">
+          <thead><tr><th></th><th>보수적</th><th style="color:var(--vroong);font-weight:800">기본 (목표)</th><th>공격적</th></tr></thead>
           <tbody>
-            <tr>
-              <td style="font-weight:700">월 신규 계약</td>
-              <td style="color:var(--text3)">~1,500건</td>
-              <td>1,500건</td>
-              <td>1,900건</td>
-              <td style="color:var(--vroong);font-weight:700">2,000건</td>
-              <td><span class="map-tag" style="background:var(--vroong-l);color:var(--vroong)">전체</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">누적 계약</td>
-              <td style="color:var(--text3)">-</td>
-              <td>3,000건</td>
-              <td>6,800건</td>
-              <td style="color:var(--vroong);font-weight:700">10,800건</td>
-              <td><span class="map-tag" style="background:var(--vroong-l);color:var(--vroong)">전체</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">리드 → 계약 전환율</td>
-              <td style="color:var(--text3)">~15%</td>
-              <td>20%</td>
-              <td>25%</td>
-              <td style="color:var(--vroong);font-weight:700">30%+</td>
-              <td><span class="map-tag" style="background:var(--vroong-l);color:var(--vroong)">Product</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">계약 소요일</td>
-              <td style="color:var(--text3)">34일</td>
-              <td>14일</td>
-              <td>7일</td>
-              <td style="color:var(--vroong);font-weight:700">3일</td>
-              <td><span class="map-tag" style="background:var(--vroong-l);color:var(--vroong)">Product</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">계약→첫주문 리드타임</td>
-              <td style="color:var(--text3)">7일+</td>
-              <td>3일</td>
-              <td>2일</td>
-              <td style="color:var(--vroong);font-weight:700">1일</td>
-              <td><span class="map-tag" style="background:var(--vroong-l);color:var(--vroong)">Product</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">6개월 잔존율</td>
-              <td style="color:var(--text3)">55~70%</td>
-              <td>65%</td>
-              <td>70%</td>
-              <td style="color:var(--vroong);font-weight:700">75%+</td>
-              <td><span class="map-tag" style="background:var(--amber-l);color:var(--amber)">Ops</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">활성 권역 수</td>
-              <td style="color:var(--text3)">1개 (중랑)</td>
-              <td>3개</td>
-              <td>8개</td>
-              <td style="color:var(--vroong);font-weight:700">10개</td>
-              <td><span class="map-tag" style="background:var(--amber-l);color:var(--amber)">Ops</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">영업사원 수</td>
-              <td style="color:var(--text3)">현행</td>
-              <td>+10%</td>
-              <td>+30%</td>
-              <td style="color:var(--vroong);font-weight:700">+40%</td>
-              <td><span class="map-tag" style="background:var(--amber-l);color:var(--amber)">Ops</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">1인당 월 계약 수</td>
-              <td style="color:var(--text3)">측정 안됨</td>
-              <td>기준선 설정</td>
-              <td>1.3x</td>
-              <td style="color:var(--vroong);font-weight:700">1.5x</td>
-              <td><span class="map-tag" style="background:var(--pink-l);color:var(--pink)">GTM</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">인바운드 리드 비율</td>
-              <td style="color:var(--text3)">0%</td>
-              <td>-</td>
-              <td>5%</td>
-              <td style="color:var(--vroong);font-weight:700">15%</td>
-              <td><span class="map-tag" style="background:var(--pink-l);color:var(--pink)">GTM</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:700">온보딩 이탈률</td>
-              <td style="color:var(--text3)">추정 15~20%</td>
-              <td>12%</td>
-              <td>8%</td>
-              <td style="color:var(--vroong);font-weight:700">5%</td>
-              <td><span class="map-tag" style="background:var(--cyan-l);color:var(--cyan)">Data</span></td>
-            </tr>
+            <tr><td style="color:var(--text3)">6개월 누적</td><td>9,000건</td><td style="font-weight:800;color:var(--vroong)">10,800건</td><td>13,200건</td></tr>
+            <tr><td style="color:var(--text3)">전환율</td><td>20%</td><td style="font-weight:700">25%</td><td>35%</td></tr>
+            <tr><td style="color:var(--text3)">권역</td><td>+5개</td><td style="font-weight:700">+8개</td><td>+10개</td></tr>
+            <tr><td style="color:var(--text3)">인바운드 비율</td><td>5%</td><td style="font-weight:700">15%</td><td>25%</td></tr>
+            <tr><td style="color:var(--text3)">잔존율 (6M)</td><td>65%</td><td style="font-weight:700">75%</td><td>80%</td></tr>
+            <tr><td style="color:var(--text3)">활성 상점</td><td>5,850</td><td style="font-weight:800;color:var(--vroong)">8,100</td><td>10,560</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- 6. Mapping -->
-  <div class="panel" id="panel-mapping">
-    <div class="section">
-      <div class="section-title"><div class="dot" style="background:var(--purple)"></div>기존 세일즈 툴 로드맵(P0/P1/P2)과의 매핑</div>
+  <!-- ===== 3. 듀얼 채널 전략 ===== -->
+  <div class="section">
+    <div class="section-label">Dual Channel Strategy</div>
+    <div class="section-title">아웃바운드 + 인바운드 듀얼 채널</div>
 
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
-        <div style="font-size:13px;color:var(--text2);margin-bottom:16px">
-          기존 <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px">roadmap-세일즈툴.html</code>은 <strong style="color:var(--text)">세일즈 툴 기능 중심</strong>이고, 이 로드맵은 <strong style="color:var(--vroong)">비즈니스 목표(10K) 중심</strong>입니다. 세일즈 툴 트랙은 기존 P0/P1/P2를 포함합니다.
+    <div class="g2" style="margin-bottom:16px">
+      <!-- Outbound -->
+      <div class="card" style="border-top:3px solid var(--vroong)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span class="badge b-green">아웃바운드</span>
+          <span style="font-size:13px;font-weight:800">영업사원 방문 계약</span>
+          <span style="font-size:11px;color:var(--text3);margin-left:auto">비중 80~85%</span>
         </div>
-
-        <div class="map-row">
-          <span class="map-tag" style="background:var(--vroong-l);color:var(--vroong);min-width:80px;text-align:center">기존 P0</span>
-          <span class="map-arrow">=</span>
-          <span class="map-tag" style="background:var(--vroong-l);color:var(--vroong)">GTM Phase 1 - 세일즈 툴 트랙</span>
-          <span style="font-size:12px;color:var(--text3);margin-left:auto">시뮬레이션, 계약, 승인, S-form</span>
+        <div class="flow" style="margin-bottom:10px">
+          <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">영업사원<br>리드 선택</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">현장 방문<br>시뮬레이션</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">즉시 계약<br>승인 요청</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--vroong-l);border-color:var(--vroong);color:var(--vroong-d);font-size:10px">S-form<br>자동</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--vroong);border-color:var(--vroong);color:#fff;font-size:10px">온보딩<br>추적</div>
         </div>
-        <div class="map-row">
-          <span class="map-tag" style="background:var(--blue-l);color:var(--blue);min-width:80px;text-align:center">기존 P1</span>
-          <span class="map-arrow">=</span>
-          <span class="map-tag" style="background:var(--blue-l);color:var(--blue)">GTM Phase 2 - 세일즈 툴 트랙</span>
-          <span style="font-size:12px;color:var(--text3);margin-left:auto">기가입 표시, SLA, 개인 대시보드</span>
-        </div>
-        <div class="map-row">
-          <span class="map-tag" style="background:var(--purple-l);color:var(--purple);min-width:80px;text-align:center">기존 P2</span>
-          <span class="map-arrow">=</span>
-          <span class="map-tag" style="background:var(--purple-l);color:var(--purple)">GTM Phase 3 - 세일즈 툴 트랙</span>
-          <span style="font-size:12px;color:var(--text3);margin-left:auto">AI 리드 스코어링, 이탈 예측</span>
-        </div>
-        <div class="map-row" style="border-bottom:none;padding-top:12px">
-          <span class="map-tag" style="background:var(--amber-l);color:var(--amber);min-width:80px;text-align:center">NEW</span>
-          <span class="map-arrow">+</span>
-          <span style="font-size:13px;font-weight:600">영업 운영 + 마케팅/피칭 + 데이터/측정 3개 트랙 추가</span>
-        </div>
+        <div style="font-size:11px;color:var(--text2)">기존 강점을 극대화. 세일즈 툴이 계약 리드타임을 34일 → 3일로 단축.</div>
       </div>
 
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px">
-        <div style="font-size:14px;font-weight:800;margin-bottom:12px">왜 4트랙이 필요한가?</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:12px;background:var(--surface2);border-radius:8px">
-            <div style="font-size:12px;font-weight:700;color:var(--vroong);margin-bottom:4px">툴만으로는 부족한 이유</div>
-            <div style="font-size:12px;color:var(--text2)">시뮬레이션/계약 기능이 있어도 영업할 <strong style="color:var(--text)">권역과 사람</strong>이 없으면 10,000건 불가. 현재 1개 권역 체제로는 물리적 한계.</div>
-          </div>
-          <div style="padding:12px;background:var(--surface2);border-radius:8px">
-            <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:4px">운영이 뒷받침해야 하는 이유</div>
-            <div style="font-size:12px;color:var(--text2)">8개 권역 동시 운영은 <strong style="color:var(--text)">표준 프로세스 + 플레이북</strong>이 없으면 품질 편차 발생. 신규 권역 온보딩 속도 좌우.</div>
-          </div>
-          <div style="padding:12px;background:var(--surface2);border-radius:8px">
-            <div style="font-size:12px;font-weight:700;color:var(--pink);margin-bottom:4px">피칭 자료가 전환율을 좌우</div>
-            <div style="font-size:12px;color:var(--text2)">인터뷰에서 확인: 영업사원별 피칭 편차 큼. <strong style="color:var(--text)">표준화된 피칭 무기</strong> (SLA, 성공사례)가 전환율 직결.</div>
-          </div>
-          <div style="padding:12px;background:var(--surface2);border-radius:8px">
-            <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:4px">측정 없이 개선 없다</div>
-            <div style="font-size:12px;color:var(--text2)">현재 전환율, 리드타임조차 정확히 모름. <strong style="color:var(--text)">측정 체계</strong>가 있어야 어떤 레버가 효과적인지 판단 가능.</div>
-          </div>
+      <!-- Inbound -->
+      <div class="card" style="border-top:3px solid var(--indigo)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span class="badge b-indigo">인바운드</span>
+          <span style="font-size:13px;font-weight:800">상점주 셀프 가입 (NEW)</span>
+          <span style="font-size:11px;color:var(--text3);margin-left:auto">비중 15~20%</span>
         </div>
+        <div class="flow" style="margin-bottom:10px">
+          <div class="flow-node" style="background:var(--indigo-l);border-color:var(--indigo);color:var(--indigo);font-size:10px">상점주<br>시뮬레이터</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--indigo-l);border-color:var(--indigo);color:var(--indigo);font-size:10px">가입 신청<br>정보 입력</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--amber-l);border-color:var(--amber);color:var(--amber);font-size:10px">영업사원<br>확인+발행</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--indigo-l);border-color:var(--indigo);color:var(--indigo);font-size:10px">S-form<br>자동</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node" style="background:var(--indigo);border-color:var(--indigo);color:#fff;font-size:10px">온보딩<br>추적</div>
+        </div>
+        <div style="font-size:11px;color:var(--text2)">프로덕트가 리드를 만들고, 영업사원이 확인+마무리. 이미 관심 있는 상점이라 전환율 40~60%.</div>
+      </div>
+    </div>
+
+    <!-- Inbound Detail -->
+    <div class="card" style="border:1px solid var(--indigo);background:rgba(79,70,229,.02)">
+      <div style="font-size:13px;font-weight:800;margin-bottom:12px;color:var(--indigo)">인바운드 하이브리드 플로우 상세</div>
+      <div style="overflow-x:auto">
+        <div style="display:grid;grid-template-columns:120px 1fr 120px;min-width:600px;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+          <div style="padding:8px;font-size:10px;font-weight:700;color:var(--text3);background:var(--bg2);border-bottom:1px solid var(--border);text-align:center">상점주</div>
+          <div style="padding:8px;font-size:10px;font-weight:700;color:var(--text3);background:var(--bg2);border-bottom:1px solid var(--border);text-align:center;border-left:1px solid var(--border);border-right:1px solid var(--border)">시스템 (자동)</div>
+          <div style="padding:8px;font-size:10px;font-weight:700;color:var(--text3);background:var(--bg2);border-bottom:1px solid var(--border);text-align:center">영업사원</div>
+
+          <div class="ib-actor" style="background:var(--indigo-l);color:var(--indigo);font-size:11px">요금 시뮬레이터<br>접속</div>
+          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><span class="badge b-cyan" style="font-size:9px">자동</span><span style="font-size:11px">주소 기반 배달 가능 여부 + 예상 요금 즉시 계산</span></div>
+          <div class="ib-right" style="color:var(--text3);font-size:11px">-</div>
+
+          <div class="ib-actor" style="background:var(--indigo-l);color:var(--indigo);font-size:11px">"가입 신청"<br>클릭</div>
+          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><span class="badge b-cyan" style="font-size:9px">자동</span><span style="font-size:11px">인바운드 리드 생성 + 계약서 초안 자동 생성</span></div>
+          <div class="ib-right" style="color:var(--text3);font-size:11px">-</div>
+
+          <div class="ib-actor" style="color:var(--text3);font-size:11px">대기</div>
+          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><span class="badge b-amber" style="font-size:9px">알림</span><span style="font-size:11px">영업사원에게 인바운드 리드 알림 푸시</span></div>
+          <div class="ib-right" style="background:var(--amber-l);color:var(--amber);font-size:11px;font-weight:700">리드 확인<br>+ 전화</div>
+
+          <div class="ib-actor" style="color:var(--text3);font-size:11px">조건 합의</div>
+          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border)"><span class="badge b-cyan" style="font-size:9px">자동</span><span style="font-size:11px">권역 확인 OK → 계약서 발행 + 승인 요청</span></div>
+          <div class="ib-right" style="background:var(--vroong-l);color:var(--vroong);font-size:11px;font-weight:700">계약서 발행<br>승인 요청</div>
+
+          <div class="ib-actor" style="color:var(--text3);font-size:11px">-</div>
+          <div class="ib-center" style="border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:none"><span class="badge b-green" style="font-size:9px">자동</span><span style="font-size:11px">S-form + 안내 발송 + 온보딩 추적 시작</span></div>
+          <div class="ib-right" style="border-bottom:none;font-size:11px;color:var(--text3)">포스 설치<br>방문</div>
+        </div>
+      </div>
+      <div class="callout" style="background:var(--indigo-l);margin-top:12px;color:var(--indigo)">
+        <strong>핵심:</strong> 상점주가 관심 표명 → 시스템이 초안 준비 → 영업사원이 확인하고 마무리. 완전 노터치가 아닌 <strong>"인바운드 리드 + 영업 마무리"</strong> 하이브리드.
       </div>
     </div>
   </div>
 
-</div>
+  <!-- ===== 4. 왜 인바운드가 효과적인가 ===== -->
+  <div class="section">
+    <div class="section-label">Why Inbound Works</div>
+    <div class="section-title">아웃바운드 vs 인바운드 비교</div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th></th><th>아웃바운드 (현재)</th><th style="color:var(--indigo)">인바운드 하이브리드 (신규)</th><th>차이</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">리드 발굴</td><td>영업사원이 직접 돌아다님</td><td style="font-weight:600">상점주가 알아서 유입</td><td style="color:var(--vroong)">인력 비용 0</td></tr>
+          <tr><td style="font-weight:600">리드 온도</td><td>콜드 (관심 불확실)</td><td style="font-weight:600">웜~핫 (이미 관심)</td><td style="color:var(--vroong)">전환율 2~3x</td></tr>
+          <tr><td style="font-weight:600">전환율</td><td>15~25%</td><td style="font-weight:600;color:var(--indigo)">40~60%</td><td style="color:var(--vroong);font-weight:700">+20~35%p</td></tr>
+          <tr><td style="font-weight:600">영업사원 시간</td><td>방문+피칭+계약 전체</td><td style="font-weight:600">확인+마무리만</td><td style="color:var(--vroong)">1건당 -70%</td></tr>
+          <tr><td style="font-weight:600">1건 소요시간</td><td>2~3일</td><td style="font-weight:600">전화 한 통 (30분)</td><td style="color:var(--vroong)">-90%</td></tr>
+          <tr><td style="font-weight:600">스케일</td><td>인력 비례</td><td style="font-weight:600">프로덕트가 24시간 작동</td><td style="color:var(--vroong)">무한 확장</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<script>
-function show(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  event.target.classList.add('active');
-}
-</script>
+  <!-- ===== 5. Phase 로드맵 ===== -->
+  <div class="section">
+    <div class="section-label">Roadmap</div>
+    <div class="section-title">5개 트랙 x 3 Phase</div>
+
+    <div class="phase-bar">
+      <!-- Phase 1 -->
+      <div class="phase-col" style="background:rgba(0,199,60,.03)">
+        <div class="phase-head">
+          <div class="phase-num" style="background:var(--vroong)">1</div>
+          <div><div class="phase-name">기반 구축</div><div class="phase-period">4~5월 | 3,000건</div></div>
+        </div>
+        <div style="margin-bottom:8px"><div class="track-label" style="background:var(--vroong-l);color:var(--vroong)">세일즈 툴</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--vroong)"></div>요금 시뮬레이션 MVP</li>
+          <li><div class="dot" style="background:var(--vroong)"></div>웹 계약서 + 승인 워크플로</li>
+          <li><div class="dot" style="background:var(--vroong)"></div>S-form 자동화</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--indigo-l);color:var(--indigo)">인바운드</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--indigo)"></div>공개 요금 시뮬레이터 랜딩</li>
+          <li><div class="dot" style="background:var(--indigo)"></div>"상담 신청" 폼</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--amber-l);color:var(--amber)">운영</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--amber)"></div>영업 표준 프로세스 + 플레이북</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--pink-l);color:var(--pink)">마케팅</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--pink)"></div>SLA 피칭 자료 + 디지털 리플렛</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--cyan-l);color:var(--cyan)">데이터</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--cyan)"></div>핵심 KPI 대시보드</li>
+        </ul>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-col" style="background:rgba(37,99,235,.03)">
+        <div class="phase-head">
+          <div class="phase-num" style="background:var(--blue)">2</div>
+          <div><div class="phase-name">확장 + 셀프계약</div><div class="phase-period">6~7월 | 누적 6,800건</div></div>
+        </div>
+        <div style="margin-bottom:8px"><div class="track-label" style="background:var(--vroong-l);color:var(--vroong)">세일즈 툴</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--vroong)"></div>기가입/해지 표시</li>
+          <li><div class="dot" style="background:var(--vroong)"></div>개인 대시보드 + 루트 최적화</li>
+          <li><div class="dot" style="background:var(--vroong)"></div>SLA 피칭 뷰</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--indigo-l);color:var(--indigo)">인바운드</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--indigo)"></div>셀프 가입 신청 + 자동 계약서 초안</li>
+          <li><div class="dot" style="background:var(--indigo)"></div>자동 온보딩 가이드</li>
+          <li><div class="dot" style="background:var(--indigo)"></div>배달 가능 지역 자동 체크</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--amber-l);color:var(--amber)">운영</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--amber)"></div>8개 권역 순차 오픈 + 인력 +30%</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--pink-l);color:var(--pink)">마케팅</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--pink)"></div>성공 사례 + 경쟁사 전환 가이드</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--cyan-l);color:var(--cyan)">데이터</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--cyan)"></div>코호트 분석 + 권역별 비교</li>
+        </ul>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-col" style="background:rgba(124,58,237,.03)">
+        <div class="phase-head">
+          <div class="phase-num" style="background:var(--purple)">3</div>
+          <div><div class="phase-name">인텔리전스 + 바이럴</div><div class="phase-period">8~9월 | 누적 10,800건</div></div>
+        </div>
+        <div style="margin-bottom:8px"><div class="track-label" style="background:var(--vroong-l);color:var(--vroong)">세일즈 툴</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--vroong)"></div>AI 리드 스코어링</li>
+          <li><div class="dot" style="background:var(--vroong)"></div>이탈 예측 + 자동 리마인드</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--indigo-l);color:var(--indigo)">인바운드</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--indigo)"></div>상점주 추천 프로그램</li>
+          <li><div class="dot" style="background:var(--indigo)"></div>성과 대시보드 (내 매장 절감액)</li>
+          <li><div class="dot" style="background:var(--indigo)"></div>기본 요금제 완전 자동 계약</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--amber-l);color:var(--amber)">운영</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--amber)"></div>성과 기반 인센티브 체계</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--pink-l);color:var(--pink)">마케팅</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--pink)"></div>인바운드 채널 (웹/소셜) + 캠페인</li>
+        </ul>
+        <div style="margin:8px 0 4px"><div class="track-label" style="background:var(--cyan-l);color:var(--cyan)">데이터</div></div>
+        <ul class="phase-items">
+          <li><div class="dot" style="background:var(--cyan)"></div>예측 모델 + ROI 측정</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 6. KPI ===== -->
+  <div class="section">
+    <div class="section-label">KPI Tracker</div>
+    <div class="section-title">핵심 지표 목표</div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th>KPI</th><th>AS-IS</th><th>P1 (5월)</th><th>P2 (7월)</th><th>P3 (9월)</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700">월 신규 계약</td><td style="color:var(--text3)">~1,500</td><td>1,500</td><td>1,900</td><td style="color:var(--vroong);font-weight:800">2,000+</td></tr>
+          <tr><td style="font-weight:700">누적 계약</td><td style="color:var(--text3)">-</td><td>3,000</td><td>6,800</td><td style="color:var(--vroong);font-weight:800">10,800</td></tr>
+          <tr><td style="font-weight:700">전환율 (리드→계약)</td><td style="color:var(--text3)">~15%</td><td>20%</td><td>25%</td><td style="color:var(--vroong);font-weight:800">30%+</td></tr>
+          <tr><td style="font-weight:700">인바운드 비율</td><td style="color:var(--text3)">0%</td><td>3%</td><td>10%</td><td style="color:var(--indigo);font-weight:800">15~20%</td></tr>
+          <tr><td style="font-weight:700">인바운드 전환율</td><td style="color:var(--text3)">-</td><td>측정 시작</td><td>40%</td><td style="color:var(--indigo);font-weight:800">50%+</td></tr>
+          <tr><td style="font-weight:700">계약 소요일</td><td style="color:var(--text3)">34일</td><td>14일</td><td>7일</td><td style="color:var(--vroong);font-weight:800">3일</td></tr>
+          <tr><td style="font-weight:700">6개월 잔존율</td><td style="color:var(--text3)">55~70%</td><td>65%</td><td>70%</td><td style="color:var(--vroong);font-weight:800">75%+</td></tr>
+          <tr><td style="font-weight:700">활성 권역</td><td style="color:var(--text3)">1개</td><td>3개</td><td>8개</td><td style="color:var(--vroong);font-weight:800">10개</td></tr>
+          <tr><td style="font-weight:700">온보딩 이탈률</td><td style="color:var(--text3)">15~20%</td><td>12%</td><td>8%</td><td style="color:var(--vroong);font-weight:800">5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 7. 벤치마크 ===== -->
+  <div class="section">
+    <div class="section-label">Benchmark</div>
+    <div class="section-title">업계 방향성과 우리의 적용</div>
+    <div class="g2">
+      <div class="card card-sm">
+        <div style="font-size:12px;font-weight:800;margin-bottom:2px">Salesforce 2026</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:6px">AI 에이전트로 수동 작업 제거, 통합 데이터 기반 예측</div>
+        <div class="callout" style="background:var(--blue-l);color:var(--blue-d);font-size:11px;padding:8px"><strong>적용:</strong> S-form 자동화 + 승인 워크플로 = 수동 제거 영역</div>
+      </div>
+      <div class="card card-sm">
+        <div style="font-size:12px;font-weight:800;margin-bottom:2px">HubSpot 2026</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:6px">PLG + 세일즈 조합 시 전환율 3x, CAC 40~60% 절감</div>
+        <div class="callout" style="background:var(--indigo-l);color:var(--indigo);font-size:11px;padding:8px"><strong>적용:</strong> 공개 시뮬레이터 = PLG 진입점. 프로덕트가 판매 시작</div>
+      </div>
+      <div class="card card-sm">
+        <div style="font-size:12px;font-weight:800;margin-bottom:2px">Field Sales 특화 (BeatRoute)</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:6px">30% 적은 인력으로 동일 매출. 판매 시간 비율 34% → 극대화</div>
+        <div class="callout" style="background:var(--amber-l);color:var(--amber);font-size:11px;padding:8px"><strong>적용:</strong> 루트 최적화 + 인바운드로 방문 외 시간 최소화</div>
+      </div>
+      <div class="card card-sm">
+        <div style="font-size:12px;font-weight:800;margin-bottom:2px">SMB 고효율 (Mangomint)</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:6px">Clarity → Cadence → Co-pilot 3단계. 도구 단순화</div>
+        <div class="callout" style="background:var(--purple-l);color:var(--purple);font-size:11px;padding:8px"><strong>적용:</strong> P1=Clarity(플레이북) → P2=Cadence(루틴) → P3=Co-pilot(AI)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 8. 리스크 ===== -->
+  <div class="section">
+    <div class="section-label">Risks & Mitigations</div>
+    <div class="section-title">주요 리스크와 대응</div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th>리스크</th><th>영향</th><th>대응</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">인바운드 배달 불가 지역 가입</td><td><span class="badge b-red">높음</span> 즉시 이탈</td><td>시뮬레이터에서 주소 입력 시 배달 가능 여부 자동 체크. 불가 시 "상담 신청"으로 전환</td></tr>
+          <tr><td style="font-weight:600">인바운드 리드 품질 낮음</td><td><span class="badge b-amber">중간</span> 전환율 하락</td><td>사업자번호 검증 + 최소 정보 요구로 필터링. 영업사원 확인 단계 유지</td></tr>
+          <tr><td style="font-weight:600">권역 확장 시 라이더 부족</td><td><span class="badge b-red">높음</span> 계약 후 이탈</td><td>계약 전 권역별 라이더 수급 현황 확인 필수. 불가 권역 → 계약 보류</td></tr>
+          <tr><td style="font-weight:600">영업사원 증원 지연</td><td><span class="badge b-amber">중간</span> 목표 미달</td><td>인바운드 비율 확대로 1인당 부담 분산. 보수적 시나리오 대비</td></tr>
+          <tr><td style="font-weight:600">포스 설치 거부</td><td><span class="badge b-amber">중간</span> 온보딩 이탈</td><td>포스리스 옵션 정책 논의 (별도). 인바운드 상점은 디지털 친화적이라 거부율 낮을 것</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;padding-top:24px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)">
+    G4 세일즈 웹 계약 프로젝트 · 10K GTM 전략 · 2026.04 · 부릉 Sales
+  </div>
+
+</div>
 </body>
 </html>
